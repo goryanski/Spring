@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit task</title>
+    <style>
+        .createForm {
+            font-size: 22px;
+        }
+        .field {
+            padding: 8px;
+            font-size: 22px;
+        }
+        .btn {
+            margin: 15px;
+            padding: 10px;
+            background-color: orange;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/tasks/{id}(id=${task.getId()})}" th:object="${task}" class="createForm">
+    <label for="name">Edition: </label>
+    <input type="text" th:field="*{text}" id="name" placeholder="Enter task text..." class="field">
+    <div style="color:red" th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Text Error</div>
+    <input type="submit" value="Save" class="btn"/>
+</form>
+</body>
+</html>

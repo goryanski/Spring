@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All tasks</title>
+    <script src="https://kit.fontawesome.com/fc9e6ab659.js" crossorigin="anonymous"></script>
+    <style>
+        .todo-list {
+            margin: 0 auto;
+            width: 60%;
+        }
+        .task-controls {
+            display: flex;
+        }
+        .todo-list .task {
+            background-color: burlywood;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 5px solid white;
+            font-size: 25px;
+            padding: 20px;
+            margin: 0;
+        }
+        .todo-list .task:hover {
+            cursor: pointer;
+        }
+        .todo-list .task input {
+            transform: scale(2);
+            align-self: center;
+            margin-right: 40px;
+        }
+        .add-task {
+            display: block;
+            text-align: center;
+            width: 60%;
+            font-size: 32px;
+            background-color: lightblue;
+            margin: 0 auto 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            color: black;
+        }
+        .edit-task {
+            font-size: 32px;
+            color: black;
+            margin-right: 55px;
+            margin-left: 25px;
+        }
+        .action-btn {
+            background-color: burlywood;
+            cursor: pointer;
+            border-color: transparent;
+            font-size: 25px;
+            padding: 0;
+            border-width: 0;
+        }
+        .action-btn-form {
+            margin-right: 20px;
+        }
+        @media (max-width: 1000px) {
+            .todo-list {
+                width: 85%;
+            }
+            .add-task {
+                width: 85%;
+            }
+        }
+        @media (max-width: 750px) {
+            .todo-list {
+                width: 95%;
+            }
+            .add-task {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<a class="add-task" th:href="@{/tasks/new}"><i class="fas fa-plus"></i></a>
+<div class="todo-list">
+    <div th:each="task : ${tasks}" class="task">
+        <div th:text="${task.getText()}"></div>
+        <div class="task-controls">
+            <a class="edit-task" th:href="@{/tasks/{id}/edit(id=${task.getId()})}"><i class="fas fa-pen"></i></a>
+            <form th:method="DELETE" th:action="@{/tasks/{id}(id=${task.getId()})}"
+                  class="action-btn-form">
+                <input type="submit" value="&#128465;" class="action-btn">
+            </form>
+            <input type="checkbox" style="cursor: pointer"/>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    let checkBoxes = document.querySelectorAll('input[type="checkbox"]');
+    for (let i = 0; i < checkBoxes.length; i++) {
+        checkBoxes[i].onclick = function (e) {
+            // set task backgroundColor
+            e.target.parentNode.parentNode.style.backgroundColor = "grey";
+            // disable checkBox
+            e.target.disabled = true;
+            // prohibit editing the task
+            e.target.previousElementSibling.previousElementSibling.style.display = "none";
+            // change delete btn (input) style
+            e.target.previousElementSibling.lastElementChild.style.color = "red";
+            e.target.previousElementSibling.lastElementChild.style.backgroundColor = "grey";
+        };
+    }
+</script>
+</body>
+</html>
+
+
+
+
