@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show person</title>
+    <style>
+        .btn {
+            border: 1px solid black;
+            padding: 10px;
+            background-color: gainsboro;
+            text-decoration: none;
+            color: black;
+            font-size: 24px;
+            font-family: monospace;
+            font-weight: 500;
+        }
+        .btn:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body style="font-size: 24px">
+
+    <!-- TODO: home link-->
+
+    <p th:text="${person}"></p>
+    <p th:text="${'Email: ' + person.getEmail()}"></p>
+
+    <!-- TODO: person's books info-->
+
+    <hr><br><br>
+    <div style="display: flex">
+        <a th:href="@{/people/{id}/edit(id=${person.getId()})}" class="btn">Edit</a>
+        <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}"
+              style="margin-left: 20px" >
+            <input type="submit" value="Delete" class="btn"/>
+        </form>
+    </div>
+</body>
+</html>
