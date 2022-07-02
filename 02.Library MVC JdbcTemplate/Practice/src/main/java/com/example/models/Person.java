@@ -4,17 +4,15 @@ import javax.validation.constraints.*;
 import java.util.Calendar;
 
 public class Person {
-    //private static final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     private int id;
 
-    @Size(min = 2, max = 74, message = "FullName should be between 2 and 74 symbols")
+    @Size(min = 2, max = 74, message = "FullName must be between 2 and 74 symbols")
     private String fullName;
 
-    @Email(message = "Email should be valid")
+    @Email(message = "Email must be valid")
     private String email;
 
-    @Min(value = 1900, message = "Year can not be less then 1900")
-    //@Max(value = )
+    @Min(value = 1900, message = "Year cannot be less then 1900")
     private int year;
 
     public Person() {}
