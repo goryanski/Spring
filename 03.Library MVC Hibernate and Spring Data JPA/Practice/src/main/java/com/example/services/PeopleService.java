@@ -1,0 +1,83 @@
+package com.example.services;
+
+import com.example.models.Book;
+import com.example.models.Person;
+import com.example.repositories.PeopleRepository;
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Transactional(readOnly = true)
+public class PeopleService {
+    private final PeopleRepository peopleRepository;
+
+    @Autowired
+    public PeopleService(PeopleRepository peopleRepository) {
+        this.peopleRepository = peopleRepository;
+    }
+
+    public List<Person> getAll() {
+        return peopleRepository.findAll();
+    }
+
+    public Person get(int id) {
+        Optional<Person> person = peopleRepository.findById(id);
+        return person.orElse(null);
+    }
+
+    @Transactional
+    public void save(Person person) {
+        peopleRepository.save(person);
+    }
+
+    @Transactional
+    public void update(int id, Person person) {
+        person.setId(id);
+        peopleRepository.save(person);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        peopleRepository.deleteById(id);
+    }
+
+    public Optional<Person> getPersonByFullName(String fullName) {
+        return peopleRepository.findByFullName(fullName);
+    }
+
+    public Optional<Person> getPersonByEmail(String email) {
+        return peopleRepository.findByEmail(email);
+    }
+
+    public List<Book> getPersonBooks(int id) {
+        Optional<Person> person = peopleRepository.findById(id);
+
+        if (person.isPresent()) {
+            // it's not necessary, but if we change the code below, it's better to always get related data anyway
+            Hibernate.initialize(person.get().getBooks());
+
+            // check every book and find out if there are expired books
+            person.get().getBooks().forEach(book -> {
+                // book is expired if person took it more than 10 days ago
+                long diffInMilliseconds = Math.abs(book.getTakenAt().getTime() - new Date().getTime());
+                int tenDaysInMilliseconds = 864000000;
+
+                if (diffInMilliseconds > tenDaysInMilliseconds) {
+                    book.setExpired(true); // book is expired
+                }
+            });
+
+            return person.get().getBooks();
+        }
+        else {
+            return Collections.emptyList();
+        }
+    }
+}
