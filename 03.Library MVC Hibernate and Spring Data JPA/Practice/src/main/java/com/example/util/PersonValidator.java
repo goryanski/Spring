@@ -9,6 +9,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 @Component
@@ -37,11 +39,25 @@ public class PersonValidator implements Validator {
             errors.rejectValue("email", "", "Person with this email already exists");
         }
 
-        // TODO: check date > 1900 && date < now
-        // person birth year cannot be greater than current year
-//        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-//        if(person.getYear() > currentYear) {
-//            errors.rejectValue("year", "", "Person birth year cannot be greater than the current year");
-        //}
+
+        // dateOfBirth validation
+        // if date from user input is not valid - in field person.getDateOfBirth() will be null
+        Date date = person.getDateOfBirthTmp();
+        if(date != null) {
+            // check date > 1900 && date < now
+            Date minDate = new GregorianCalendar(1900, Calendar.JANUARY , 1).getTime();
+            Date maxDate = Calendar.getInstance().getTime(); // current
+
+            if(date.before(minDate) || date.after(maxDate)) {
+                errors.rejectValue("dateOfBirth", "", "Date of birth cannot be earlier then 1900 and  greater than the current date");
+            }
+            else {
+                // if there are no errors - set correct date to field which linked to Hibernate
+                person.setDateOfBirth(date);
+                // field dateOfBirthTmp we need to avoid system error which occur if user writes invalid date (like "sdsdvsdvg"). this error writes to errors.rejectValue(), but we don't need such error in our errors list, so this error remains for field dateOfBirthTmp, instead of field dateOfBirth, where we put our errors messages without system's.
+            }
+        } else {
+            errors.rejectValue("dateOfBirth", "", "Date of birth can be only in format (dd/mm/yyyy)");
+        }
     }
 }

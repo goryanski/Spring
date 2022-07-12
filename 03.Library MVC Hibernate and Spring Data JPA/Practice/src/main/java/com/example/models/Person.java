@@ -1,9 +1,9 @@
 package com.example.models;
 
 
-import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
+import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +32,11 @@ public class Person {
     @Column(name = "person_type")
     @Enumerated(EnumType.STRING)
     private PersonType type;
+
+    @Transient
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date dateOfBirthTmp; // Hibernate won't see this field. it's just for custom date validation
 
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
@@ -93,8 +98,16 @@ public class Person {
         this.books = books;
     }
 
+    public Date getDateOfBirthTmp() {
+        return dateOfBirthTmp;
+    }
+
+    public void setDateOfBirthTmp(Date dateOfBirthTmp) {
+        this.dateOfBirthTmp = dateOfBirthTmp;
+    }
+
     @Override
     public String toString() {
-        return fullName + ", " + dateOfBirth;
+        return fullName + ", " + dateOfBirth + ", " + type;
     }
 }

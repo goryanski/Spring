@@ -62,3 +62,32 @@ CREATE TABLE books (
     year INT NOT NULL CHECK(year > 1000),
     taken_at TIMESTAMP NOT NULL
 );
+
+
+
+-----------
+INSERT INTO people(full_name, email, date_of_birth, person_type)
+VALUES
+    ('Ivanov Igor Igorovich', 'igor@gmail.com', '1997-08-24', 'STUDENT');
+
+
+
+INSERT INTO people(full_name, email, date_of_birth, person_type)
+VALUES
+    ('Ivanov Igor Igorovich', 'igor@gmail.com', '1997-08-24', 'STUDENT'),
+    ('Petrov Ivan Ivanovich', 'ivan@gmail.com', 1990),
+    ('Sidorova Maria Mitrofanovna', 'maria@gmail.com', 1988),
+    ('Dan Bland', 'dan@gmail.com', 2000),
+    ('Barbara Bull', 'barbara@gmail.com', 2004),
+    ('Silas Lambert', 'silas@gmail.com', 1999);
+
+
+INSERT INTO books(person_id, name, author, year)
+VALUES
+    (1, 'The Lost Tribe', 'John Smyth', 1905),
+    (2, 'How to Sew Buttons', 'Jane Do', 1991),
+    (3, 'The Terrible Night', 'Eleanor Mellors', 1989),
+    (2, 'Pizza and Donuts Diet', 'Heidi Holly', 2009),
+    (1, '101 Cat House Plans', 'Bart Brat', 2007),
+    (null, 'Land of Lemurs', 'Carol Sims', 2018), -- no one took this book
+    (null, 'Last book', 'Tonny M', 1996); -- no one took this book

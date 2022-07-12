@@ -29,8 +29,17 @@ public class BooksController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("books", booksService.getAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "books_per_page", required = false) Integer booksPerPage,
+                        @RequestParam(value = "sort_by_year", required = false) boolean sortByYear) {
+
+        if (page == null || booksPerPage == null) {
+            // if user didn't pass all pagination params - give him books without pagination
+            // (but with sorting if sortByYear is not null)
+            model.addAttribute("books", booksService.getAll(sortByYear));
+        } else {
+            model.addAttribute("books", booksService.getWithPagination(page, booksPerPage, sortByYear));
+        }
         return "books/index";
     }
 
@@ -38,10 +47,10 @@ public class BooksController {
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
         model.addAttribute("book", booksService.get(id));
 
-        Optional<Person> bookOwner = booksService.getBookOwner(id);
+        Person bookOwner = booksService.getBookOwner(id);
 
-        if (bookOwner.isPresent()) {
-            model.addAttribute("bookOwner", bookOwner.get());
+        if (bookOwner != null) {
+            model.addAttribute("bookOwner", bookOwner);
         } else {
             model.addAttribute("people", peopleService.getAll());
         }
@@ -100,7 +109,19 @@ public class BooksController {
     @PatchMapping("/{id}/assign")
     public String assign(@PathVariable("id") int bookId,
                          @ModelAttribute("person") Person selectedPerson) {
-        booksService.assign(bookId, selectedPerson.getId());
+        // selectedPerson has only field id, other fields are null
+        booksService.assign(bookId, selectedPerson);
         return "redirect:/books/" + bookId; // go to selected book page (to see changes)
+    }
+
+    @GetMapping("/search")
+    public String searchPage() {
+        return "books/search";
+    }
+
+    @PostMapping("/search")
+    public String doSearch(Model model, @RequestParam("part_of_name") String partOfName) {
+        model.addAttribute("books", booksService.searchByName(partOfName));
+        return "books/search";
     }
 }

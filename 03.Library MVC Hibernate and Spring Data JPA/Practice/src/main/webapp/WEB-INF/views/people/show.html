@@ -44,7 +44,9 @@
         <p style="font-weight: bold">Borrowed books:</p>
         <div th:each="book : ${personBooks}">
             <a th:href="@{/books/{id}(id=${book.getId()})}"
-               th:text="${book}"></a>
+               th:text="${book}"
+               th:style="${book.isExpired()} ? 'color: red' : 'color: black'"> <!-- show expired books  -->
+            </a>
         </div>
     </div>
     <div th:if="${personBooks.size() == 0}">

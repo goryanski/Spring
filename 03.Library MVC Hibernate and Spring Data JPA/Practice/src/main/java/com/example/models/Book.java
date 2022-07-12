@@ -1,10 +1,9 @@
 package com.example.models;
 
-import jakarta.persistence.*;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "books")
