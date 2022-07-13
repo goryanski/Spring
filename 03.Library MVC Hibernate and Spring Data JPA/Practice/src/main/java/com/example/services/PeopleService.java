@@ -2,6 +2,7 @@ package com.example.services;
 
 import com.example.models.Book;
 import com.example.models.Person;
+import com.example.repositories.BooksRepository;
 import com.example.repositories.PeopleRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +18,16 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class PeopleService {
     private final PeopleRepository peopleRepository;
+    private final BooksRepository booksRepository;
 
     @Autowired
-    public PeopleService(PeopleRepository peopleRepository) {
+    public PeopleService(PeopleRepository peopleRepository, BooksRepository booksRepository, BooksRepository booksRepository1) {
         this.peopleRepository = peopleRepository;
+        this.booksRepository = booksRepository1;
     }
 
     public List<Person> getAll() {
-        return peopleRepository.findAll();
+       return peopleRepository.findAll();
     }
 
     public Person get(int id) {
@@ -70,7 +73,7 @@ public class PeopleService {
                 int tenDaysInMilliseconds = 864000000;
 
                 if (diffInMilliseconds > tenDaysInMilliseconds) {
-                    book.setExpired(true); // book is expired
+                    book.setExpired(true);
                 }
             });
 
@@ -79,5 +82,25 @@ public class PeopleService {
         else {
             return Collections.emptyList();
         }
+
+
+
+        // or use method with custom query in booksRepository
+//        List<Book> books = booksRepository.getPersonBooks(id);
+//        if(books.size() > 0) {
+//            // check every book and find out if there are expired books
+//            books.forEach(book -> {
+//                // book is expired if person took it more than 10 days ago
+//                long diffInMilliseconds = Math.abs(book.getTakenAt().getTime() - new Date().getTime());
+//                int tenDaysInMilliseconds = 864000000;
+//
+//                if (diffInMilliseconds > tenDaysInMilliseconds) {
+//                    book.setExpired(true);
+//                }
+//            });
+//            return books;
+//        } else {
+//            return Collections.emptyList();
+//        }
     }
 }

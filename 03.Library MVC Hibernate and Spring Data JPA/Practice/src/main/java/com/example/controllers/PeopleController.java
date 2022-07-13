@@ -45,6 +45,7 @@ public class PeopleController {
     public String create(@ModelAttribute("person") @Valid Person person,
                          BindingResult bindingResult) {
 
+        personValidator.setValidationMode("add");
         personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "people/new";
@@ -64,6 +65,7 @@ public class PeopleController {
                          BindingResult bindingResult,
                          @PathVariable("id") int id) {
 
+        personValidator.setValidationMode("update");
         personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "people/edit";

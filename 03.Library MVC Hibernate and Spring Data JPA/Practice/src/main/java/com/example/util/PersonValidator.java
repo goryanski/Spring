@@ -16,6 +16,7 @@ import java.util.GregorianCalendar;
 @Component
 public class PersonValidator implements Validator {
     private final PeopleService peopleService;
+    private String validationMode;
 
     @Autowired
     public PersonValidator(PeopleService peopleService) {
@@ -31,13 +32,16 @@ public class PersonValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Person person = (Person) o;
 
-        // full name and email must be unique
-        if (peopleService.getPersonByFullName(person.getFullName()).isPresent()) {
-            errors.rejectValue("fullName", "", "Person with this full name already exists");
+        if(validationMode.equals("add")) {
+            // full name and email must be unique, but only if we create a new person, otherwise we won't update existent person correctly (can't leave fields fullName and email without changes)
+            if (peopleService.getPersonByFullName(person.getFullName()).isPresent()) {
+                errors.rejectValue("fullName", "", "Person with this full name already exists");
+            }
+            if (peopleService.getPersonByEmail(person.getEmail()).isPresent()) {
+                errors.rejectValue("email", "", "Person with this email already exists");
+            }
         }
-        if (peopleService.getPersonByEmail(person.getEmail()).isPresent()) {
-            errors.rejectValue("email", "", "Person with this email already exists");
-        }
+
 
 
         // dateOfBirth validation
@@ -59,5 +63,14 @@ public class PersonValidator implements Validator {
         } else {
             errors.rejectValue("dateOfBirth", "", "Date of birth can be only in format (dd/mm/yyyy)");
         }
+    }
+
+
+    public String getValidationMode() {
+        return validationMode;
+    }
+
+    public void setValidationMode(String validationMode) {
+        this.validationMode = validationMode;
     }
 }

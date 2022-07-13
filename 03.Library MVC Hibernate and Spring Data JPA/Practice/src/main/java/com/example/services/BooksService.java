@@ -83,6 +83,7 @@ public class BooksService {
                     // call book setters in a lambda
                     book.setOwner(null);
                     book.setTakenAt(null);
+                    booksRepository.save(book);
                 });
     }
 
@@ -94,6 +95,7 @@ public class BooksService {
                     book.setOwner(selectedPerson);
                     // set current time in a milliseconds to check later if this book is not expired
                     book.setTakenAt(new Date());
+                    booksRepository.save(book);
                 }
         );
     }
