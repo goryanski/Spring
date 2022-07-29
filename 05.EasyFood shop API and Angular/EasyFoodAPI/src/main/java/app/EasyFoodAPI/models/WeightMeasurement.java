@@ -2,6 +2,7 @@ package app.EasyFoodAPI.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "weight_measurements")
@@ -14,6 +15,17 @@ public class WeightMeasurement {
     @Column(name = "name")
     @Size(min = 1, max = 4, message = "Measurement name must be between 1 and 4 characters")
     private String name;
+
+    @OneToMany(mappedBy = "measurement")
+    private List<Product> products;
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     public Integer getId() {
         return id;
