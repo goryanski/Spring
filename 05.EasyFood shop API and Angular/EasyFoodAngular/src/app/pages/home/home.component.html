@@ -1,0 +1,7 @@
+<div class="categories" *ngIf="categoriesList$ | async as categories; else loading" >
+  <p *ngFor="let category of categories">{{category.name}}</p>
+</div>
+
+<ng-template #loading >
+  <div class="spinner-border" role="status"></div>
+</ng-template>

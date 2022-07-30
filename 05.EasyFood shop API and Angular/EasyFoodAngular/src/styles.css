@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+}
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+app-header {
+  flex: 0;
+  background-color: palevioletred;
+}
+main {
+  flex: 1;
+  /*background-color: rgba(0, 0, 0, 0.7);*/
+  /*border-bottom: 1px solid white;*/
+  /*border-top: 1px solid white;*/
+}
+app-footer {
+  flex: 0;
+  background-color: burlywood;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

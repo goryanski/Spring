@@ -1,0 +1,17 @@
+footer {
+  height: 75px;
+  width: 100%;
+  opacity: 0.5;
+  padding: 10px;
+  bottom: -1px;
+  position: fixed;
+    .copyright {
+      font-size: 15px;
+      color: white;
+      margin: auto 0;
+    }
+}
+
+footer:hover {
+  opacity: 1;
+}
