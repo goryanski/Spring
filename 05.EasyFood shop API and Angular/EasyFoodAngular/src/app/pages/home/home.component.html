@@ -1,7 +1,17 @@
-<div class="categories" *ngIf="categoriesList$ | async as categories; else loading" >
-  <p *ngFor="let category of categories">{{category.name}}</p>
+<div class="d-flex">
+  <div class="categories list-group" *ngIf="categoriesList$ | async as categories; else loading" >
+    <button type="button" class="category list-group-item list-group-item-action"
+            *ngFor="let category of categories"
+            (click)="onCategoryClick(category.id)"
+            [class.selected]="category.id === selectedCategoryId">
+      {{category.name}}
+    </button>
+  </div>
+  <div class="products-list">
+    <router-outlet></router-outlet>
+  </div>
 </div>
 
-<ng-template #loading >
+<ng-template #loading>
   <div class="spinner-border" role="status"></div>
 </ng-template>

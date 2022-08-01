@@ -20,6 +20,8 @@ public class EasyFoodApiApplication {
 		return new ModelMapper();
 	}
 
+
+	// cors for all queries (instead of @CrossOrigin annotation)
 //	@Bean
 //	public WebMvcConfigurer corsConfig() {
 //		return new WebMvcConfigurerAdapter() {

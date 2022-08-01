@@ -1,6 +1,7 @@
 import {NgModule} from "@angular/core";
 import {HttpClientModule} from "@angular/common/http";
 import {HomeService} from "./services/home.service";
+import {ProductsService} from "./services/products.service";
 
 @NgModule({
   declarations: [],
@@ -8,7 +9,8 @@ import {HomeService} from "./services/home.service";
     HttpClientModule
   ],
   providers: [
-    HomeService
+    HomeService,
+    ProductsService
   ]
 })
 export class ApiServicesModule { }

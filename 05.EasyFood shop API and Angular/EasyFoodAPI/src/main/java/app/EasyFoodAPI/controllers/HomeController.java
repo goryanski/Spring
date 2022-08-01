@@ -1,5 +1,6 @@
 package app.EasyFoodAPI.controllers;
 import app.EasyFoodAPI.dto.CategoryDTO;
+import app.EasyFoodAPI.dto.ShortProductInfoDTO;
 import app.EasyFoodAPI.services.CategoriesService;
 import app.EasyFoodAPI.services.MapperService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,0 +1,16 @@
+@import 'src/app/shared/global-variables.scss';
+
+.categories {
+  margin: 20px;
+  .category {
+    font-size: 24px;
+    padding: 20px 40px;
+    border-color: $opacity-primary-color;
+    color: $main-primary-color;
+  }
+}
+
+.selected {
+  background-color: $main-primary-color;
+  color: white !important;
+}
