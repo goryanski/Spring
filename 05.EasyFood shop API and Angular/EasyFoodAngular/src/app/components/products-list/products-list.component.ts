@@ -11,22 +11,18 @@ import {CategoryInterface} from "../../api/interfaces/category.interface";
   styleUrls: ['./products-list.component.scss']
 })
 export class ProductsListComponent implements OnInit {
-  //selectedCategoryId: number = 0
   products$?: Observable<ShortProductInfoInterface[]>;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly productsService: ProductsService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
+      // get category id from route params
       let selectedCategoryId: number = Number(params['categoryId']);
-      //console.log('products-list selectedCategoryId: ' + selectedCategoryId);
       this.products$ = this.productsService.getProducts(selectedCategoryId);
-      this.products$.subscribe(res => console.log(...res));
     });
 
   }

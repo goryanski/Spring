@@ -1,0 +1,8 @@
+<div class="product">
+  <div *ngIf="product.discount > 0" class="discount-label">{{product.discount}}%</div>
+  <img src="{{product.photoPath}}" alt="product image">
+  <p *ngIf="product.discount == 0" class="product-price">{{product.price}} &#8372;</p>
+  <p *ngIf="product.discount > 0" class="product-price discount-price">{{product.price}} &#8372;</p>
+  <p class="product-name">{{product.name}}</p>
+  <p>{{product.weight}} {{product.weightMeasurement}}</p>
+</div>

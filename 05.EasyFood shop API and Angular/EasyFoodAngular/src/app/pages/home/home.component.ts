@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
   }
 
   onCategoryClick(id: number) {
-    //console.log('home selected id: ' + id);
     this.selectedCategoryId = id;
     this.router.navigate([`/home/products-list/${id}`]);
   }

@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {RouterModule} from "@angular/router";
 import { ProductsListComponent } from './products-list/products-list.component';
+import { ProductComponent } from './product/product.component';
 
 
 // common components
@@ -11,7 +12,8 @@ import { ProductsListComponent } from './products-list/products-list.component';
   declarations: [
     HeaderComponent,
     FooterComponent,
-    ProductsListComponent
+    ProductsListComponent,
+    ProductComponent
   ],
   exports: [
     HeaderComponent,
