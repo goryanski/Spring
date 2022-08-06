@@ -5,7 +5,7 @@ import { FooterComponent } from './footer/footer.component';
 import {RouterModule} from "@angular/router";
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductComponent } from './product/product.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // common components
 @NgModule({
@@ -21,7 +21,8 @@ import { ProductComponent } from './product/product.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    NgbModule
   ]
 })
 

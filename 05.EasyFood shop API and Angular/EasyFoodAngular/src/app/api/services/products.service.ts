@@ -11,11 +11,12 @@ export class ProductsService {
     private readonly appEnv: AppEnvironment,
   ) {}
 
-  getProducts(categoryId: number): Observable<ShortProductInfoInterface[]> {
-    return this.httpClient.get<ShortProductInfoInterface[]>(
+  getAllProductsCountByCategoryId(categoryId: number) {
+    return this.httpClient.get<number> (
       [
         this.appEnv.apiEasyFoodURL,
         'products',
+        'count',
         `${categoryId}`
       ].join('/')
     ).pipe(
@@ -23,5 +24,21 @@ export class ProductsService {
       refCount()
     );
   }
+
+  getProductsByCategoryId(requestObject: object): Observable<ShortProductInfoInterface[]> {
+    return this.httpClient.post<ShortProductInfoInterface[]>(
+      [
+        this.appEnv.apiEasyFoodURL,
+        'products',
+        'byCategoryId'
+      ].join('/'),
+      requestObject
+    ).pipe(
+      publishReplay(1),
+      refCount()
+    );
+  }
+
+
 }
 

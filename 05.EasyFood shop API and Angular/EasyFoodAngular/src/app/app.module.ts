@@ -7,6 +7,7 @@ import {ApiServicesModule} from "./api/services-api.module";
 import {HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {AppEnvironment} from "./shared/app-environment.interface";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {AppEnvironment} from "./shared/app-environment.interface";
     AppRoutingModule,
     ComponentsModule,
     ApiServicesModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     {
