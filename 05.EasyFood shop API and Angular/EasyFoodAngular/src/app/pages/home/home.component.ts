@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HomeService} from "../../api/services/home.service";
+import {HomePageService} from "../../api/services/home-page.service";
 import {Observable} from "rxjs";
 import {CategoryInterface} from "../../api/interfaces/category.interface";
 import {Router} from "@angular/router";
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   selectedCategoryId: number = 0;
 
   constructor(
-    private readonly homeService: HomeService,
+    private readonly homeService: HomePageService,
     private readonly router: Router,
   ) {
     this.categoriesList$ = homeService.getAllCategories();

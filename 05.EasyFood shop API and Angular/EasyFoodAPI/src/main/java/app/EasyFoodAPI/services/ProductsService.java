@@ -1,4 +1,5 @@
 package app.EasyFoodAPI.services;
+import app.EasyFoodAPI.dto.FullProductInfoDTO;
 import app.EasyFoodAPI.models.Product;
 import app.EasyFoodAPI.repositories.CategoriesRepository;
 import app.EasyFoodAPI.repositories.ProductsRepository;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -14,11 +16,13 @@ import java.util.stream.Collectors;
 public class ProductsService {
     private final CategoriesRepository categoriesRepository;
     private final ProductsRepository productsRepository;
+    private final MapperService mapper;
 
     @Autowired
-    public ProductsService(CategoriesRepository categoriesRepository, ProductsRepository productsRepository) {
+    public ProductsService(CategoriesRepository categoriesRepository, ProductsRepository productsRepository, MapperService mapper) {
         this.categoriesRepository = categoriesRepository;
         this.productsRepository = productsRepository;
+        this.mapper = mapper;
     }
 
     public List<Product> getProductsByCategoryId(int categoryId,
@@ -37,5 +41,10 @@ public class ProductsService {
         return categoriesRepository.findById(id)
                 .map(value -> value.getProducts().size())
                 .orElse(0); // if wrong id - just return 0
+    }
+
+    public FullProductInfoDTO getProductById(int id) {
+       Optional<Product> product = productsRepository.findById(id);
+        return product.map(mapper::convertFullProduct).orElse(null);
     }
 }

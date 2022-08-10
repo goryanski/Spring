@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ShortProductInfoInterface} from "../../api/interfaces/short-product-info.interface";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-product',
@@ -16,8 +17,14 @@ export class ProductComponent implements OnInit {
     discount: 0,
     photoPath: ''
   };
-  constructor() { }
 
-  ngOnInit(): void {
+  constructor(
+    private readonly router: Router
+  ) { }
+
+  ngOnInit(): void {}
+
+  onShowProductFullInfoClick() {
+    this.router.navigate([`/show-product/${this.product.id}`]);
   }
 }

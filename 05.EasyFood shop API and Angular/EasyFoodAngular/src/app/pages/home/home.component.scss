@@ -1,16 +1,115 @@
 @import 'src/app/shared/global-variables.scss';
 
-.categories {
-  margin: 20px;
-  .category {
-    font-size: 24px;
-    padding: 20px 40px;
-    border-color: $opacity-primary-color;
-    color: $main-primary-color;
+.content {
+  display: flex;
+  .categories {
+    margin: 20px;
+    .category {
+      font-size: 24px;
+      padding: 20px 40px;
+      border-color: $opacity-primary-color;
+      color: $main-primary-color;
+    }
   }
 }
+
 
 .selected {
   background-color: $main-primary-color;
   color: white !important;
+}
+
+.loader {
+  margin: 20px;
+}
+
+
+
+/* hello text styles */
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:900");
+
+$size: 10vw;
+$shadow: 35;
+$primary: white;
+$secondary: black;
+
+.wrapper {
+  animation: sliding-background 40s linear infinite;
+  background: url("https://images.unsplash.com/photo-1452697620382-f6543ead73b5") no-repeat left / 120%;
+  text-align: center;
+  margin-top: 50px;
+  margin-right: 20px;
+}
+
+.title {
+  background: $primary;
+  color: $secondary;
+  font-family: "Montserrat", sans-serif;
+  font-size: $size;
+  letter-spacing: 1vw;
+  margin: 0;
+  mix-blend-mode: lighten;
+  text-transform: uppercase;
+  $text-shadow: ();
+  @for $i from 1 through $shadow {
+    $text-shadow: $text-shadow, 1px * $i 1px * $i $secondary;
+  }
+  text-shadow: 0 0 0px, $text-shadow;
+
+  &:before {
+    color: $primary;
+    content: attr(data-text);
+    margin-left: -1%;
+    margin-top: -1%;
+    position: absolute;
+  }
+}
+
+@keyframes sliding-background {
+  0%,
+  100% {
+    background-position: 0 40%;
+  }
+
+  50% {
+    background-position: 100% 40%;
+  }
+}
+
+
+@media (max-width: 1000px) {
+  .title {
+    font-size: 80px;
+  }
+}
+@media (max-width: 900px) {
+  .content {
+    display: block;
+    .categories {
+      //flex-direction: row;
+
+    }
+  }
+  .wrapper {
+    margin-bottom: 125px;
+    .title {
+      font-size: 60px;
+    }
+  }
+}
+@media (max-width: 800px) {
+  .title {
+    font-size: 50px;
+  }
+}
+@media (max-width: 530px) {
+  .title {
+    font-size: 40px !important;
+  }
+}
+@media (max-width: 370px) {
+  .title {
+    font-size: 30px !important;
+  }
 }

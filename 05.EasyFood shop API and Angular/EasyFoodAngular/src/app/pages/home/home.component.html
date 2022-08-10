@@ -1,5 +1,5 @@
-<div class="d-flex">
-  <div class="categories list-group" *ngIf="categoriesList$ | async as categories; else loading" >
+<div class="content">
+  <div class="categories list-group flex-grow-5" *ngIf="categoriesList$ | async as categories; else loading" >
     <button type="button" class="category list-group-item list-group-item-action"
             *ngFor="let category of categories"
             (click)="onCategoryClick(category.id)"
@@ -7,11 +7,16 @@
       {{category.name}}
     </button>
   </div>
-  <div class="products-list">
-    <router-outlet></router-outlet>
+  <div class="products-list flex-grow-1">
+      <div *ngIf="selectedCategoryId == 0" class="wrapper">
+        <h1 class="title" data-text="Welcome">Welcome</h1>
+        <h1 class="title" data-text="to">to</h1>
+        <h1 class="title" data-text="EasyFood">EasyFood</h1>
+      </div>
+    <router-outlet *ngIf="selectedCategoryId != 0"></router-outlet>
   </div>
 </div>
 
 <ng-template #loading>
-  <div class="spinner-border" role="status"></div>
+  <div class="spinner-border loader" role="status"></div>
 </ng-template>

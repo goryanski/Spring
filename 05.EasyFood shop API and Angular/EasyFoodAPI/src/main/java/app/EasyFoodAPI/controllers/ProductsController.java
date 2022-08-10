@@ -1,4 +1,5 @@
 package app.EasyFoodAPI.controllers;
+import app.EasyFoodAPI.dto.FullProductInfoDTO;
 import app.EasyFoodAPI.dto.ShortProductInfoDTO;
 import app.EasyFoodAPI.dto.requestObjects.ProductsByCategoryRequestObjectDTO;
 import app.EasyFoodAPI.services.MapperService;
@@ -36,5 +37,10 @@ public class ProductsController {
     @GetMapping("/count/{categoryId}")
     public long getAllProductsCountByCategoryId(@PathVariable("categoryId") int id) {
         return productsService.getAllProductsCountByCategoryId(id);
+    }
+
+    @GetMapping("/{productId}")
+    public FullProductInfoDTO getFullInfoProductById(@PathVariable("productId") int id) {
+        return productsService.getProductById(id);
     }
 }

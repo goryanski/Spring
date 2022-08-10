@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {ProductsService} from "../../api/services/products.service";
-import {Observable} from "rxjs";
+import {count, Observable, take} from "rxjs";
 import {ShortProductInfoInterface} from "../../api/interfaces/short-product-info.interface";
+import {HomePageService} from "../../api/services/home-page.service";
 
 @Component({
   selector: 'app-products-list',
@@ -15,10 +15,11 @@ export class ProductsListComponent implements OnInit {
   currentPage: number = 1; // changes every time we click on pagination panel
   allProductsCount: number = 0;
   selectedCategoryId: number = 0;
+  isProductsListEmpty: boolean = false;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
-    private readonly productsService: ProductsService
+    private readonly homePageService: HomePageService
   ) {}
 
   ngOnInit(): void {
@@ -26,13 +27,18 @@ export class ProductsListComponent implements OnInit {
       // get category id from route params
       this.selectedCategoryId = Number(params['categoryId']);
       // get allProductsCount first to display it on pagination panel
-      this.productsService.getAllProductsCountByCategoryId(this.selectedCategoryId)
-        .subscribe(count => this.allProductsCount = count);
-
-      // get first page of products
-      this.getProducts();
+      this.homePageService.getAllProductsCountByCategoryId(this.selectedCategoryId)
+        .pipe(take(1))
+        .subscribe(count => {
+          this.allProductsCount = count;
+          if(this.allProductsCount == 0) {
+            this.isProductsListEmpty = true;
+          } else {
+            // get first page of products
+            this.getProducts();
+          }
+        });
     });
-
   }
 
   getNextProducts() {
@@ -41,7 +47,7 @@ export class ProductsListComponent implements OnInit {
 
   getProducts() {
     let requestObj = this.getRequestObject();
-    this.products$ = this.productsService.getProductsByCategoryId(requestObj);
+    this.products$ = this.homePageService.getProductsByCategoryId(requestObj);
   }
 
   getRequestObject(): object {

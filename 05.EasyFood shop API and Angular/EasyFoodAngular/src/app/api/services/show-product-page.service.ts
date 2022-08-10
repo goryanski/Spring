@@ -3,21 +3,21 @@ import {HttpClient} from "@angular/common/http";
 import {AppEnvironment} from "../../shared/app-environment.interface";
 import {Observable, publishReplay, refCount} from "rxjs";
 import {ShortProductInfoInterface} from "../interfaces/short-product-info.interface";
+import {FullProductInfoInterface} from "../interfaces/full-product-info.interface";
 
 @Injectable()
-export class ProductsService {
+export class ShowProductPageService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly appEnv: AppEnvironment,
   ) {}
 
-  getAllProductsCountByCategoryId(categoryId: number) {
-    return this.httpClient.get<number> (
+  getFullInfoProductById(productId: number): Observable<FullProductInfoInterface> {
+    return this.httpClient.get<FullProductInfoInterface>(
       [
         this.appEnv.apiEasyFoodURL,
         'products',
-        'count',
-        `${categoryId}`
+        `${productId}`
       ].join('/')
     ).pipe(
       publishReplay(1),
@@ -25,20 +25,19 @@ export class ProductsService {
     );
   }
 
-  getProductsByCategoryId(requestObject: object): Observable<ShortProductInfoInterface[]> {
-    return this.httpClient.post<ShortProductInfoInterface[]>(
+  getSimilarProducts(categoryId: number, count: number): Observable<ShortProductInfoInterface[]> {
+    return this.httpClient.get<ShortProductInfoInterface[]>(
       [
         this.appEnv.apiEasyFoodURL,
         'products',
-        'byCategoryId'
-      ].join('/'),
-      requestObject
+        'similar',
+        `${categoryId}`,
+        `${count}`
+      ].join('/')
     ).pipe(
       publishReplay(1),
       refCount()
     );
   }
-
-
 }
 

@@ -1,9 +1,9 @@
 @import 'src/app/shared/global-variables.scss';
 
 .product {
-  margin-right: -1px;
-  margin-bottom: -1px;
+  margin: 20px;
   border: 1px solid $opacity-primary-color;
+  box-shadow: 0 1px 10px 2px $shadow-primary-color;
   .discount-label {
     position: absolute;
     margin-top: 20px;
@@ -32,7 +32,17 @@
   }
   .product-name {
     padding: 0 20px;
-    max-width: 200px;
+    max-width: 260px;
     height: 100px;
+  }
+
+  .bottom-panel {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px 20px 20px;
+    .weight {
+      //text-;
+      margin-top: 20px;
+    }
   }
 }

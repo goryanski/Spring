@@ -1,15 +1,21 @@
-<div class="products d-flex flex-wrap"
-     *ngIf="products$ | async as products; else loading">
-  <app-product *ngFor="let product of products" [product]="product"></app-product>
+<div *ngIf="!isProductsListEmpty; else noProductsMessage">
+  <div class="products"
+       *ngIf="products$ | async as products; else loading">
+    <app-product *ngFor="let product of products" [product]="product"></app-product>
+  </div>
+
+  <ngb-pagination [collectionSize]="allProductsCount" [(page)]="currentPage" [pageSize]="pageSize"
+                  size="lg" aria-label="Products pagination"
+                  class="pagination-block"
+                  (pageChange)="getNextProducts()">
+  </ngb-pagination>
+
+  <ng-template #loading>
+    <div class="spinner-border loader" role="status"></div>
+  </ng-template>
 </div>
 
-<ngb-pagination [collectionSize]="allProductsCount" [(page)]="currentPage" [pageSize]="pageSize"
-                size="lg" aria-label="Products pagination"
-                class="d-flex justify-content-center pagination-block"
-                (pageChange)="getNextProducts()">
-</ngb-pagination>
 
-
-<ng-template #loading>
-  <div class="spinner-border" role="status"></div>
+<ng-template #noProductsMessage>
+  <p class="no-products-message">There are no products</p>
 </ng-template>

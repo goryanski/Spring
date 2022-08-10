@@ -1,0 +1,125 @@
+@import 'src/app/shared/global-variables.scss';
+
+.product {
+  box-shadow: 0 1px 10px 2px $shadow-primary-color;
+  width: 60%;
+  margin: 50px auto 125px;
+  border-radius: 30px;
+  .product-header {
+    display: flex;
+    justify-content: center;
+    .image {
+      box-shadow: 0 1px 10px 2px $opacity-warning-color;
+      border-radius: 30px;
+      margin: 40px;
+      .discount-label {
+        position: absolute;
+        margin-top: 20px;
+        padding: 10px 15px 10px 15px;
+        font-size: 18px;
+        background-color: red;
+        color: white;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+        font-weight: bold;
+      }
+      img {
+        margin: 40px;
+        width: 200px;
+      }
+    }
+    .short-info {
+      margin-left: 20px;
+      .product-name {
+        margin-top: 40px;
+        max-width: 260px;
+        margin-right: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        color: $main-primary-color;
+      }
+      .product-price {
+        margin-top: 40px;
+        font-size: 24px;
+        font-weight: bold;
+        color: $main-primary-color;
+      }
+      .discount-price {
+        margin-top: 20px;
+        color: red;
+      }
+    }
+  }
+  .product-body {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 22px;
+    p {
+      margin-left: 20px;
+      margin-right: 20px;
+      span {
+        font-size: 24px;
+        color: $main-primary-color;
+        font-weight: bold;
+      }
+    }
+    p:last-child {
+      padding-bottom: 30px;
+    }
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .product {
+    width: 80%;
+  }
+}
+@media (max-width: 900px) {
+  .product {
+    width: 95%;
+  }
+}
+@media (max-width: 700px) {
+  .product {
+    .product-header {
+      .image {
+        img {
+          margin: 40px 20px;
+          width: 150px;
+        }
+      }
+      .short-info {
+        margin-left: 0;
+        .product-name {
+        }
+      }
+    }
+  }
+}
+@media (max-width: 500px) {
+  .product {
+    .product-header {
+      display: block;
+      padding-top: 30px;
+      .image {
+        margin-top: 0;
+        text-align: center;
+      }
+      .short-info {
+        margin: 0 20px 40px 40px;
+        text-align: center;
+        .product-name {
+          margin: 0 auto 10px;
+        }
+      }
+    }
+    hr {
+      display: block !important;
+      margin: 0 40px 30px;
+    }
+  }
+
+}
+
+

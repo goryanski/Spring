@@ -15,10 +15,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProductsListComponent,
     ProductComponent
   ],
-  exports: [
-    HeaderComponent,
-    FooterComponent
-  ],
+    exports: [
+        HeaderComponent,
+        FooterComponent,
+        ProductComponent
+    ],
   imports: [
     CommonModule,
     RouterModule,

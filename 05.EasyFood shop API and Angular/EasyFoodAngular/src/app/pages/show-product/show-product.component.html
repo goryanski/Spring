@@ -1,0 +1,28 @@
+<div class="product">
+  <div class="product-header">
+    <div class="image">
+      <div *ngIf="product.discount > 0" class="discount-label">{{product.discount}}%</div>
+      <img src="{{product.photoPath}}" alt="product image">
+    </div>
+    <div class="short-info">
+      <p class="product-name">{{product.name}}</p>
+      <div class="weight">{{product.weight}} {{product.weightMeasurement}}</div>
+      <p *ngIf="product.discount == 0" class="product-price">{{product.price}} &#8372;</p>
+      <p *ngIf="product.discount > 0" class="product-price discount-price">{{product.price}} &#8372;</p>
+    </div>
+  </div>
+  <hr style="display: none">
+  <div class="product-body">
+    <p>Brand: <span>{{product.brand}}</span></p>
+    <p>Country: <span>{{product.country}}</span></p>
+    <p><span>{{product.likesCount}}</span> people liked this product!</p>
+    <p>Description: {{product.description}}</p>
+  </div>
+  <div class="product-footer">
+    <div class="products-label">You may also like:</div>
+    <div class="products"
+         *ngIf="products$ | async as products">
+      <app-product *ngFor="let product of products" [product]="product"></app-product>
+    </div>
+  </div>
+</div>
