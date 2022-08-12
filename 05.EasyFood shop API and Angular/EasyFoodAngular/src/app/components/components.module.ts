@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {RouterModule} from "@angular/router";
-import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductComponent } from './product/product.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ShowProductModalWindowComponent } from './show-product-modal-window/show-product-modal-window.component';
 
 // common components
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    ProductsListComponent,
-    ProductComponent
+    ProductComponent,
+    ShowProductModalWindowComponent
   ],
     exports: [
         HeaderComponent,

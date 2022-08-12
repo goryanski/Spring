@@ -2,8 +2,8 @@ package app.EasyFoodAPI.dto.requestObjects;
 
 public class ProductsByCategoryRequestObjectDTO {
     private int categoryId;
-    private int skip;
-    private int limit;
+    private int currentPage;
+    private int pageSize;
 
     public int getCategoryId() {
         return categoryId;
@@ -13,19 +13,19 @@ public class ProductsByCategoryRequestObjectDTO {
         this.categoryId = categoryId;
     }
 
-    public int getSkip() {
-        return skip;
+    public int getCurrentPage() {
+        return currentPage;
     }
 
-    public void setSkip(int skip) {
-        this.skip = skip;
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
     }
 
-    public int getLimit() {
-        return limit;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }

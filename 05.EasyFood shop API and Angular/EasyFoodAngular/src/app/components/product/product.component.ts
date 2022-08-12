@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ShortProductInfoInterface} from "../../api/interfaces/short-product-info.interface";
 import {Router} from "@angular/router";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ShowProductModalWindowComponent} from "../show-product-modal-window/show-product-modal-window.component";
 
 @Component({
   selector: 'app-product',
@@ -19,12 +21,18 @@ export class ProductComponent implements OnInit {
   };
 
   constructor(
-    private readonly router: Router
+    private readonly router: Router,
+    private modalWindowService: NgbModal
   ) { }
 
   ngOnInit(): void {}
 
   onShowProductFullInfoClick() {
-    this.router.navigate([`/show-product/${this.product.id}`]);
+    // link to modal window
+    const ref = this.modalWindowService.open(ShowProductModalWindowComponent, { size: 'xl' });
+    // pass to selected modal window id of product (we can also pass the object)
+    ref.componentInstance.productId = this.product.id;
   }
 }
+
+

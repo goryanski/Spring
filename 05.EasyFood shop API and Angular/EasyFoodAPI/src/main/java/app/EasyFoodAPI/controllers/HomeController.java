@@ -18,18 +18,14 @@ import java.util.stream.Collectors;
 @CrossOrigin
 public class HomeController {
     private final CategoriesService categoriesService;
-    private final MapperService mapper;
 
     @Autowired
-    public HomeController(CategoriesService categoriesService, MapperService mapper) {
+    public HomeController(CategoriesService categoriesService) {
         this.categoriesService = categoriesService;
-        this.mapper = mapper;
     }
 
     @GetMapping
     public List<CategoryDTO> getHomePageCategories() {
-        return categoriesService.getAll().stream()
-                .map(mapper::convertCategory)
-                .collect(Collectors.toList());
+        return categoriesService.getAll();
     }
 }

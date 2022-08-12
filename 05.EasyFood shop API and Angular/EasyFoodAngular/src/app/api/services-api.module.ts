@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {HttpClientModule} from "@angular/common/http";
 import {HomePageService} from "./services/home-page.service";
-import {ShowProductPageService} from "./services/show-product-page.service";
+import {ShowProductWindowService} from "./services/show-product-window.service";
 
 @NgModule({
   declarations: [],
@@ -10,7 +10,7 @@ import {ShowProductPageService} from "./services/show-product-page.service";
   ],
   providers: [
     HomePageService,
-    ShowProductPageService
+    ShowProductWindowService
   ]
 })
 export class ApiServicesModule { }

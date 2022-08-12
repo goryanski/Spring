@@ -4,6 +4,8 @@ import {AppEnvironment} from "../../shared/app-environment.interface";
 import {Observable, publishReplay, refCount} from "rxjs";
 import {CategoryInterface} from "../interfaces/category.interface";
 import {ShortProductInfoInterface} from "../interfaces/short-product-info.interface";
+import {ProductsByCategoryIdRequestInterface} from "../interfaces/requests/products-by-category-id-request.interface";
+import {PaginatedProductsResponseInterface} from "../interfaces/responses/paginated-products-response.interface";
 
 @Injectable()
 export class HomePageService {
@@ -24,22 +26,9 @@ export class HomePageService {
     );
   }
 
-  getAllProductsCountByCategoryId(categoryId: number): Observable<number> {
-    return this.httpClient.get<number> (
-      [
-        this.appEnv.apiEasyFoodURL,
-        'products',
-        'count',
-        `${categoryId}`
-      ].join('/')
-    ).pipe(
-      publishReplay(1),
-      refCount()
-    );
-  }
-
-  getProductsByCategoryId(requestObject: object): Observable<ShortProductInfoInterface[]> {
-    return this.httpClient.post<ShortProductInfoInterface[]>(
+  getProductsByCategoryId(requestObject: ProductsByCategoryIdRequestInterface)
+          : Observable<PaginatedProductsResponseInterface> {
+    return this.httpClient.post<PaginatedProductsResponseInterface>(
       [
         this.appEnv.apiEasyFoodURL,
         'products',

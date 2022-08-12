@@ -6,7 +6,7 @@ import {ShortProductInfoInterface} from "../interfaces/short-product-info.interf
 import {FullProductInfoInterface} from "../interfaces/full-product-info.interface";
 
 @Injectable()
-export class ShowProductPageService {
+export class ShowProductWindowService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly appEnv: AppEnvironment,

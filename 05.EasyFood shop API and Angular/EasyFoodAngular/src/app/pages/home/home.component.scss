@@ -1,5 +1,7 @@
 @import 'src/app/shared/global-variables.scss';
 
+
+/*#region categories styles*/
 .content {
   display: flex;
   .categories {
@@ -19,14 +21,18 @@
   color: white !important;
 }
 
-.loader {
+.categories-loader {
   margin: 20px;
 }
 
+.connection-error {
+  color: #e90000;
+  margin-top: 30px;
+}
+/*#endregion categories styles*/
 
 
-/* hello text styles */
-
+/*#region hello text styles*/
 @import url("https://fonts.googleapis.com/css?family=Montserrat:900");
 
 $size: 10vw;
@@ -113,3 +119,33 @@ $secondary: black;
     font-size: 30px !important;
   }
 }
+/*#endregion hello text styles*/
+
+
+/*#region products styles*/
+.products {
+  margin: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination-block {
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.no-products-message {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.products-loader {
+  margin: 50px 50%;
+}
+/*#endregion products styles*/
+
+

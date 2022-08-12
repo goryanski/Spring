@@ -8,6 +8,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {AppEnvironment} from "./shared/app-environment.interface";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {BrowserLocalStorage} from "./shared/storage/local-storage";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule
   ],
   providers: [
+    BrowserLocalStorage,
     {
       provide: AppEnvironment,
       useValue: environment
