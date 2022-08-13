@@ -2,6 +2,7 @@ package app.EasyFoodAPI.services;
 import app.EasyFoodAPI.dto.FullProductInfoDTO;
 import app.EasyFoodAPI.dto.ShortProductInfoDTO;
 import app.EasyFoodAPI.dto.requestObjects.ProductsByCategoryRequestObjectDTO;
+import app.EasyFoodAPI.dto.requestObjects.ProductsByNameRequestObjectDTO;
 import app.EasyFoodAPI.models.Product;
 import app.EasyFoodAPI.repositories.CategoriesRepository;
 import app.EasyFoodAPI.repositories.ProductsRepository;
@@ -32,17 +33,7 @@ public class GetProductsService {
     public Map<String, Object> getProductsByCategoryId(ProductsByCategoryRequestObjectDTO params) {
         Pageable paging = PageRequest.of(params.getCurrentPage(), params.getPageSize());
         Page<Product> pageTuts = productsRepository.findByCategoryId(params.getCategoryId(), paging);
-        List<ShortProductInfoDTO> products = pageTuts.getContent()
-                .stream()
-                .map(mapper::convertProduct)
-                .collect(Collectors.toList());;
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("products", products);
-        response.put("currentPage", pageTuts.getNumber());
-        response.put("totalItems", pageTuts.getTotalElements());
-        response.put("totalPages", pageTuts.getTotalPages());
-        return response;
+        return getPaginatedResponse(pageTuts);
     }
 
     public FullProductInfoDTO getProductById(int id) {
@@ -59,5 +50,27 @@ public class GetProductsService {
                  .limit(productsCount)
                  .map(mapper::convertProduct)
                  .collect(Collectors.toList());
+    }
+
+    public Map<String, Object> getProductsBySubstringOfName(ProductsByNameRequestObjectDTO params) {
+        Pageable paging = PageRequest.of(params.getCurrentPage(), params.getPageSize());
+        // get all products which names contain required substring
+        Page<Product> pageTuts = productsRepository.findByNameContainingIgnoreCase(params.getName(), paging);
+        return getPaginatedResponse(pageTuts);
+    }
+
+
+    private Map<String, Object> getPaginatedResponse(Page<Product> pageTuts) {
+        List<ShortProductInfoDTO> products = pageTuts.getContent()
+                .stream()
+                .map(mapper::convertProduct)
+                .collect(Collectors.toList());;
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("products", products);
+        response.put("currentPage", pageTuts.getNumber());
+        response.put("totalItems", pageTuts.getTotalElements());
+        response.put("totalPages", pageTuts.getTotalPages());
+        return response;
     }
 }

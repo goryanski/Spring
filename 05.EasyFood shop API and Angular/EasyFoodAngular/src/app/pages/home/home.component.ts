@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
 
   onCategoryClick(id: number) {
     this.selectedCategoryId = id;
+    this.currentPage = 1;
     this.getProducts();
   }
 

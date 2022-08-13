@@ -6,19 +6,29 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<!--        <li class="nav-item">-->
-<!--          <a routerLink="/home" routerLinkActive="active" class="nav-link active">Home</a>-->
-<!--        </li>-->
+        <li class="nav-item">
+          <a routerLink="/home" routerLinkActive="active" class="nav-link active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/products-filter" routerLinkActive="active"
+             class="nav-link" id="filterLink">Filter</a>
+        </li>
       </ul>
       <div id="searchHeaderForm">
-        <form class="d-flex">
+        <form class="d-flex" [formGroup]="form">
           <input class="form-control me-2" #searchField type="search"
-                 placeholder="Search" aria-label="Search" formControlName="search">
+                 placeholder="Search by name" aria-label="Search" formControlName="search">
           <div class="btn-group" role="group" aria-label="outlined">
-            <button type="button" class="btn btn-outline-light">Search
+            <button [disabled]="!form.valid" (click)="btnSearchProductsClick()"
+              type="button" class="btn btn-outline-light">Search
             </button>
           </div>
         </form>
+        <div *ngIf="form.controls['search'].errors">
+          <div *ngIf="form.controls['search'].errors['pattern']"
+               class="form-text text-white">English letters only, 2-18 characters length
+          </div>
+        </div>
       </div>
     </div>
   </div>

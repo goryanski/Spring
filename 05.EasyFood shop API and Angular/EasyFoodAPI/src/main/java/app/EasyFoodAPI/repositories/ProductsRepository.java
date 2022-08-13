@@ -10,8 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ProductsRepository extends JpaRepository<Product, Integer> {
-
     Page<Product> findByCategoryId(int categoryId, Pageable pageable);
-
     List<Product> findByCategoryIdOrderByLikesCount(int categoryId);
+    Page<Product> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }

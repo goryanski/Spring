@@ -13,6 +13,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
   },
   {
+    path: 'found-products/:name',
+    loadChildren: () => import('./pages/found-products/found-products.module').then(m => m.FoundProductsModule)
+  },
+  {
+    path: 'products-filter',
+    loadChildren: () => import('./pages/products-filter/products-filter.module').then(m => m.ProductsFilterModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule)
   }

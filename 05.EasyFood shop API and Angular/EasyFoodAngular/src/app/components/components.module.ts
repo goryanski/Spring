@@ -6,6 +6,7 @@ import {RouterModule} from "@angular/router";
 import { ProductComponent } from './product/product.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShowProductModalWindowComponent } from './show-product-modal-window/show-product-modal-window.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 // common components
 @NgModule({
@@ -23,7 +24,8 @@ import { ShowProductModalWindowComponent } from './show-product-modal-window/sho
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ]
 })
 

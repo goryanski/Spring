@@ -1,0 +1,26 @@
+<div class="content">
+  <!-- get all country names, put it to select list and sort it alphabetically -->
+<!--  <div class="dropdown mb-5" *ngIf="counties$ | async as counties">-->
+<!--    <a class="btn btn-secondary dropdown-toggle" href="#" role="button"-->
+<!--       id="dropdownMenuLink" data-toggle="dropdown"-->
+<!--       aria-haspopup="true" aria-expanded="false">-->
+<!--      Choose country-->
+<!--    </a>-->
+<!--    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+<!--      <a *ngFor="let country of counties"-->
+<!--        class="dropdown-item" href="#" data-country-id="country.id">{{country.name}}</a>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+  <div ngbDropdown class="d-inline-block">
+    <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{selectedCountryName}}</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button ngbDropdownItem
+              (click)="onDropdownCountryIsNotSelectedClick()">Not selected</button>
+      <button ngbDropdownItem *ngFor="let country of testCountries"
+              (click)="onDropdownCountryClick(country)">{{country.name}}</button>
+    </div>
+  </div>
+
+</div>
