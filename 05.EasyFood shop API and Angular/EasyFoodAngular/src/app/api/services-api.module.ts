@@ -3,6 +3,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {HomePageService} from "./services/home-page.service";
 import {ShowProductWindowService} from "./services/show-product-window.service";
 import {SearchProductsService} from "./services/search-products.service";
+import {ProductsFilterService} from "./services/products-filter.service";
 
 @NgModule({
   declarations: [],
@@ -12,7 +13,8 @@ import {SearchProductsService} from "./services/search-products.service";
   providers: [
     HomePageService,
     ShowProductWindowService,
-    SearchProductsService
+    SearchProductsService,
+    ProductsFilterService
   ]
 })
 export class ApiServicesModule { }

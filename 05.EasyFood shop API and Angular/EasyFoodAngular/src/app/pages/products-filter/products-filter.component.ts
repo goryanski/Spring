@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {CountryInterface} from "../../api/interfaces/country.interface";
+import {ProductsFilterService} from "../../api/services/products-filter.service";
+import {BrandInterface} from "../../api/interfaces/brand.interface";
 
 @Component({
   selector: 'app-products-filter',
@@ -8,30 +10,58 @@ import {CountryInterface} from "../../api/interfaces/country.interface";
   styleUrls: ['./products-filter.component.scss']
 })
 export class ProductsFilterComponent implements OnInit {
-  counties$?: Observable<CountryInterface[]>;
-  //brands$?: Observable<any[]>;
-  testCountries: CountryInterface[] = [
-    {id: 1, name: "Ukraine"},
-    {id: 2, name: "Poland"},
-    {id: 3, name: "USA"}
-  ]
+  counties$: Observable<CountryInterface[]>;
   selectedCountryName: string = 'Choose a country';
-  countryIsNotSelected: boolean = true;
+  selectedCountryId: number = 0;
 
-  constructor() { }
+  brands$: Observable<BrandInterface[]>;
+  selectedBrandName: string = 'Choose a brand';
+  selectedBrandId: number = 0;
 
-  ngOnInit(): void {
+  @ViewChild('priceRangeControl') priceRangeControl: ElementRef | undefined;
+  currentPriceValue: number = 600;
+
+  @ViewChild('discountCheckbox') discountCheckbox: ElementRef | undefined;
+  discount: boolean = false;
+  isDiscountCheckboxActive: boolean = false;
+
+  constructor(
+    private readonly productsFilterService: ProductsFilterService
+  ) {
+    this.counties$ = this.productsFilterService.getAllCountries();
+    this.brands$ = this.productsFilterService.getAllBrands();
   }
+
+  ngOnInit(): void {}
 
   onDropdownCountryClick(country: CountryInterface) {
-    this.countryIsNotSelected = false;
     this.selectedCountryName = country.name;
-    // use id of the selected country
-    console.log(country.id);
+    this.selectedCountryId = country.id;
+  }
+  onDropdownCountryIsNotSelectedClick() {
+    this.selectedCountryName = 'Not selected';
+    this.selectedCountryId = 0;
   }
 
-  onDropdownCountryIsNotSelectedClick() {
-    this.countryIsNotSelected = true;
-    this.selectedCountryName = 'Not selected';
+  onDropdownBrandClick(brand: BrandInterface) {
+    this.selectedBrandName = brand.name;
+    this.selectedBrandId = brand.id;
+  }
+  onDropdownBrandIsNotSelectedClick() {
+    this.selectedBrandName = 'Not selected';
+    this.selectedBrandId = 0;
+  }
+
+  onChangePriceRange() {
+    if(this.priceRangeControl != undefined) {
+      this.currentPriceValue = this.priceRangeControl.nativeElement.value;
+    }
+  }
+
+
+  onDiscountCheckboxChange() {
+    if(this.discountCheckbox != undefined) {
+      console.log(this.discountCheckbox.nativeElement);
+    }
   }
 }

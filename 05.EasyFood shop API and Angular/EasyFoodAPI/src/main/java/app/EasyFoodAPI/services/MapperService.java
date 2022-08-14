@@ -1,9 +1,9 @@
 package app.EasyFoodAPI.services;
-import app.EasyFoodAPI.dto.CategoryDTO;
-import app.EasyFoodAPI.dto.FullProductInfoDTO;
-import app.EasyFoodAPI.dto.ShortProductInfoDTO;
+import app.EasyFoodAPI.dto.*;
+import app.EasyFoodAPI.models.Brand;
 import app.EasyFoodAPI.models.Category;
 import app.EasyFoodAPI.models.Product;
+import app.EasyFoodAPI.models.ProvisionerCountry;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -36,4 +36,11 @@ public class MapperService {
         return productDTO;
     }
 
+    public ProvisionerCountryDTO convertCountry(ProvisionerCountry country) {
+        return modelMapper.map(country, ProvisionerCountryDTO.class);
+    }
+
+    public BrandDTO convertBrand(Brand brand) {
+        return modelMapper.map(brand, BrandDTO.class);
+    }
 }

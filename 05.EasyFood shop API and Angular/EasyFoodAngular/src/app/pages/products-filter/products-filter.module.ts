@@ -5,6 +5,7 @@ import { ProductsFilterRoutingModule } from './products-filter-routing.module';
 import { ProductsFilterComponent } from './products-filter.component';
 import {ComponentsModule} from "../../components/components.module";
 import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
     CommonModule,
     ProductsFilterRoutingModule,
     ComponentsModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    FormsModule
   ]
 })
 export class ProductsFilterModule { }

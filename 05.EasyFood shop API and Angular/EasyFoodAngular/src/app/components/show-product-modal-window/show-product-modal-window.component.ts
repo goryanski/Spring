@@ -27,7 +27,7 @@ export class ShowProductModalWindowComponent implements OnInit {
     country: '',
     categoryId: 0
   };
-  readonly similarProductsCount: number = 5;
+  readonly similarProductsCount: number = 4;
   products$?: Observable<ShortProductInfoInterface[]>;
 
   constructor(

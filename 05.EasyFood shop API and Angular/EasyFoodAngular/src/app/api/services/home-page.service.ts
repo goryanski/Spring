@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {AppEnvironment} from "../../shared/app-environment.interface";
 import {Observable, publishReplay, refCount} from "rxjs";
 import {CategoryInterface} from "../interfaces/category.interface";
-import {ShortProductInfoInterface} from "../interfaces/short-product-info.interface";
 import {ProductsByCategoryIdRequestInterface} from "../interfaces/requests/products-by-category-id-request.interface";
 import {PaginatedProductsResponseInterface} from "../interfaces/responses/paginated-products-response.interface";
 

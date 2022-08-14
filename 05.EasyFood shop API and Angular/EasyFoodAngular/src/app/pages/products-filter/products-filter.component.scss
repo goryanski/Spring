@@ -1,0 +1,14 @@
+.content {
+  display: flex;
+  .filters-block {
+    padding: 40px;
+    //flex-direction: row;
+    .countries-dropdown, .brands-dropdown {
+      padding: 10px 20px;
+    }
+    .range-input {
+      cursor: pointer;
+      width: 100%;
+    }
+  }
+}

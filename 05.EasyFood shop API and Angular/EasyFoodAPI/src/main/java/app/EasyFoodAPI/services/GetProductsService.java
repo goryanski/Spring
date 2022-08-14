@@ -43,13 +43,18 @@ public class GetProductsService {
     }
 
     public List<ShortProductInfoDTO> getSimilarProducts(int categoryId, int productsCount) {
-        // get first the most unpopular or new products with category like selected product category
+        // get first the most unpopular or new products by required categoryId
         // (only unpopular or new products have the least likesCount value)
-         return productsRepository.findByCategoryIdOrderByLikesCount(categoryId)
-                 .stream()
-                 .limit(productsCount)
-                 .map(mapper::convertProduct)
-                 .collect(Collectors.toList());
+        // for getting the first products we'll use pagination (explanation in the repository)
+        return productsRepository.findByCategoryIdOrderByLikesCount(categoryId,
+                        PageRequest.of(0, productsCount))
+                .getContent()
+                .stream()
+                // .limit(productsCount) we also can use limit here. In this way we don't need to get paginated result
+                // from repository, but it's not as efficient because we get all products from DB and only after that
+                // take only 4 from them
+                .map(mapper::convertProduct)
+                .collect(Collectors.toList());
     }
 
     public Map<String, Object> getProductsBySubstringOfName(ProductsByNameRequestObjectDTO params) {
