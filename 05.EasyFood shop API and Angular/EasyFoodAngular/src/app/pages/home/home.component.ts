@@ -4,6 +4,7 @@ import {Observable, take} from "rxjs";
 import {CategoryInterface} from "../../api/interfaces/category.interface";
 import {ShortProductInfoInterface} from "../../api/interfaces/short-product-info.interface";
 import {ProductsByCategoryIdRequestInterface} from "../../api/interfaces/requests/products-by-category-id-request.interface";
+import {ViewportScroller} from "@angular/common";
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly homeService: HomePageService,
+    private readonly scroll: ViewportScroller
   ) {
     homeService.getAllCategories()
       .pipe(take(1))
@@ -47,6 +49,7 @@ export class HomeComponent implements OnInit {
 
   getNextProducts() {
     this.getProducts();
+    this.scroll.scrollToPosition([0,0]);
   }
 
   getProducts() {
@@ -55,9 +58,7 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .subscribe(response => {
         this.allProductsCount = response.totalItems;
-        if(this.allProductsCount == 0) {
-          this.isProductsListEmpty = true;
-        }
+        this.isProductsListEmpty = this.allProductsCount == 0;
         this.products = response.products;
       });
   }

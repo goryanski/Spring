@@ -4,6 +4,7 @@ import {ShortProductInfoInterface} from "../../api/interfaces/short-product-info
 import {ProductsByNameRequestInterface} from "../../api/interfaces/requests/products-by-name-request.interface";
 import {SearchProductsService} from "../../api/services/search-products.service";
 import {take} from "rxjs";
+import {ViewportScroller} from "@angular/common";
 
 @Component({
   selector: 'app-found-products',
@@ -21,6 +22,7 @@ export class FoundProductsComponent implements OnInit {
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly searchProductsService: SearchProductsService,
+    private readonly scroll: ViewportScroller
   ) { }
 
   ngOnInit(): void {
@@ -33,6 +35,7 @@ export class FoundProductsComponent implements OnInit {
 
   getNextProducts() {
     this.getProducts();
+    this.scroll.scrollToPosition([0,0]);
   }
 
   getProducts() {
@@ -41,9 +44,7 @@ export class FoundProductsComponent implements OnInit {
       .pipe(take(1))
       .subscribe(response => {
         this.allProductsCount = response.totalItems;
-        if(this.allProductsCount == 0) {
-          this.isProductsListEmpty = true;
-        }
+        this.isProductsListEmpty = this.allProductsCount == 0;
         this.products = response.products;
       });
   }

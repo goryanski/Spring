@@ -17,4 +17,16 @@ public interface ProductsRepository extends JpaRepository<Product, Integer> {
     // we cannot change how many products we can take (we want to decide it on the client side)
 
     Page<Product> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
+    // filter
+    List<Product> findByBrandId(int brandId);
+    List<Product> findByCountryId(int countryId);
+    List<Product> findByDiscountGreaterThan(int discount);
+    List<Product> findByPriceLessThanEqual(float price);
+
+
+
+    
+    // test
+    //List<Product> findByCountryIdAndBrandIdNot(int country, int brandId);
 }

@@ -2,13 +2,52 @@
   display: flex;
   .filters-block {
     padding: 40px;
-    //flex-direction: row;
+    display: block;
+    font-size: 22px;
     .countries-dropdown, .brands-dropdown {
       padding: 10px 20px;
+      font-size: 22px !important;
     }
     .range-input {
       cursor: pointer;
       width: 100%;
+    }
+    .form-check {
+      input, label {
+        cursor: pointer;
+      }
+      label {
+        user-select: none;
+      }
+    }
+    .start-filter-btn {
+      padding: 12px 20px;
+      margin-bottom: 100px;
+    }
+  }
+  .products-block {
+    .no-products-message {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .products-loader {
+      margin: 50px 50%;
+    }
+
+    .products {
+      margin: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .pagination-block {
+      margin-bottom: 100px;
+      display: flex;
+      justify-content: center;
     }
   }
 }

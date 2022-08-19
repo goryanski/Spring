@@ -1,8 +1,8 @@
 package app.EasyFoodAPI.controllers;
 import app.EasyFoodAPI.dto.FullProductInfoDTO;
 import app.EasyFoodAPI.dto.ShortProductInfoDTO;
-import app.EasyFoodAPI.dto.requestObjects.ProductsByCategoryRequestObjectDTO;
-import app.EasyFoodAPI.dto.requestObjects.ProductsByNameRequestObjectDTO;
+import app.EasyFoodAPI.dto.requestObjects.ProductsByCategoryRequestDTO;
+import app.EasyFoodAPI.dto.requestObjects.ProductsByNameRequestDTO;
 import app.EasyFoodAPI.services.GetProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class GetProductsController {
 
     @PostMapping("/byCategoryId")
     public ResponseEntity<Map<String, Object>> getProductsByCategoryId (
-                @RequestBody ProductsByCategoryRequestObjectDTO params) {
+                @RequestBody ProductsByCategoryRequestDTO params) {
         Map<String, Object> response = productsService.getProductsByCategoryId(params);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -42,7 +42,7 @@ public class GetProductsController {
 
     @PostMapping("/byName")
     public ResponseEntity<Map<String, Object>> getProductsBySubstringOfName (
-            @RequestBody ProductsByNameRequestObjectDTO params) {
+            @RequestBody ProductsByNameRequestDTO params) {
         Map<String, Object> response = productsService.getProductsBySubstringOfName(params);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

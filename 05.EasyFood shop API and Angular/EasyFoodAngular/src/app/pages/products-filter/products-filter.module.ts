@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProductsFilterRoutingModule } from './products-filter-routing.module';
 import { ProductsFilterComponent } from './products-filter.component';
 import {ComponentsModule} from "../../components/components.module";
-import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDropdownModule, NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 
 
@@ -17,7 +17,8 @@ import {FormsModule} from "@angular/forms";
     ProductsFilterRoutingModule,
     ComponentsModule,
     NgbDropdownModule,
-    FormsModule
+    FormsModule,
+    NgbPaginationModule
   ]
 })
 export class ProductsFilterModule { }

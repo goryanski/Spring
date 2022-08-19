@@ -1,14 +1,18 @@
 package app.EasyFoodAPI.controllers;
 import app.EasyFoodAPI.dto.BrandDTO;
+import app.EasyFoodAPI.dto.FullProductInfoDTO;
 import app.EasyFoodAPI.dto.ProvisionerCountryDTO;
+import app.EasyFoodAPI.dto.ShortProductInfoDTO;
+import app.EasyFoodAPI.dto.requestObjects.FilterProductsRequestDTO;
 import app.EasyFoodAPI.services.BrandsService;
+import app.EasyFoodAPI.services.GetProductsService;
 import app.EasyFoodAPI.services.ProvisionersCountriesService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -17,10 +21,12 @@ import java.util.List;
 public class ProductsFilterController {
     private final ProvisionersCountriesService countriesService;
     private final BrandsService brandsService;
+    private final GetProductsService productsService;
 
-    public ProductsFilterController(ProvisionersCountriesService countriesService, BrandsService brandsService) {
+    public ProductsFilterController(ProvisionersCountriesService countriesService, BrandsService brandsService, GetProductsService productsService) {
         this.countriesService = countriesService;
         this.brandsService = brandsService;
+        this.productsService = productsService;
     }
 
     @GetMapping("/countries")
@@ -32,4 +38,13 @@ public class ProductsFilterController {
     public List<BrandDTO> getAllBrands() {
         return brandsService.getAll();
     }
+
+    @PostMapping("/filtered-products")
+    public ResponseEntity<Map<String, Object>> getFilteredProducts(
+            @RequestBody FilterProductsRequestDTO params
+    ) {
+        Map<String, Object> response = productsService.getFilteredProducts(params);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

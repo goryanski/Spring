@@ -5,7 +5,7 @@
 .content {
   display: flex;
   .categories {
-    margin: 20px;
+    margin: 20px 20px 100px 20px;
     .category {
       font-size: 24px;
       padding: 20px 40px;
@@ -93,8 +93,7 @@ $secondary: black;
   .content {
     display: block;
     .categories {
-      //flex-direction: row;
-
+      margin-bottom: 20px;
     }
   }
   .wrapper {
