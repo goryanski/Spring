@@ -1,9 +1,7 @@
 package app.EasyFoodAPI.services;
 import app.EasyFoodAPI.dto.*;
-import app.EasyFoodAPI.models.Brand;
-import app.EasyFoodAPI.models.Category;
-import app.EasyFoodAPI.models.Product;
-import app.EasyFoodAPI.models.ProvisionerCountry;
+import app.EasyFoodAPI.dto.auth.RegisterPersonDTO;
+import app.EasyFoodAPI.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +41,6 @@ public class MapperService {
     public BrandDTO convertBrand(Brand brand) {
         return modelMapper.map(brand, BrandDTO.class);
     }
+
+
 }
