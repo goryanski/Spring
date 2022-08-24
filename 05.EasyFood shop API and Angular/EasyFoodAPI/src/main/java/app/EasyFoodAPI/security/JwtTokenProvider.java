@@ -11,13 +11,13 @@ import java.util.Date;
 
 
 @Component
-public class JWTUtil {
+public class JwtTokenProvider {
+    // values from resources/application.properties
     @Value("${jwtExpirationMs}")
     private long expirationMs;
 
     @Value("${jwtSecret}")
     private String secret;
-
 
     public String generateToken(String username) {
         // current time from current timeZone + milliseconds value from application.properties file

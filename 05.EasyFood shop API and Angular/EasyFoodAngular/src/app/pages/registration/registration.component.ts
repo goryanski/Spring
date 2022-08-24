@@ -81,7 +81,7 @@ export class RegistrationComponent implements OnInit {
             registration => {
               if(registration.message == 'OK') {
                 this.isRegistrationError = false;
-                this.router.navigate(['/']);
+                this.router.navigate(['/login']);
               }
               else {
                 this.errorMessage = registration.message;

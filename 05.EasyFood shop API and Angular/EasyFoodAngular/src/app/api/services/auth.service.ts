@@ -4,6 +4,8 @@ import {AppEnvironment} from "../../shared/app-environment.interface";
 import {Observable, publishReplay, refCount} from "rxjs";
 import {RegisterPersonRequestInterface} from "../interfaces/requests/register-person-request.interface";
 import {MessageResponseInterface} from "../interfaces/responses/message-response.interface";
+import {LoginPersonRequestInterface} from "../interfaces/requests/login-person-request.interface";
+import {JwtResponse} from "../interfaces/responses/jwt-response.interface";
 
 @Injectable()
 export class AuthService {
@@ -19,6 +21,20 @@ export class AuthService {
         this.appEnv.apiEasyFoodURL,
         'auth',
         'registration'
+      ].join('/'),
+      requestObject
+    ).pipe(
+      publishReplay(1),
+      refCount()
+    );
+  }
+
+  login(requestObject: LoginPersonRequestInterface): Observable<JwtResponse> {
+    return this.httpClient.post<JwtResponse>(
+      [
+        this.appEnv.apiEasyFoodURL,
+        'auth',
+        'login'
       ].join('/'),
       requestObject
     ).pipe(

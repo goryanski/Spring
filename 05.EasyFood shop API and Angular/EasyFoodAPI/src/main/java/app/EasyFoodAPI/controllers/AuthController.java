@@ -1,21 +1,22 @@
 package app.EasyFoodAPI.controllers;
+import app.EasyFoodAPI.dto.auth.JwtResponseDTO;
+import app.EasyFoodAPI.dto.auth.LoginRequestDTO;
 import app.EasyFoodAPI.dto.auth.RegisterPersonDTO;
-import app.EasyFoodAPI.models.PersonTest;
-import app.EasyFoodAPI.security.JWTUtil;
-import app.EasyFoodAPI.security.PersonDetails;
+import app.EasyFoodAPI.security.JwtTokenProvider;
+import app.EasyFoodAPI.services.AccountsService;
 import app.EasyFoodAPI.services.AuthService;
 import app.EasyFoodAPI.util.MessageResponse;
-import app.EasyFoodAPI.util.exceptions.RegistrationException;
+import app.EasyFoodAPI.util.exceptions.AuthException;
 import app.EasyFoodAPI.util.validators.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
 import java.util.Map;
 
 import static app.EasyFoodAPI.util.ErrorsUtil.returnRegistrationErrorsToClient;
@@ -25,16 +26,42 @@ import static app.EasyFoodAPI.util.ErrorsUtil.returnRegistrationErrorsToClient;
 @CrossOrigin()
 @RequestMapping("/api/easyFood/auth")
 public class AuthController {
-    private final JWTUtil jwtUtil;
     private final PersonValidator personValidator;
     private final AuthService authService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AccountsService accountsService;
 
     @Autowired
-    public AuthController(JWTUtil jwtUtil, PersonValidator personValidator, AuthService authService) {
-        this.jwtUtil = jwtUtil;
+    public AuthController(PersonValidator personValidator,
+                          AuthService authService,
+                          AuthenticationManager authenticationManager,
+                          JwtTokenProvider jwtTokenProvider, AccountsService accountsService) {
         this.personValidator = personValidator;
         this.authService = authService;
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.accountsService = accountsService;
     }
+
+    @PostMapping("/login")
+    public JwtResponseDTO login(@RequestBody LoginRequestDTO authenticationDTO) {
+        UsernamePasswordAuthenticationToken authInputToken =
+                new UsernamePasswordAuthenticationToken(
+                        authenticationDTO.getUsername(),
+                        authenticationDTO.getPassword());
+
+        try {
+            authenticationManager.authenticate(authInputToken);
+        } catch (BadCredentialsException e) {
+            // Incorrect username or password. find out what's incorrect exactly and return error:
+            return authService.getJwtErrorResponse(authenticationDTO.getUsername());
+        }
+
+        String token = jwtTokenProvider.generateToken(authenticationDTO.getUsername());
+        return authService.getJwtSuccessResponse(authenticationDTO.getUsername(), token);
+    }
+
 
     @PostMapping("/registration")
     public MessageResponse registration(@RequestBody @Valid RegisterPersonDTO person,
@@ -51,32 +78,13 @@ public class AuthController {
         );
     }
 
+
     @ExceptionHandler
-    private MessageResponse handleException(RegistrationException e) {
+    private MessageResponse handleException(AuthException e) {
         // message from exception put to ErrorsResponse and send to client
         return new MessageResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
         );
-    }
-
-
-
-// generate and return token to client
-//        String token = jwtUtil.generateToken(person.getUsername());
-//        return Map.of("jwt-token", token);
-
-
-
-    // when user is authenticated (test method)
-    @GetMapping("/getUserInfo")
-    public PersonTest showUserInfo() {
-        // получаем доступ к объекту Authentication из джава потока
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // authentication.getPrincipal() returns interface UserDetails, but we need PersonDetails object to call method getPerson() on it
-        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
-        //System.out.println(personDetails.getPerson());
-
-        return personDetails.getPerson();
     }
 }

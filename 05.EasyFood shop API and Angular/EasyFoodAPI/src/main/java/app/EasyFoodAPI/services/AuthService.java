@@ -1,5 +1,6 @@
 package app.EasyFoodAPI.services;
 
+import app.EasyFoodAPI.dto.auth.JwtResponseDTO;
 import app.EasyFoodAPI.dto.auth.RegisterPersonDTO;
 import app.EasyFoodAPI.models.Account;
 import app.EasyFoodAPI.models.Person;
@@ -7,12 +8,14 @@ import app.EasyFoodAPI.repositories.AccountsRepository;
 import app.EasyFoodAPI.repositories.PeopleRepository;
 import app.EasyFoodAPI.repositories.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,13 +24,34 @@ public class AuthService {
     private final AccountsRepository accountsRepository;
     private final RolesRepository rolesRepository;
     private final MapperService mapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthService(PeopleRepository peopleRepository, AccountsRepository accountsRepository, RolesRepository rolesRepository, MapperService mapper) {
+    public AuthService(PeopleRepository peopleRepository, AccountsRepository accountsRepository, RolesRepository rolesRepository, MapperService mapper, PasswordEncoder passwordEncoder) {
         this.peopleRepository = peopleRepository;
         this.accountsRepository = accountsRepository;
         this.rolesRepository = rolesRepository;
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public JwtResponseDTO getJwtErrorResponse(String username) {
+        Optional<Account> account = accountsRepository.findByUsername(username);
+        String errorMessage = account.isPresent()
+                ? "Incorrect password"
+                : "User not found";
+        return new JwtResponseDTO("", errorMessage, "", "");
+    }
+
+    public JwtResponseDTO getJwtSuccessResponse(String username, String token) {
+        // we already checked that account with this username really exists
+        Account account = accountsRepository.findByUsername(username).get();
+        return new JwtResponseDTO(
+                token,
+                "none",
+                account.getRole().getName(),
+                Integer.toString(account.getPerson().getId())
+        );
     }
 
     @Transactional
@@ -60,8 +84,10 @@ public class AuthService {
     private Account fillAccount(RegisterPersonDTO registerPerson) {
         Account account = new Account();
         account.setUsername(registerPerson.getUsername());
-        account.setPassword(registerPerson.getPassword());
+        // encode password before saving to db
+        account.setPassword(passwordEncoder.encode(registerPerson.getPassword()));
         account.setRole(rolesRepository.findById(1)); // user role always
         return account;
     }
+
 }

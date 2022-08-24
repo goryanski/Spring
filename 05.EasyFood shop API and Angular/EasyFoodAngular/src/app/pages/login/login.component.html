@@ -1,1 +1,45 @@
-<p>login works!</p>
+<form class="login-form mt-5" [formGroup]="form">
+  <div class="mb-3">
+    <label for="inputLogin" class="form-label">Username</label>
+    <input type="text" class="form-control"
+           formControlName="username" id="inputLogin" aria-describedby="emailHelp">
+    <div *ngIf="form.controls['username'].errors">
+      <div *ngIf="form.controls['username'].errors['required']"
+           class="form-text text-danger">Field is required
+      </div>
+      <div *ngIf="form.controls['username'].errors['pattern']"
+           class="form-text text-danger">English letters only, digits, symbols _.^! (2-36 symbols)
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="inputPassword" class="form-label">Password</label>
+    <input type="password" class="form-control"
+           formControlName="password" id="inputPassword">
+    <div *ngIf="form.controls['password'].errors">
+      <div *ngIf="form.controls['password'].errors['required']"
+           class="form-text text-danger">Field is required
+      </div>
+      <div *ngIf="form.controls['password'].errors['pattern']"
+           class="form-text text-danger">English letters only, digits, symbols _#@.^! (4-36 symbols)
+      </div>
+    </div>
+  </div>
+
+
+  <div class="error-block mb-4" *ngIf="isRegistrationError">
+    {{errorMessage}}
+  </div>
+
+
+  <div class="mt-5">
+    <button [disabled]="!form.valid"
+            (click)="onLoginClick()"
+            class="btn btn-warning">Login
+    </button>
+    <button (click)="onBackClick()"
+            class="btn btn-warning btn-back">Back
+    </button>
+  </div>
+</form>
+

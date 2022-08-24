@@ -1,5 +1,5 @@
 package app.EasyFoodAPI.util;
-import app.EasyFoodAPI.util.exceptions.RegistrationException;
+import app.EasyFoodAPI.util.exceptions.AuthException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import java.util.List;
@@ -9,7 +9,7 @@ public class ErrorsUtil {
     public static void returnRegistrationErrorsToClient(BindingResult bindingResult) {
         StringBuilder errorMessage = getErrorMessage(bindingResult);
         // pass this string to custom exception class
-        throw new RegistrationException(errorMessage.toString());
+        throw new AuthException(errorMessage.toString());
     }
 
     private static StringBuilder getErrorMessage(BindingResult bindingResult) {

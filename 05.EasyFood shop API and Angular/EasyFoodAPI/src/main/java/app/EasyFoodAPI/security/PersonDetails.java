@@ -1,33 +1,34 @@
 package app.EasyFoodAPI.security;
 
-import app.EasyFoodAPI.models.PersonTest;
+import app.EasyFoodAPI.models.Account;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
-// class for spring security - class-wrapper for Person entity. use methods from UserDetails
+// this class for spring security. it uses methods from UserDetails
 public class PersonDetails implements UserDetails {
-    // later it'll be account object
-    private final PersonTest person;
+    private final Account account;
 
-    public PersonDetails(PersonTest person) {
-        this.person = person;
+    public PersonDetails(Account account) {
+        this.account = account;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null; // do later
+        return Collections.singletonList(new SimpleGrantedAuthority(account.getRole().getName()));
     }
 
     @Override
     public String getPassword() {
-        return this.person.getPassword();
+        return this.account.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.person.getUsername();
+        return this.account.getUsername();
     }
 
     @Override
@@ -42,17 +43,16 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; // password is non expired
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return !account.getPerson().getBlocked();
     }
 
-    // we need it to get data of authenticated user
-    // return person info object. later it will be account.getPerson()
-    public PersonTest getPerson() {
-        return this.person;
+    // to get data of authenticated user later
+    public Account getAccount() {
+        return this.account;
     }
 }

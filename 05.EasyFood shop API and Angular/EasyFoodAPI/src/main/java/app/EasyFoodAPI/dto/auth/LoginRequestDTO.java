@@ -1,7 +1,8 @@
 package app.EasyFoodAPI.dto.auth;
+
 import javax.validation.constraints.Size;
 
-public class AuthenticationPersonDTO {
+public class LoginRequestDTO {
     @Size(min = 2, max = 36, message = "Username must be between 2 and 36 symbols")
     private String username;
 
