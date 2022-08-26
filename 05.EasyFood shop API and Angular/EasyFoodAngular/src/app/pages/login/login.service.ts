@@ -16,12 +16,12 @@ export class LoginService {
   login(requestObject: LoginPersonRequestInterface): Observable<string> {
     return this.authService.login(requestObject).pipe(
       tap(response => {
-        // TODO: Save token and role to localStorage
-        // this.localStorage.setItem('accessToken', response.accessToken);
-        // this.localStorage.setItem('y16', response.userRole); // currentUserRole
-        // this.localStorage.setItem('v33', response.userId); // currentUserId
+        // Save data in response to localStorage
+        this.localStorage.setItem('accessToken', response.accessToken);
+        this.localStorage.setItem('currentUserRole', response.userRole);
+        this.localStorage.setItem('currentUserId', response.userId);
       }),
-      // return only exception to login component (to show there what happened)
+      // return only exception to login.component.ts (to show there what happened)
       map(response => response.exception)
     );
   }

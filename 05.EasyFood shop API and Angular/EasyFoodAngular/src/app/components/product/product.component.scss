@@ -30,7 +30,32 @@
   .discount-price {
     color: red;
   }
+  .order-btn {
+    margin-right: 20px;
+    margin-top: -70px;
+    button {
+      padding: 10px 20px;
+    }
+  }
+  .product-order-count {
+    margin-top: -70px;
+    margin-right: 20px;
+    display: flex;
+    height: 40px;
+    button {
+      svg{
+        color: white;
+      }
+    }
+    .product-count-input {
+      width: 80px;
+      margin-right: 5px;
+      margin-left: 5px;
+      border: 1px solid $main-primary-color;
+    }
+  }
   .product-name {
+    margin-top: 10px;
     padding: 0 20px;
     max-width: 260px;
     height: 100px;

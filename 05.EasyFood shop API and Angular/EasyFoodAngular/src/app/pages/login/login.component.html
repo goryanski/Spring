@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-  <div class="mb-3">
+  <div class="mb-5">
     <label for="inputPassword" class="form-label">Password</label>
     <input type="password" class="form-control"
            formControlName="password" id="inputPassword">
@@ -27,7 +27,7 @@
   </div>
 
 
-  <div class="error-block mb-4" *ngIf="isRegistrationError">
+  <div class="error-block mb-4" *ngIf="isLoginError">
     {{errorMessage}}
   </div>
 

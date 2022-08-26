@@ -9,20 +9,40 @@ import java.util.List;
 
 @Repository
 public interface ProductsRepository extends JpaRepository<Product, Integer> {
-    Page<Product> findByCategoryId(int categoryId, Pageable pageable);
+    Page<Product> findByCategoryIdAndIsAvailableAndAmountInStorageGreaterThan(
+            int categoryId,
+            boolean isAvailable,
+            int amount,
+            Pageable pageable);
 
     // we use pagination to get only a few first products (in our case - 4 first products)
     Page<Product> findByCategoryIdOrderByLikesCount(int categoryId, Pageable pageable); // or we could use another way:
     //List<Product> findTop4ByCategoryIdOrderByLikesCount(int categoryId); - find top 4 from result, but in this case
     // we cannot change how many products we can take (we want to decide it on the client side)
 
-    Page<Product> findByNameContainingIgnoreCase(String name, Pageable pageable);
+    Page<Product> findByNameContainingIgnoreCaseAndIsAvailableAndAmountInStorageGreaterThan(
+            String name,
+            boolean isAvailable,
+            int amount,
+            Pageable pageable);
 
     // filter
-    List<Product> findByBrandId(int brandId);
-    List<Product> findByCountryId(int countryId);
-    List<Product> findByDiscountGreaterThan(int discount);
-    List<Product> findByPriceLessThanEqual(float price);
+    List<Product> findByBrandIdAndIsAvailableAndAmountInStorageGreaterThan(
+            int brandId,
+            boolean isAvailable,
+            int amount);
+    List<Product> findByCountryIdAndIsAvailableAndAmountInStorageGreaterThan(
+            int countryId,
+            boolean isAvailable,
+            int amount);
+    List<Product> findByDiscountGreaterThanAndIsAvailableAndAmountInStorageGreaterThan(
+            int discount,
+            boolean isAvailable,
+            int amount);
+    List<Product> findByPriceLessThanEqualAndIsAvailableAndAmountInStorageGreaterThan(
+            float price,
+            boolean isAvailable,
+            int amount);
 
 
 

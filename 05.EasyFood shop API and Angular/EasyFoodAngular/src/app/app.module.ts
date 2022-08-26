@@ -9,6 +9,7 @@ import {environment} from "../environments/environment";
 import {AppEnvironment} from "./shared/app-environment.interface";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserLocalStorage} from "./shared/storage/local-storage";
+import {AuthHelper} from "./shared/helpers/auth-helper";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {BrowserLocalStorage} from "./shared/storage/local-storage";
   ],
   providers: [
     BrowserLocalStorage,
+    AuthHelper,
     {
       provide: AppEnvironment,
       useValue: environment

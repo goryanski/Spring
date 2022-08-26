@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {AuthHelper} from "../../shared/helpers/auth-helper";
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly authHelper: AuthHelper
   ) {
     this.form = this.fb.group({
       'search': this.fb.control(
@@ -30,7 +32,9 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authHelper.checkAndSetAuthUserState();
+  }
 
   btnSearchProductsClick() {
     if(this.searchField != undefined) {
@@ -42,6 +46,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut() {
-
+    this.authHelper.setNonAuthenticatedUserState();
+    this.authHelper.clearLocalStorage();
   }
 }

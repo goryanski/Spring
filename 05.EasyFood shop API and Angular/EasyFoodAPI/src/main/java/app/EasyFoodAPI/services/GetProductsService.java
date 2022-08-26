@@ -5,7 +5,6 @@ import app.EasyFoodAPI.dto.requestObjects.FilterProductsRequestDTO;
 import app.EasyFoodAPI.dto.requestObjects.ProductsByCategoryRequestDTO;
 import app.EasyFoodAPI.dto.requestObjects.ProductsByNameRequestDTO;
 import app.EasyFoodAPI.models.Product;
-import app.EasyFoodAPI.repositories.CategoriesRepository;
 import app.EasyFoodAPI.repositories.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,20 +19,24 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 public class GetProductsService {
-    private final CategoriesRepository categoriesRepository;
     private final ProductsRepository productsRepository;
     private final MapperService mapper;
 
     @Autowired
-    public GetProductsService(CategoriesRepository categoriesRepository, ProductsRepository productsRepository, MapperService mapper) {
-        this.categoriesRepository = categoriesRepository;
+    public GetProductsService(ProductsRepository productsRepository, MapperService mapper) {
         this.productsRepository = productsRepository;
         this.mapper = mapper;
     }
 
     public Map<String, Object> getProductsByCategoryId(ProductsByCategoryRequestDTO params) {
         Pageable paging = PageRequest.of(params.getCurrentPage(), params.getPageSize());
-        Page<Product> pageTuts = productsRepository.findByCategoryId(params.getCategoryId(), paging);
+        Page<Product> pageTuts = productsRepository
+                // products must also be available and in stock
+                .findByCategoryIdAndIsAvailableAndAmountInStorageGreaterThan(
+                        params.getCategoryId(),
+                        true,
+                        0,
+                        paging);
         return getPaginatedResponse(pageTuts);
     }
 
@@ -61,7 +64,12 @@ public class GetProductsService {
     public Map<String, Object> getProductsBySubstringOfName(ProductsByNameRequestDTO params) {
         Pageable paging = PageRequest.of(params.getCurrentPage(), params.getPageSize());
         // get all products which names contain required substring
-        Page<Product> pageTuts = productsRepository.findByNameContainingIgnoreCase(params.getName(), paging);
+        Page<Product> pageTuts = productsRepository
+                .findByNameContainingIgnoreCaseAndIsAvailableAndAmountInStorageGreaterThan(
+                        params.getName(),
+                        true,
+                        0,
+                        paging);
         return getPaginatedResponse(pageTuts);
     }
 
@@ -70,7 +78,9 @@ public class GetProductsService {
         List<Product> filteredProducts;
         // first try to filter by brandId to significantly reduce the number of products we take from DB
         if(params.getBrandId() != 0) {
-            filteredProducts = productsRepository.findByBrandId(params.getBrandId());
+            filteredProducts = productsRepository
+                    .findByBrandIdAndIsAvailableAndAmountInStorageGreaterThan(
+                            params.getBrandId(), true, 0);
             // then check other filter params and do filter if it's required
             if(params.getCountryId() != 0) {
                 filteredProducts.removeIf(p -> p.getCountry().getId() != params.getCountryId());
@@ -82,7 +92,9 @@ public class GetProductsService {
         } else {
             // if brandId = 0, start filter with country
             if(params.getCountryId() != 0) {
-                filteredProducts = productsRepository.findByCountryId(params.getCountryId());
+                filteredProducts = productsRepository
+                        .findByCountryIdAndIsAvailableAndAmountInStorageGreaterThan(
+                                params.getCountryId(), true, 0);
                 if(params.isWithDiscount()) {
                     filteredProducts.removeIf(p -> p.getDiscount() == 0);
                 }
@@ -90,12 +102,16 @@ public class GetProductsService {
             } else {
                 // if brandId = 0 and country id = 0, start with discount
                 if(params.isWithDiscount()) {
-                    filteredProducts = productsRepository.findByDiscountGreaterThan(0);
+                    filteredProducts = productsRepository
+                            .findByDiscountGreaterThanAndIsAvailableAndAmountInStorageGreaterThan(
+                                    0, true, 0);
                     filteredProducts.removeIf(p -> p.getPrice() > params.getMaxPrice());
                 }
                 else {
                     // if brandId = 0, country id = 0 and discountProducts = false, start with price
-                    filteredProducts = productsRepository.findByPriceLessThanEqual(params.getMaxPrice());
+                    filteredProducts = productsRepository
+                            .findByPriceLessThanEqualAndIsAvailableAndAmountInStorageGreaterThan(
+                                    params.getMaxPrice(), true, 0);
                 }
             }
         }
@@ -155,7 +171,7 @@ public class GetProductsService {
         List<ShortProductInfoDTO> products = pageTuts.getContent()
                 .stream()
                 .map(mapper::convertProduct)
-                .collect(Collectors.toList());;
+                .collect(Collectors.toList());
 
         Map<String, Object> response = new HashMap<>();
         response.put("products", products);

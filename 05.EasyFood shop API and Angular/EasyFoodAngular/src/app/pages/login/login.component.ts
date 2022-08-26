@@ -7,6 +7,7 @@ import {AuthService} from "../../api/services/auth.service";
 import {LoginService} from "./login.service";
 import {tap} from "rxjs/operators";
 import {take} from "rxjs";
+import {AuthHelper} from "../../shared/helpers/auth-helper";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     password: '^[a-zA-Z_#@.^!0-9]{4,36}$', // English letters only, digits, symbols _#@.^! (4-36 symbols)
   }
 
-  isRegistrationError: boolean = false;
+  isLoginError: boolean = false;
   errorMessage: string = '';
 
   constructor(
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
     private readonly router: Router,
     private location: Location,
     private readonly loginService: LoginService,
-    //private readonly authHelper: AuthHelper
+    private readonly authHelper: AuthHelper
   ) {
     this.form = this.fb.group({
       'username': this.fb.control(
@@ -57,13 +58,13 @@ export class LoginComponent implements OnInit {
         tap(
           exception => {
             if(exception == 'none') {
-              console.log('login completed');
               // change links logOut, login, etc. (in a header)
-             // this.authHelper.setAuthenticatedUserState();
-              //this.router.navigate(['/']);
+              this.authHelper.setAuthenticatedUserState();
+              this.router.navigate(['/']);
             }
             else {
-              console.log('login error: ', exception);
+              this.errorMessage = exception;
+              this.isLoginError = true;
             }
           }),
         take(1)

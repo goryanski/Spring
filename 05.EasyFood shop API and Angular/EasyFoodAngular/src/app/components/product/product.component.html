@@ -1,12 +1,43 @@
 <div class="product">
   <div *ngIf="product.discount > 0" class="discount-label">{{product.discount}}%</div>
   <img src="{{product.photoPath}}" alt="product image">
-  <p *ngIf="product.discount == 0" class="product-price">{{product.price}} &#8372;</p>
-  <p *ngIf="product.discount > 0" class="product-price discount-price">{{product.price}} &#8372;</p>
+  <div class="d-flex justify-content-between">
+    <div>
+      <p *ngIf="product.discount == 0" class="product-price">{{product.price}} &#8372;</p>
+      <p *ngIf="product.discount > 0" class="product-price discount-price">{{product.price}} &#8372;</p>
+    </div>
+    <div class="order-btn"  *ngIf="!isProductOrdered">
+      <button  *ngIf="!isUserAuthenticated"
+        class="btn btn-primary" ngbTooltip="Login to buy!" triggers="click:blur">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z"/>
+        </svg>
+      </button>
+      <button  *ngIf="isUserAuthenticated" class="btn btn-primary"
+      (click)="OnBuyProductClock()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="product-order-count"  *ngIf="isProductOrdered">
+      <button class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
+        </svg>
+      </button>
+      <input type="number" class="product-count-input form-control">
+      <button class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
   <p class="product-name">{{product.name}}</p>
   <div class="bottom-panel">
     <div class="weight">{{product.weight}} {{product.weightMeasurement}}</div>
-    <button class="btn btn-primary" (click)="onShowProductFullInfoClick()">
+    <button class="btn btn-primary show-product-btn" (click)="onShowProductFullInfoClick()">
       <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>

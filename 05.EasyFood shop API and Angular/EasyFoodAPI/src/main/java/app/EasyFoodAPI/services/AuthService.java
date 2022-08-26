@@ -40,7 +40,7 @@ public class AuthService {
         String errorMessage = account.isPresent()
                 ? "Incorrect password"
                 : "User not found";
-        return new JwtResponseDTO("", errorMessage, "", "");
+        return new JwtResponseDTO("none", errorMessage, "none", "none");
     }
 
     public JwtResponseDTO getJwtSuccessResponse(String username, String token) {

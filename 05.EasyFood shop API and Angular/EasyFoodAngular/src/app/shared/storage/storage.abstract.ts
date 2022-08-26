@@ -15,7 +15,5 @@ export abstract class AbstractStorage implements Storage {
 
   abstract getUserRole(): string
 
-  abstract getSelectedCategoryId(): number
-
-  abstract getCurrentPageForHomePageProducts(): number
+  abstract getCurrentUserId(): number
 }
