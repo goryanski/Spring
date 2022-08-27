@@ -51,7 +51,8 @@ public class Product {
     @Column(name = "likes_count")
     private Integer likesCount;
 
-
+    @Column(name = "is_weight_flexible")
+    private boolean isWeightFlexible;
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
@@ -69,6 +70,13 @@ public class Product {
     @JoinColumn(name = "weight_measurement_id", referencedColumnName = "id")
     private WeightMeasurement measurement;
 
+    public boolean isWeightFlexible() {
+        return isWeightFlexible;
+    }
+
+    public void setWeightFlexible(boolean weightFlexible) {
+        isWeightFlexible = weightFlexible;
+    }
 
     public Integer getId() {
         return id;

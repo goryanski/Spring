@@ -30,6 +30,17 @@ public class ShortProductInfoDTO {
     @NotEmpty(message = "Photo path cannot be empty")
     private String photoPath;
 
+    private boolean isWeightFlexible;
+
+
+    public boolean isWeightFlexible() {
+        return isWeightFlexible;
+    }
+
+    public void setWeightFlexible(boolean weightFlexible) {
+        isWeightFlexible = weightFlexible;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -20,19 +20,32 @@
         </svg>
       </button>
     </div>
-    <div class="product-order-count"  *ngIf="isProductOrdered">
-      <button class="btn btn-primary">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
-        </svg>
-      </button>
-      <input type="number" class="product-count-input form-control">
-      <button class="btn btn-primary">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-        </svg>
-      </button>
+
+
+    <div class="product-order-count-block" *ngIf="isProductOrdered">
+      <div class="count-form">
+        <input #productCountField type="number"
+               class="product-count-input form-control" min="0" max="100" placeholder="count">
+        <button class="btn btn-primary" (click)="onAddToBasketClick(productCountField.value)">To basket</button>
+      </div>
+      <div class="invalid-count-msg text-danger mt-2" *ngIf="isInvalidCountMessage && !isSuccessCountMessage">
+        {{invalidCountMessageText}}
+      </div>
+      <div class="success-count-msg text-success mt-2" *ngIf="isSuccessCountMessage && !isInvalidCountMessage">
+        {{successCountMessageText}}
+      </div>
     </div>
+
+
+<!--    works-->
+<!--    <div class="product-order-count"  *ngIf="isProductOrdered">-->
+<!--      <button class="btn btn-primary" (click)="onReduceProductCountValueClick(productCountField.value)">-</button>-->
+<!--            <input #productCountField [value]="productCountValue"-->
+<!--                   type="number"  class="product-count-input form-control" min="1" max="999"-->
+<!--                   (input)="onProductCountFieldChange(productCountField.value)">-->
+<!--      <button class="btn btn-primary" (click)="onIncreaseProductCountValueClick(productCountField.value)">+</button>-->
+<!--    </div>-->
+
   </div>
   <p class="product-name">{{product.name}}</p>
   <div class="bottom-panel">

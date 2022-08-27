@@ -5,5 +5,6 @@ export interface ShortProductInfoInterface {
   weight: number,
   weightMeasurement: string,
   discount: number,
-  photoPath: string
+  photoPath: string,
+  weightFlexible: boolean
 }
