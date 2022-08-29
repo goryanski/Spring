@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "people")
@@ -40,6 +41,12 @@ public class Person {
 
     @OneToOne(mappedBy = "person")
     private Account account;
+
+    @OneToMany(mappedBy = "person")
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "person")
+    private List<BasketProduct> basketProducts;
 
     public int getId() {
         return id;
@@ -95,5 +102,21 @@ public class Person {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<BasketProduct> getBasketProducts() {
+        return basketProducts;
+    }
+
+    public void setBasketProducts(List<BasketProduct> basketProducts) {
+        this.basketProducts = basketProducts;
     }
 }

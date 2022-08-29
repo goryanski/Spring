@@ -12,6 +12,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -40,6 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 // to allow every HTTP request that modifies state (PATCH, POST, PUT and DELETE — not GET). for JSON data we don't need csrf token, we need it only when we work with forms (in MVC apps for example)
                 .csrf().disable()
+                .cors() // it's necessary to configure cors before jwt filter (as well),
+                // otherwise jwt filter won't see header with the jwt token
+                .and()
                 .authorizeRequests()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .antMatchers(PUBLIC_ENDPOINTS).permitAll()

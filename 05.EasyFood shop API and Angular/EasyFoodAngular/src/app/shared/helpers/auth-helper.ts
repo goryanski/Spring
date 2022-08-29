@@ -1,5 +1,8 @@
 import {Injectable} from "@angular/core";
 import {BrowserLocalStorage} from "../storage/local-storage";
+import {Router} from "@angular/router";
+import {BasketService} from "../../api/services/basket-service";
+import {take} from "rxjs";
 
 @Injectable()
 export class AuthHelper {
@@ -10,7 +13,13 @@ export class AuthHelper {
   registrationLink: any;
   logOutLink: any;
 
-  constructor(private readonly localStorage: BrowserLocalStorage) {}
+  countProductsInBasketBadge: any;
+
+  constructor(
+    private readonly localStorage: BrowserLocalStorage,
+    private readonly router: Router,
+    private readonly ordersService: BasketService
+  ) {}
 
   initFields() {
     this.profileLink = document.getElementById('profileLink');
@@ -19,6 +28,7 @@ export class AuthHelper {
     this.loginLink = document.getElementById('loginLink');
     this.registrationLink = document.getElementById('registrationLink');
     this.logOutLink = document.getElementById('logOutLink');
+    this.countProductsInBasketBadge = document.getElementById('countProductsInBasketBadge');
   }
 
   checkAndSetAuthUserState() {
@@ -63,6 +73,8 @@ export class AuthHelper {
         }
       }
     }
+
+    this.setCountProductsInBasket();
   }
 
   setNonAuthenticatedUserState() {
@@ -87,13 +99,46 @@ export class AuthHelper {
     }
   }
 
+  public logOut() {
+    this.setNonAuthenticatedUserState();
+    this.clearLocalStorage();
+    this.router.navigate(['/']);
+  }
+
   clearLocalStorage() {
     this.localStorage.removeItem('accessToken');
     this.localStorage.removeItem('currentUserRole');
     this.localStorage.removeItem('currentUserId');
+    this.localStorage.removeItem('countProductsInBasket');
     // to destroy the current component (because, for example, currentUserId can be saved in a component and after user logout, user still can do something)
     setTimeout(() => {
       document.location.reload();
     },500);
+  }
+
+  private setCountProductsInBasket() {
+    this.ordersService.getUserProductsCountInBasket(this.localStorage.getCurrentUserId())
+      .pipe(take(1))
+      .subscribe(response => {
+        localStorage.setItem('countProductsInBasket', response.toString());
+        this.setCountProductsInBasketToBadge();
+      });
+  }
+
+  public increaseBasketProductsCount() {
+    this.localStorage.increaseBasketProductsCount();
+    this.setCountProductsInBasketToBadge();
+  }
+
+  public reduceBasketProductsCount() {
+    this.localStorage.reduceBasketProductsCount();
+    this.setCountProductsInBasketToBadge();
+  }
+
+  private setCountProductsInBasketToBadge() {
+    let countProducts = this.localStorage.getCountProductsInBasket();
+    if(countProducts != null) {
+      this.countProductsInBasketBadge.innerText = countProducts;
+    }
   }
 }

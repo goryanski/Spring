@@ -2,6 +2,7 @@ package app.EasyFoodAPI.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -69,6 +70,12 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "weight_measurement_id", referencedColumnName = "id")
     private WeightMeasurement measurement;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderedProduct> orderedProducts;
+
+    @OneToMany(mappedBy = "product")
+    private List<BasketProduct> basketProducts;
 
     public boolean isWeightFlexible() {
         return isWeightFlexible;
@@ -188,5 +195,21 @@ public class Product {
 
     public void setMeasurement(WeightMeasurement measurement) {
         this.measurement = measurement;
+    }
+
+    public List<OrderedProduct> getOrderedProducts() {
+        return orderedProducts;
+    }
+
+    public void setOrderedProducts(List<OrderedProduct> orderedProducts) {
+        this.orderedProducts = orderedProducts;
+    }
+
+    public List<BasketProduct> getBasketProducts() {
+        return basketProducts;
+    }
+
+    public void setBasketProducts(List<BasketProduct> basketProducts) {
+        this.basketProducts = basketProducts;
     }
 }

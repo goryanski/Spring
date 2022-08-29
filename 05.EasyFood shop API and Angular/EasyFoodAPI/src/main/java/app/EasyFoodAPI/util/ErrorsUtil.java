@@ -1,4 +1,5 @@
 package app.EasyFoodAPI.util;
+import app.EasyFoodAPI.util.exceptions.AddProductToBasketException;
 import app.EasyFoodAPI.util.exceptions.AuthException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -10,6 +11,11 @@ public class ErrorsUtil {
         StringBuilder errorMessage = getErrorMessage(bindingResult);
         // pass this string to custom exception class
         throw new AuthException(errorMessage.toString());
+    }
+
+    public static void returnAddProductToBasketErrorsToClient(BindingResult bindingResult) {
+        StringBuilder errorMessage = getErrorMessage(bindingResult);
+        throw new AddProductToBasketException(errorMessage.toString());
     }
 
     private static StringBuilder getErrorMessage(BindingResult bindingResult) {

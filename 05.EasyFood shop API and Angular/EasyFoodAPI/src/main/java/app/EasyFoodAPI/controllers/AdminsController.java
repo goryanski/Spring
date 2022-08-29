@@ -13,11 +13,11 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin()
-@RequestMapping("/api/easyFood/user")
-public class UserController {
+@RequestMapping("/api/easyFood/admin")
+public class AdminsController {
 
-    @GetMapping("/get-info")
-    public Map<String, String> getInfo() {
+    @GetMapping("/add-product")
+    public Map<String, String> addProduct() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
 

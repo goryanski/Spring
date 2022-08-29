@@ -4,12 +4,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {ComponentsModule} from "./components/components.module";
 import {ApiServicesModule} from "./api/services-api.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {AppEnvironment} from "./shared/app-environment.interface";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserLocalStorage} from "./shared/storage/local-storage";
 import {AuthHelper} from "./shared/helpers/auth-helper";
+import {QueryHttpInterceptor} from "./shared/http-interceptors/query-http.interceptor";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,11 @@ import {AuthHelper} from "./shared/helpers/auth-helper";
       provide: AppEnvironment,
       useValue: environment
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: QueryHttpInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

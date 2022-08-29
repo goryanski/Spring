@@ -24,4 +24,8 @@ public class PeopleService {
     public Optional<Person> getPersonByEmail(String email) {
         return peopleRepository.findByEmail(email);
     }
+
+    public Optional<Person> getPersonById(Integer id) {
+        return peopleRepository.findById(id);
+    }
 }

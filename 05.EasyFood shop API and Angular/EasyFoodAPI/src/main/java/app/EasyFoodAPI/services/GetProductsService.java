@@ -40,10 +40,14 @@ public class GetProductsService {
         return getPaginatedResponse(pageTuts);
     }
 
-    public FullProductInfoDTO getProductById(int id) {
+    public FullProductInfoDTO getFullProductById(int id) {
         return productsRepository.findById(id)
                 .map(mapper::convertFullProduct)
                 .orElse(null);
+    }
+
+    public Optional<Product> getProductById(int id) {
+        return productsRepository.findById(id);
     }
 
     public List<ShortProductInfoDTO> getSimilarProducts(int categoryId, int productsCount) {

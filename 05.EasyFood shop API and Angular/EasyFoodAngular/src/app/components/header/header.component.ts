@@ -46,7 +46,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut() {
-    this.authHelper.setNonAuthenticatedUserState();
-    this.authHelper.clearLocalStorage();
+    this.authHelper.logOut();
   }
 }

@@ -31,7 +31,7 @@ public class GetProductsController {
 
     @GetMapping("/{productId}")
     public FullProductInfoDTO getFullInfoProductById(@PathVariable("productId") int id) {
-        return productsService.getProductById(id);
+        return productsService.getFullProductById(id);
     }
 
     @GetMapping("/similar/{categoryId}/{count}")

@@ -49,5 +49,22 @@ export class BrowserLocalStorage implements AbstractStorage {
     return 0;
   }
 
+  getCountProductsInBasket() {
+    let countProducts = localStorage.getItem('countProductsInBasket');
+    return countProducts == null ? null : parseInt(countProducts);
+  }
 
+  increaseBasketProductsCount() {
+    let countProducts = localStorage.getItem('countProductsInBasket');
+    if(countProducts != null) {
+      localStorage.setItem('countProductsInBasket', (parseInt(countProducts) + 1).toString())
+    }
+  }
+
+  reduceBasketProductsCount() {
+    let countProducts = localStorage.getItem('countProductsInBasket');
+    if(countProducts != null) {
+      localStorage.setItem('countProductsInBasket', (parseInt(countProducts) - 1).toString())
+    }
+  }
 }

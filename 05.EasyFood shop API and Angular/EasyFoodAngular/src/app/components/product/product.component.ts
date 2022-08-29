@@ -6,6 +6,10 @@ import {ShowProductModalWindowComponent} from "../show-product-modal-window/show
 import {AuthHelper} from "../../shared/helpers/auth-helper";
 import {BrowserLocalStorage} from "../../shared/storage/local-storage";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {BasketProductRequestInterface} from "../../api/interfaces/requests/basket-product-request.interface";
+import {take} from "rxjs";
+import {BasketService} from "../../api/services/basket-service";
+import {RemoveBasketProductRequestInterface} from "../../api/interfaces/requests/remove-basket-product-request.interface";
 
 @Component({
   selector: 'app-product',
@@ -25,16 +29,18 @@ export class ProductComponent implements OnInit {
   };
   isUserAuthenticated: boolean;
   isProductOrdered: boolean = false;
+
   isInvalidCountMessage: boolean = false;
   isSuccessCountMessage: boolean = false;
   invalidCountMessageText: string = '';
   successCountMessageText: string = '';
-  //productCountValue: string = '1';
 
   constructor(
     private readonly router: Router,
     private modalWindowService: NgbModal,
-    private readonly localStorage: BrowserLocalStorage
+    private readonly localStorage: BrowserLocalStorage,
+    private readonly ordersService: BasketService,
+    private readonly authHelper: AuthHelper
   ) {
     this.isUserAuthenticated = localStorage.isUserAuthenticated();
   }
@@ -54,9 +60,8 @@ export class ProductComponent implements OnInit {
 
   onAddToBasketClick(value: string) {
     let invalidMessageText: string = '';
-    let successMessageText: string = '';
 
-    // field product.weightFlexible – we need it to know how we have to change count of products when user makes order (if it’s wine – we can only add +1 bottle, but if it’s the potatoes – we want to add 1.5 kg or even 700 g):
+    // field product.weightFlexible – we need it to know how we have to change count of products when user makes order (if it’s wine – we can only add +1 bottle, but if it’s the potatoes – we want to add 1.5 kg or even 700 g)
     if(!this.product.weightFlexible) {
       // allows only whole number (int)
       let intValue: number = Math.round(parseInt(value));
@@ -66,7 +71,6 @@ export class ProductComponent implements OnInit {
             } else if(intValue < 1) {
               invalidMessageText = 'min value is 1';
             } else {
-              successMessageText = 'added count: ' + intValue;
               this.addProductToBasket(intValue);
             }
           } else {
@@ -81,7 +85,6 @@ export class ProductComponent implements OnInit {
             } else if(floatValue < 0.5) {
               invalidMessageText = 'min value is 0.5';
             } else {
-              successMessageText = 'added count: ' + floatValue;
               this.addProductToBasket(floatValue);
             }
           } else {
@@ -90,36 +93,84 @@ export class ProductComponent implements OnInit {
     }
 
     // error handle
+    this.showErrorMessage(invalidMessageText);
+  }
+
+  private addProductToBasket(countValue: number) {
+    let invalidMessageText: string = '';
+    let successMessageText: string = '';
+
+    let requestObject: BasketProductRequestInterface = this.getRequestObjectToAdd(countValue);
+    this.ordersService.addProductToBasket(requestObject)
+      .pipe(take(1))
+      .subscribe(response => {
+        if(response.message === 'added') {
+          this.authHelper.increaseBasketProductsCount();
+          successMessageText = 'added count: ' + countValue;
+        } else if(response.message === 'updated') {
+          successMessageText = 'updated count: ' + countValue;
+        } else {
+          invalidMessageText = response.message;
+        }
+
+        // show result
+        this.showErrorMessage(invalidMessageText);
+        this.showSuccessMessage(successMessageText);
+      });
+  }
+
+  onDeleteProductFromBasketClick(value: string) {
+    let invalidMessageText: string = '';
+    let successMessageText: string = '';
+
+    let requestObject: RemoveBasketProductRequestInterface = this.getRequestObjectToRemove();
+    this.ordersService.removeProductFromBasket(requestObject)
+      .pipe(take(1))
+      .subscribe(response => {
+        if(response.message === 'removed') {
+          successMessageText = response.message + ' from basket';
+          this.authHelper.reduceBasketProductsCount();
+        } else {
+          invalidMessageText = response.message + ' yet'; // nothing to remove
+        }
+
+        // show result
+        this.showErrorMessage(invalidMessageText);
+        this.showSuccessMessage(successMessageText);
+      });
+  }
+
+
+  private getRequestObjectToAdd(productsCount: number): BasketProductRequestInterface {
+    return {
+      userId: this.localStorage.getCurrentUserId(),
+      productId: this.product.id,
+      count: productsCount,
+      weightFlexible: this.product.weightFlexible
+    }
+  }
+  private getRequestObjectToRemove(): RemoveBasketProductRequestInterface {
+    return {
+      userId: this.localStorage.getCurrentUserId(),
+      productId: this.product.id
+    };
+  }
+
+
+  private showErrorMessage(invalidMessageText: string) {
     if(invalidMessageText != '') {
       this.isInvalidCountMessage = true;
       this.invalidCountMessageText = invalidMessageText;
       this.isSuccessCountMessage = false;
     }
+  }
+  private showSuccessMessage(successMessageText: string) {
     if(successMessageText != '') {
       this.isSuccessCountMessage = true;
       this.successCountMessageText = successMessageText;
       this.isInvalidCountMessage = false;
     }
   }
-
-  private addProductToBasket(amount: number) {
-
-    // let requestObject = this.getRequestObject(amount);
-    // this.ordersService.addProductToBasket(requestObject)
-    //   .subscribe(
-    //     res => {
-    //       //this.localStorage.increaseBasketProductsCount() // or don't increase if this product already is in the basket.
-    //       // so first add product to basket in db or change count of this product in db, then return response and decide increase count in local storage or not
-    //     }
-    //   )
-
-  }
-
-  private getRequestObject(amount: number) {
-    let userId: number = this.localStorage.getCurrentUserId();
-    // + amount + product.id
-  }
-
   // change product count value while ordering product
   // onReduceProductCountValueClick(value: string) {
   //   if(!this.product.weightFlexible) {
@@ -157,6 +208,7 @@ export class ProductComponent implements OnInit {
   //     }
   //   }
   // }
+
 
 }
 

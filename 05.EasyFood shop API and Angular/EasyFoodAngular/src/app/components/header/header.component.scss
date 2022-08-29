@@ -1,3 +1,6 @@
+@import 'src/app/shared/global-variables.scss';
+
+
 #profileLink {
   display: none;
 }
@@ -6,4 +9,12 @@
 }
 #adminPanelLink {
   display: none;
+}
+.basket-btn {
+  // don't change when click
+  color: $main-primary-color !important;
+  span {
+    background-color: $main-primary-color !important;
+    color: white !important;
+  }
 }
