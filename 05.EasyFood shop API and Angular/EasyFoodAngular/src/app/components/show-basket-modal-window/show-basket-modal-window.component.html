@@ -28,9 +28,28 @@
 </div>
 <div class="modal-footer">
   <div class="general-price"><span class="total-label">Total:</span> {{basketPrice}} &#8372;</div>
+  <div id="phoneNumberForm">
+    <form class="d-flex" [formGroup]="form">
+      <input class="phone-number-input form-control" #phoneNumberField type="text"
+             placeholder="phone number" aria-label="PhoneNumber" formControlName="phoneNumber">
+    </form>
+    <div *ngIf="form.controls['phoneNumber'].errors" class="error-label">
+      <div *ngIf="form.controls['phoneNumber'].errors['required']"
+           class="form-text text-danger">field is required
+      </div>
+      <div *ngIf="form.controls['phoneNumber'].errors['pattern']"
+           class="form-text text-danger">example: 0934094350
+      </div>
+    </div>
+  </div>
   <div class="buttons">
     <button type="button" class="btn btn-outline-dark cancel-btn" (click)="modal.close('Cancel click')">Cancel</button>
     <button *ngIf="!isProductsListEmpty"
-      type="button" class="btn btn-outline-dark confirm-btn" (click)="modal.close('Confirm click')">Confirm</button>
+      type="button" class="btn btn-outline-dark confirm-btn"
+            [disabled]="!form.valid" (click)="onConfirmOrderClick(phoneNumberField.value)">Confirm</button>
   </div>
+</div>
+
+<div class="success-order-message-container" *ngIf="showSuccessOrderMessage">
+  <p class="success-order-message">Order accepted, our employee will contact you soon!</p>  <!--  + link_to_orders-->
 </div>

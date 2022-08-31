@@ -8,7 +8,7 @@ import {BrowserLocalStorage} from "../../shared/storage/local-storage";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BasketProductRequestInterface} from "../../api/interfaces/requests/basket-product-request.interface";
 import {take} from "rxjs";
-import {BasketService} from "../../api/services/basket-service";
+import {BasketService} from "../../api/services/basket.service";
 import {RemoveBasketProductRequestInterface} from "../../api/interfaces/requests/remove-basket-product-request.interface";
 
 @Component({

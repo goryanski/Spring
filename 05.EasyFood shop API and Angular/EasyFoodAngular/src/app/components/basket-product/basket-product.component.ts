@@ -3,7 +3,7 @@ import {BasketProductInterface} from "../../api/interfaces/basket-product.interf
 import {RemoveBasketProductRequestInterface} from "../../api/interfaces/requests/remove-basket-product-request.interface";
 import {take} from "rxjs";
 import {BrowserLocalStorage} from "../../shared/storage/local-storage";
-import {BasketService} from "../../api/services/basket-service";
+import {BasketService} from "../../api/services/basket.service";
 import {AuthHelper} from "../../shared/helpers/auth-helper";
 import {UpdateBasketProductRequestInterface} from "../../api/interfaces/requests/update-basket-product-request.interface";
 

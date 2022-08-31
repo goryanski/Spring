@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {BrowserLocalStorage} from "../storage/local-storage";
 import {Router} from "@angular/router";
-import {BasketService} from "../../api/services/basket-service";
+import {BasketService} from "../../api/services/basket.service";
 import {take} from "rxjs";
 
 @Injectable()

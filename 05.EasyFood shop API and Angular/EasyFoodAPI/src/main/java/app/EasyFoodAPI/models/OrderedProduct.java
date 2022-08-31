@@ -1,9 +1,9 @@
 package app.EasyFoodAPI.models;
-
 import javax.persistence.*;
 
+
 @Entity
-@Table(name = "orders")
+@Table(name = "ordered_products")
 public class OrderedProduct {
     @Id
     @Column(name = "id")
@@ -13,13 +13,20 @@ public class OrderedProduct {
     @Column(name = "count")
     private Float count;
 
+    @Column(name = "general_price")
+    private Float generalPrice;
+
+
+
     @ManyToOne
-    @JoinColumn(name = "full_product_info_id", referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
+
+
 
 
     public Integer getId() {
@@ -53,5 +60,13 @@ public class OrderedProduct {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public Float getGeneralPrice() {
+        return generalPrice;
+    }
+
+    public void setGeneralPrice(Float generalPrice) {
+        this.generalPrice = generalPrice;
     }
 }

@@ -61,4 +61,10 @@ public class MapperService {
         productDTO.setCountInStorage(basketProduct.getProduct().getAmountInStorage());
         return productDTO;
     }
+
+    public OrderedProduct convertOrderedProduct(BasketProduct product) {
+        OrderedProduct orderedProduct = modelMapper.map(product, OrderedProduct.class);
+        orderedProduct.setId(null); // we don't need to map id - orderedProduct will have his own id
+        return orderedProduct;
+    }
 }

@@ -7,7 +7,7 @@ import app.EasyFoodAPI.dto.responses.BasketResponse;
 import app.EasyFoodAPI.models.BasketProduct;
 import app.EasyFoodAPI.models.Person;
 import app.EasyFoodAPI.models.Product;
-import app.EasyFoodAPI.repositories.BasketProductRepository;
+import app.EasyFoodAPI.repositories.BasketsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,23 +22,23 @@ public class BasketsService {
     private final MapperService mapper;
     private final PeopleService peopleService;
     private final GetProductsService productsService;
-    private final BasketProductRepository basketProductRepository;
+    private final BasketsRepository basketsRepository;
 
     @Autowired
-    public BasketsService(MapperService mapper, PeopleService peopleService, GetProductsService productsService, BasketProductRepository basketProductRepository) {
+    public BasketsService(MapperService mapper, PeopleService peopleService, GetProductsService productsService, BasketsRepository basketsRepository) {
         this.mapper = mapper;
         this.peopleService = peopleService;
         this.productsService = productsService;
-        this.basketProductRepository = basketProductRepository;
+        this.basketsRepository = basketsRepository;
     }
 
     @Transactional
     public String addProductToBasket(BasketProductRequestDTO basketProductDTO) {
-        // we already validate productId and userId and we sure that they are valid
+        // we already validate productId and userId and we sure that they are valid (exist)
         Product product = productsService.getProductById(basketProductDTO.getProductId()).get();
 
         // check if this product already is in the basket
-        Optional<BasketProduct> existingProductInBasket = basketProductRepository.findByPersonIdAndProductId(
+        Optional<BasketProduct> existingProductInBasket = basketsRepository.findByPersonIdAndProductId(
                 basketProductDTO.getUserId(),
                 basketProductDTO.getProductId());
 
@@ -47,7 +47,7 @@ public class BasketsService {
         if(existingProductInBasket.isEmpty()) {
             // this product isn't in basket - create a new entity and add to DB
             BasketProduct basketProduct = fillBasketProduct(basketProductDTO, product);
-            basketProductRepository.save(basketProduct);
+            basketsRepository.save(basketProduct);
             return "added";
         } else {
             // this product already in basket - just update count column and update general price as well
@@ -60,27 +60,24 @@ public class BasketsService {
     @Transactional
     public String removeProductFromBasket(RemoveBasketProductRequestDTO basketProductDTO) {
         // check if this product already is in the basket
-        Optional<BasketProduct> existingProductInBasket = basketProductRepository.findByPersonIdAndProductId(
+        Optional<BasketProduct> existingProductInBasket = basketsRepository.findByPersonIdAndProductId(
                 basketProductDTO.getUserId(),
                 basketProductDTO.getProductId());
 
         if(existingProductInBasket.isEmpty()) {
             return "nothing to remove";
         } else {
-            basketProductRepository.delete(existingProductInBasket.get());
+            basketsRepository.delete(existingProductInBasket.get());
             return "removed";
         }
     }
 
     public int getUserProductsCountInBasket(int userId) {
-        return basketProductRepository.countByPersonId(userId);
+        return basketsRepository.countByPersonId(userId);
     }
 
-    public BasketResponse getUserProducts(int id) {
-        List<BasketProductDTO> productsDTO = basketProductRepository.findByPersonId(id)
-                .stream()
-                .map(mapper::convertBasketProduct)
-                .collect(Collectors.toList());
+    public BasketResponse getUserBasketData(int id) {
+        List<BasketProductDTO> productsDTO = getUserProducts(id);
 
         Double basketPrice = 0.0;
         for (var product: productsDTO) {
@@ -93,7 +90,7 @@ public class BasketsService {
 
     @Transactional
     public String updateBasketProduct(UpdateBasketProductRequestDTO basketProductDTO) {
-        Optional<BasketProduct> existingProductInBasket = basketProductRepository.findByPersonIdAndProductId(
+        Optional<BasketProduct> existingProductInBasket = basketsRepository.findByPersonIdAndProductId(
                 basketProductDTO.getUserId(),
                 basketProductDTO.getProductId());
 
@@ -109,7 +106,14 @@ public class BasketsService {
     @Transactional
     public int deleteAllProducts(int id) {
         // return count of removed products
-        return basketProductRepository.removeByPersonId(id);
+        return basketsRepository.removeByPersonId(id);
+    }
+
+    public List<BasketProductDTO> getUserProducts(int userId) {
+        return basketsRepository.findByPersonId(userId)
+                .stream()
+                .map(mapper::convertBasketProduct)
+                .collect(Collectors.toList());
     }
 
     private BasketProduct fillBasketProduct(BasketProductRequestDTO basketProductDTO,

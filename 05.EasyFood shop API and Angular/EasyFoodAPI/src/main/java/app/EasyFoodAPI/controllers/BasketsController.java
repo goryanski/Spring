@@ -1,6 +1,5 @@
 package app.EasyFoodAPI.controllers;
 
-import app.EasyFoodAPI.dto.BasketProductDTO;
 import app.EasyFoodAPI.dto.requests.BasketProductRequestDTO;
 import app.EasyFoodAPI.dto.requests.RemoveBasketProductRequestDTO;
 import app.EasyFoodAPI.dto.requests.UpdateBasketProductRequestDTO;
@@ -14,8 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import java.util.List;
 
 import static app.EasyFoodAPI.util.ErrorsUtil.returnAddProductToBasketErrorsToClient;
 
@@ -64,7 +61,7 @@ public class BasketsController {
 
     @GetMapping("/getProducts/{userId}")
     public BasketResponse getUserProducts(@PathVariable("userId") int id) {
-        return basketsService.getUserProducts(id);
+        return basketsService.getUserBasketData(id);
     }
 
     @PostMapping("/updateProduct")
@@ -83,7 +80,7 @@ public class BasketsController {
 
     @ExceptionHandler
     private MessageResponse handleException(AddProductToBasketException e) {
-        // message from exception put to ErrorsResponse and send to client
+        // message from exception put to response and send to client
         return new MessageResponse(
                 e.getMessage(),
                 System.currentTimeMillis()

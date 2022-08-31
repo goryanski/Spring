@@ -81,7 +81,7 @@ public class AuthController {
 
     @ExceptionHandler
     private MessageResponse handleException(AuthException e) {
-        // message from exception put to ErrorsResponse and send to client
+        // message from exception put to response and send to client
         return new MessageResponse(
                 e.getMessage(),
                 System.currentTimeMillis()

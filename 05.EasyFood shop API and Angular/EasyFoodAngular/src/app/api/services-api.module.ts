@@ -5,7 +5,8 @@ import {ShowProductWindowService} from "./services/show-product-window.service";
 import {SearchProductsService} from "./services/search-products.service";
 import {ProductsFilterService} from "./services/products-filter.service";
 import {AuthService} from "./services/auth.service";
-import {BasketService} from "./services/basket-service";
+import {BasketService} from "./services/basket.service";
+import {OrdersService} from "./services/orders.service";
 
 @NgModule({
   declarations: [],
@@ -18,7 +19,8 @@ import {BasketService} from "./services/basket-service";
     SearchProductsService,
     ProductsFilterService,
     AuthService,
-    BasketService
+    BasketService,
+    OrdersService
   ]
 })
 export class ApiServicesModule { }

@@ -43,15 +43,35 @@
 }
 
 
+.success-order-message-container {
+  text-align: center;
+  margin: 20px 10px 10px 10px;
+  .success-order-message {
+    color: $bootstrap-success-color;
+    font-size: 22px;
+    font-weight: bold;
+  }
+}
 
-@media (max-width: 500px) {
+
+@media (max-width: 1000px) {
   .modal-footer {
     flex-direction: column;
     .general-price, .buttons {
-      margin-top: 20px;
+      margin-top: 30px;
+      margin-left: 0;
     }
-    .confirm-btn {
-      margin-left: 20px;
+    #phoneNumberForm {
+      margin-top: 30px;
+      .error-label {
+        text-align: center;
+      }
+    }
+    .buttons {
+      margin-top: 30px;
+      .confirm-btn {
+        margin-left: 20px;
+      }
     }
   }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BasketProductRepository extends JpaRepository<BasketProduct, Integer> {
+public interface BasketsRepository extends JpaRepository<BasketProduct, Integer> {
     Optional<BasketProduct> findByPersonIdAndProductId(int personId, int productId);
     List<BasketProduct> findByPersonId(int personId);
     int countByPersonId(int personId);

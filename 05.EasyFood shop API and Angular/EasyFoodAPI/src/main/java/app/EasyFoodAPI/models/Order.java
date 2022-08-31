@@ -1,10 +1,9 @@
 package app.EasyFoodAPI.models;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
 
 @Entity
 @Table(name = "orders")
@@ -14,23 +13,32 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "general_count")
-    private Float productsCount;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Column(name = "general_price")
     private Float generalPrice;
 
-    @Column(name = "last_updated_date")
+    @Column(name = "date")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date lastUpdatedDate;
+    private Date date;
+
+
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
 
+    @ManyToOne
+    @JoinColumn(name = "state_id", referencedColumnName = "id")
+    private OrderState state;
+
     @OneToMany(mappedBy = "order")
     private List<OrderedProduct> orderedProducts;
+
+
+
 
     public Integer getId() {
         return id;
@@ -40,13 +48,6 @@ public class Order {
         this.id = id;
     }
 
-    public Float getProductsCount() {
-        return productsCount;
-    }
-
-    public void setProductsCount(Float productsCount) {
-        this.productsCount = productsCount;
-    }
 
     public Float getGeneralPrice() {
         return generalPrice;
@@ -54,14 +55,6 @@ public class Order {
 
     public void setGeneralPrice(Float generalPrice) {
         this.generalPrice = generalPrice;
-    }
-
-    public Date getLastUpdatedDate() {
-        return lastUpdatedDate;
-    }
-
-    public void setLastUpdatedDate(Date lastUpdatedDate) {
-        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public Person getPerson() {
@@ -78,5 +71,29 @@ public class Order {
 
     public void setOrderedProducts(List<OrderedProduct> orderedProducts) {
         this.orderedProducts = orderedProducts;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public OrderState getState() {
+        return state;
+    }
+
+    public void setState(OrderState state) {
+        this.state = state;
     }
 }
