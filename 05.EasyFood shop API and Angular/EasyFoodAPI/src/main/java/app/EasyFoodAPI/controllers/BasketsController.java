@@ -1,7 +1,10 @@
 package app.EasyFoodAPI.controllers;
 
-import app.EasyFoodAPI.dto.requestObjects.BasketProductRequestDTO;
-import app.EasyFoodAPI.dto.requestObjects.RemoveBasketProductRequestDTO;
+import app.EasyFoodAPI.dto.BasketProductDTO;
+import app.EasyFoodAPI.dto.requests.BasketProductRequestDTO;
+import app.EasyFoodAPI.dto.requests.RemoveBasketProductRequestDTO;
+import app.EasyFoodAPI.dto.requests.UpdateBasketProductRequestDTO;
+import app.EasyFoodAPI.dto.responses.BasketResponse;
 import app.EasyFoodAPI.services.BasketsService;
 import app.EasyFoodAPI.util.MessageResponse;
 import app.EasyFoodAPI.util.exceptions.AddProductToBasketException;
@@ -11,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static app.EasyFoodAPI.util.ErrorsUtil.returnAddProductToBasketErrorsToClient;
 
@@ -55,6 +60,25 @@ public class BasketsController {
     @GetMapping("/countProductsInBasket/{userId}")
     public int getUserProductsCountInBasket(@PathVariable("userId") int id) {
         return basketsService.getUserProductsCountInBasket(id);
+    }
+
+    @GetMapping("/getProducts/{userId}")
+    public BasketResponse getUserProducts(@PathVariable("userId") int id) {
+        return basketsService.getUserProducts(id);
+    }
+
+    @PostMapping("/updateProduct")
+    public MessageResponse updateBasketProduct(@RequestBody UpdateBasketProductRequestDTO basketProductDTO) {
+        String response = basketsService.updateBasketProduct(basketProductDTO);
+        return new MessageResponse(
+                response,
+                System.currentTimeMillis()
+        );
+    }
+
+    @DeleteMapping("/deleteAll/{userId}")
+    public int deleteAllProducts(@PathVariable("userId") int id) {
+        return basketsService.deleteAllProducts(id);
     }
 
     @ExceptionHandler

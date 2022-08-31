@@ -1,16 +1,16 @@
-package app.EasyFoodAPI.dto.requestObjects;
+package app.EasyFoodAPI.dto.requests;
 
-public class ProductsByCategoryRequestDTO {
-    private int categoryId;
+public class ProductsByNameRequestDTO {
+    private String name;
     private int currentPage;
     private int pageSize;
 
-    public int getCategoryId() {
-        return categoryId;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getCurrentPage() {

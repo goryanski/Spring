@@ -1,8 +1,8 @@
 package app.EasyFoodAPI.controllers;
 import app.EasyFoodAPI.dto.FullProductInfoDTO;
 import app.EasyFoodAPI.dto.ShortProductInfoDTO;
-import app.EasyFoodAPI.dto.requestObjects.ProductsByCategoryRequestDTO;
-import app.EasyFoodAPI.dto.requestObjects.ProductsByNameRequestDTO;
+import app.EasyFoodAPI.dto.requests.ProductsByCategoryRequestDTO;
+import app.EasyFoodAPI.dto.requests.ProductsByNameRequestDTO;
 import app.EasyFoodAPI.services.GetProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

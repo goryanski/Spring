@@ -1,4 +1,4 @@
-package app.EasyFoodAPI.dto.requestObjects;
+package app.EasyFoodAPI.dto.requests;
 
 import javax.validation.constraints.NotNull;
 

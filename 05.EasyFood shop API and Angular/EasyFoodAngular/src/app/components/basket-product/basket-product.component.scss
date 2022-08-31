@@ -1,0 +1,132 @@
+@import 'src/app/shared/global-variables.scss';
+
+.product {
+  display: flex;
+  .left-half {
+    width: 50%;
+    display: flex;
+    .img-container {
+      margin-left: 6%;
+      img {
+        margin: 20px 3%;
+        width: 100px;
+        height: 100px;
+      }
+    }
+    .description-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 60%;
+      margin: 0 6%;
+      .product-name {
+        font-size: 18px;
+      }
+    }
+  }
+ .right-half {
+   width: 50%;
+   display: flex;
+   .count-block {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     margin: 0 6%;
+     .count-controls {
+       height: 40px;
+       display: flex;
+       .product-count-input {
+         width: 80px;
+         margin-right: 5px;
+         margin-left: 5px;
+         border: 1px solid $main-primary-color;
+         text-align: center;
+       }
+     }
+     .error-count-message {
+       margin-top: 5px;
+       color: red;
+     }
+   }
+   .price {
+     font-size: 26px;
+     width: 20%;
+     margin: 0 6%;
+     color: $bootstrap-success-color;
+     display: flex;
+     align-items: center;
+   }
+   .delete-btn-block {
+     display: flex;
+     align-items: center;
+     .delete-btn {
+       height: 50px;
+     }
+   }
+ }
+}
+
+
+@media (max-width: 1200px) {
+  .product {
+    flex-direction: column;
+    .left-half {
+      margin-top: 20px;
+      width: 100%;
+      .img-container {
+        margin-left: 15%;
+      }
+      .description-block {
+        width: 100%;
+      }
+    }
+    .right-half {
+      margin-top: 40px;
+      margin-bottom: 20px;
+      width: 100%;
+      .count-block {
+        width: 34%;
+        //justify-content: center;
+        align-items: center;
+      }
+      .price {
+        width: 33%;
+        justify-content: center;
+      }
+      .delete-btn-block {
+        width: 33%;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .product {
+    .left-half {
+      .img-container {
+        margin-left: 5%;
+      }
+    }
+    .right-half {
+      flex-direction: column;
+      .count-block {
+        width: 100%;
+        margin: 40px 0 0 0;
+        justify-content: center;
+      }
+      .price {
+        width: 100%;
+        margin: 40px 0 0 0;
+        justify-content: center;
+      }
+      .delete-btn-block {
+        width: 100%;
+        margin-top: 60px;
+        .delete-btn {
+          width: 100px;
+        }
+      }
+    }
+  }
+}

@@ -5,6 +5,8 @@ import app.EasyFoodAPI.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
+
 @Service
 public class MapperService {
     private final ModelMapper modelMapper;
@@ -43,4 +45,20 @@ public class MapperService {
     }
 
 
+    public BasketProductDTO convertBasketProduct(BasketProduct basketProduct) {
+        // map manually
+        BasketProductDTO productDTO = new BasketProductDTO();
+        productDTO.setProductId(basketProduct.getProduct().getId());
+        productDTO.setUserId(basketProduct.getPerson().getId());
+        productDTO.setName(basketProduct.getProduct().getName());
+        productDTO.setPhotoPath(basketProduct.getProduct().getPhotoPath());
+        productDTO.setWeight(basketProduct.getProduct().getWeight());
+        productDTO.setWeightMeasurement(basketProduct.getProduct().getMeasurement().getName());
+        productDTO.setWeightFlexible(basketProduct.getProduct().isWeightFlexible());
+        productDTO.setPricePerOneItem(basketProduct.getProduct().getPrice());
+        productDTO.setGeneralCount(basketProduct.getCount());
+        productDTO.setGeneralPrice(basketProduct.getGeneralPrice());
+        productDTO.setCountInStorage(basketProduct.getProduct().getAmountInStorage());
+        return productDTO;
+    }
 }

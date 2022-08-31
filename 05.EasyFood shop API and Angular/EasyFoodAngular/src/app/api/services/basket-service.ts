@@ -6,6 +6,8 @@ import {BasketProductRequestInterface} from "../interfaces/requests/basket-produ
 import {MessageResponseInterface} from "../interfaces/responses/message-response.interface";
 import {BrowserLocalStorage} from "../../shared/storage/local-storage";
 import {RemoveBasketProductRequestInterface} from "../interfaces/requests/remove-basket-product-request.interface";
+import {BasketResponseInterface} from "../interfaces/responses/basket-response.interface";
+import {UpdateBasketProductRequestInterface} from "../interfaces/requests/update-basket-product-request.interface";
 
 @Injectable()
 export class BasketService {
@@ -61,6 +63,64 @@ export class BasketService {
         this.appEnv.apiEasyFoodURL,
         'basket',
         'countProductsInBasket',
+        `${userId}`
+      ].join('/'),
+      {
+        headers: {
+          'Authorization': `Bearer ${this.browserLocalStorage.getItem('accessToken')}`
+        }
+      }
+    ).pipe(
+      publishReplay(1),
+      refCount()
+    );
+  }
+
+  getAllBasketProducts(userId: number): Observable<BasketResponseInterface> {
+    return this.httpClient.get<BasketResponseInterface>(
+      [
+        this.appEnv.apiEasyFoodURL,
+        'basket',
+        'getProducts',
+        `${userId}`
+      ].join('/'),
+      {
+        headers: {
+          'Authorization': `Bearer ${this.browserLocalStorage.getItem('accessToken')}`
+        }
+      }
+    ).pipe(
+      publishReplay(1),
+      refCount()
+    );
+  }
+
+  updateBasketProduct(requestObject: UpdateBasketProductRequestInterface)
+    : Observable<MessageResponseInterface> {
+    return this.httpClient.post<MessageResponseInterface>(
+      [
+        this.appEnv.apiEasyFoodURL,
+        'basket',
+        'updateProduct'
+      ].join('/'),
+      requestObject,
+      {
+        headers: {
+          'Authorization': `Bearer ${this.browserLocalStorage.getItem('accessToken')}`
+        }
+      }
+    ).pipe(
+      publishReplay(1),
+      refCount()
+    );
+  }
+
+  deleteAllProducts(userId: number): Observable<number> {
+    return this.httpClient.delete<number>(
+      [
+        this.appEnv.apiEasyFoodURL,
+        'basket',
+        'deleteAll',
         `${userId}`
       ].join('/'),
       {

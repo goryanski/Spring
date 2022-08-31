@@ -1,5 +1,5 @@
 package app.EasyFoodAPI.util.validators;
-import app.EasyFoodAPI.dto.requestObjects.BasketProductRequestDTO;
+import app.EasyFoodAPI.dto.requests.BasketProductRequestDTO;
 import app.EasyFoodAPI.services.GetProductsService;
 import app.EasyFoodAPI.services.PeopleService;
 import org.springframework.stereotype.Component;

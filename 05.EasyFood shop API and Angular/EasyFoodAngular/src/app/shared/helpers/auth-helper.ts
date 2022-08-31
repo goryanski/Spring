@@ -135,6 +135,11 @@ export class AuthHelper {
     this.setCountProductsInBasketToBadge();
   }
 
+  clearCountProductsInBasket() {
+    this.localStorage.clearCountProductsInBasket();
+    this.setCountProductsInBasketToBadge();
+  }
+
   private setCountProductsInBasketToBadge() {
     let countProducts = this.localStorage.getCountProductsInBasket();
     if(countProducts != null) {

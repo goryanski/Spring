@@ -39,7 +39,7 @@ export class ProductComponent implements OnInit {
     private readonly router: Router,
     private modalWindowService: NgbModal,
     private readonly localStorage: BrowserLocalStorage,
-    private readonly ordersService: BasketService,
+    private readonly basketService: BasketService,
     private readonly authHelper: AuthHelper
   ) {
     this.isUserAuthenticated = localStorage.isUserAuthenticated();
@@ -101,7 +101,7 @@ export class ProductComponent implements OnInit {
     let successMessageText: string = '';
 
     let requestObject: BasketProductRequestInterface = this.getRequestObjectToAdd(countValue);
-    this.ordersService.addProductToBasket(requestObject)
+    this.basketService.addProductToBasket(requestObject)
       .pipe(take(1))
       .subscribe(response => {
         if(response.message === 'added') {
@@ -119,12 +119,12 @@ export class ProductComponent implements OnInit {
       });
   }
 
-  onDeleteProductFromBasketClick(value: string) {
+  onDeleteProductFromBasketClick() {
     let invalidMessageText: string = '';
     let successMessageText: string = '';
 
     let requestObject: RemoveBasketProductRequestInterface = this.getRequestObjectToRemove();
-    this.ordersService.removeProductFromBasket(requestObject)
+    this.basketService.removeProductFromBasket(requestObject)
       .pipe(take(1))
       .subscribe(response => {
         if(response.message === 'removed') {
@@ -171,45 +171,6 @@ export class ProductComponent implements OnInit {
       this.isInvalidCountMessage = false;
     }
   }
-  // change product count value while ordering product
-  // onReduceProductCountValueClick(value: string) {
-  //   if(!this.product.weightFlexible) {
-  //     let intValue: number = Math.round(parseInt(value));
-  //     if(intValue >= 2) {
-  //       this.productCountValue = (intValue - 1).toString();
-  //     } else {
-  //       this.productCountValue = (1).toString();
-  //     }
-  //   } else {
-  //     let floatValue: number = parseFloat(parseFloat(value).toFixed(1)); // one digit after point
-  //     if(floatValue >= 1) {
-  //       this.productCountValue = (floatValue - 0.5).toString();
-  //     } else if(floatValue < 1 && floatValue > 0.5) {
-  //       this.productCountValue = floatValue.toString();
-  //     } else {
-  //       this.productCountValue = (0.5).toString();
-  //     }
-  //   }
-  // }
-  // onIncreaseProductCountValueClick(value: string) {
-  //   if(!this.product.weightFlexible) {
-  //     let intValue: number = Math.round(parseInt(value));
-  //     if(intValue < 999) {
-  //       this.productCountValue = (intValue + 1).toString();
-  //     } else {
-  //       this.productCountValue = (999).toString();
-  //     }
-  //   } else {
-  //     let floatValue: number = parseFloat(parseFloat(value).toFixed(1));
-  //     if(floatValue > 998.5) {
-  //       this.productCountValue = (999).toString();
-  //     } else {
-  //       this.productCountValue = (floatValue + 0.5).toString();
-  //     }
-  //   }
-  // }
-
-
 }
 
 

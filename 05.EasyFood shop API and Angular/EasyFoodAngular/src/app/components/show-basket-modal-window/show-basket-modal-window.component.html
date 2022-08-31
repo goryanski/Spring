@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Basket</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div *ngIf="!isProductsListEmpty; else noProductsMessage">
+      <div class="clear-basket-btn">
+        <button class="btn btn-danger" (click)="onClearBasketClick()">Clear basket</button>
+      </div>
+      <hr>
+      <div class="products"
+           *ngIf="products.length > 0; else productsLoading">
+        <app-basket-product *ngFor="let product of products"
+                            [product]="product"
+                            (productRemovingEvent)="onRemoveProductEvent($event)"
+                            (productPriceChangedEvent)="onProductPriceChangedEvent()">
+        </app-basket-product>
+      </div>
+
+      <ng-template #productsLoading>
+        <div class="spinner-border products-loader" role="status"></div>
+      </ng-template>
+    </div>
+
+    <ng-template #noProductsMessage>
+      <p class="no-products-message">There are no products yet</p>
+    </ng-template>
+</div>
+<div class="modal-footer">
+  <div class="general-price"><span class="total-label">Total:</span> {{basketPrice}} &#8372;</div>
+  <div class="buttons">
+    <button type="button" class="btn btn-outline-dark cancel-btn" (click)="modal.close('Cancel click')">Cancel</button>
+    <button *ngIf="!isProductsListEmpty"
+      type="button" class="btn btn-outline-dark confirm-btn" (click)="modal.close('Confirm click')">Confirm</button>
+  </div>
+</div>

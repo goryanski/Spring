@@ -2,6 +2,9 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthHelper} from "../../shared/helpers/auth-helper";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ShowProductModalWindowComponent} from "../show-product-modal-window/show-product-modal-window.component";
+import {ShowBasketModalWindowComponent} from "../show-basket-modal-window/show-basket-modal-window.component";
 
 @Component({
   selector: 'app-header',
@@ -20,7 +23,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private readonly router: Router,
-    private readonly authHelper: AuthHelper
+    private readonly authHelper: AuthHelper,
+    private modalWindowService: NgbModal
   ) {
     this.form = this.fb.group({
       'search': this.fb.control(
@@ -43,6 +47,12 @@ export class HeaderComponent implements OnInit {
         this.router.navigate([`found-products/${text}`]);
       }
     }
+  }
+
+  onShowBasketClick() {
+    // link to modal window
+    this.modalWindowService.open(ShowBasketModalWindowComponent, { size: 'xl', scrollable: true } );
+    // { scrollable: true } - to fix footer and let scroll only basket content (footer where the total price and buttons we will see no matter how long the content is)
   }
 
   logOut() {

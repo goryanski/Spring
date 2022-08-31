@@ -1,9 +1,7 @@
 package app.EasyFoodAPI.controllers;
 import app.EasyFoodAPI.dto.BrandDTO;
-import app.EasyFoodAPI.dto.FullProductInfoDTO;
 import app.EasyFoodAPI.dto.ProvisionerCountryDTO;
-import app.EasyFoodAPI.dto.ShortProductInfoDTO;
-import app.EasyFoodAPI.dto.requestObjects.FilterProductsRequestDTO;
+import app.EasyFoodAPI.dto.requests.FilterProductsRequestDTO;
 import app.EasyFoodAPI.services.BrandsService;
 import app.EasyFoodAPI.services.GetProductsService;
 import app.EasyFoodAPI.services.ProvisionersCountriesService;

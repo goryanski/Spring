@@ -1,0 +1,59 @@
+@import 'src/app/shared/global-variables.scss';
+
+.modal-body {
+  .clear-basket-btn {
+    text-align: center;
+    margin: 10px 0 20px 0;
+  }
+  .no-products-message {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 26px;
+    font-weight: bold;
+  }
+  .products-loader {
+    margin: 50px 50%;
+  }
+}
+
+
+
+.modal-footer {
+  justify-content: space-between;
+  .general-price {
+    font-size: 26px;
+    margin-left: 20px;
+    color: $bootstrap-success-color;
+    .total-label {
+      color: black;
+      font-size: 18px;
+    }
+  }
+  .cancel-btn {
+    margin-right: 10px;
+  }
+  .cancel-btn:hover {
+    background-color: $bootstrap-secondary-color;
+    color: white;
+  }
+  .confirm-btn:hover {
+    background-color: $warning-color;
+    color: black;
+  }
+}
+
+
+
+@media (max-width: 500px) {
+  .modal-footer {
+    flex-direction: column;
+    .general-price, .buttons {
+      margin-top: 20px;
+    }
+    .confirm-btn {
+      margin-left: 20px;
+    }
+  }
+}
+
+

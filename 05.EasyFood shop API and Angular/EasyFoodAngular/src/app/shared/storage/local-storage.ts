@@ -67,4 +67,11 @@ export class BrowserLocalStorage implements AbstractStorage {
       localStorage.setItem('countProductsInBasket', (parseInt(countProducts) - 1).toString())
     }
   }
+
+  clearCountProductsInBasket() {
+    let countProducts = localStorage.getItem('countProductsInBasket');
+    if(countProducts != null) {
+      localStorage.setItem('countProductsInBasket', (0).toString())
+    }
+  }
 }
