@@ -1,5 +1,7 @@
 package app.EasyFoodAPI.services;
 
+import app.EasyFoodAPI.dto.OrderDTO;
+import app.EasyFoodAPI.dto.OrderedProductDTO;
 import app.EasyFoodAPI.dto.requests.MakeOrderRequestDTO;
 import app.EasyFoodAPI.models.BasketProduct;
 import app.EasyFoodAPI.models.Order;
@@ -44,14 +46,14 @@ public class OrdersService {
         ordersRepository.save(order);
 
         // create and save order products
-        List<OrderedProduct> orderedProducts = getOrderedProduct(params);
+        List<OrderedProduct> orderedProducts = getOrderedProducts(params);
         orderedProducts.forEach(product -> {
                     product.setOrder(order);
                     orderedProductsRepository.save(product);
                 });
     }
 
-    private List<OrderedProduct> getOrderedProduct(MakeOrderRequestDTO params) {
+    private List<OrderedProduct> getOrderedProducts(MakeOrderRequestDTO params) {
         List<BasketProduct> basketProducts = basketsRepository.findByPersonId(params.getUserId());
         return basketProducts.stream()
                 .map(mapper::convertOrderedProduct)
@@ -71,12 +73,18 @@ public class OrdersService {
     }
 
 
-    public String getUserOrders(int userId) {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date currentDate = Calendar.getInstance().getTime();
-        String dateStr = dateFormat.format(currentDate);
-        return "";
+    public List<OrderDTO> getUserOrders(int userId) {
+        return ordersRepository.findByPersonId(userId)
+                .stream()
+                .map(mapper::convertOrder)
+                .collect(Collectors.toList());
     }
 
 
+    public List<OrderedProductDTO> getOrderProducts(int orderId) {
+        return orderedProductsRepository.findByOrderId(orderId)
+                .stream()
+                .map(mapper::convertOrderedProduct)
+                .collect(Collectors.toList());
+    }
 }

@@ -14,7 +14,7 @@ export class BasketService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly appEnv: AppEnvironment,
-    private readonly browserLocalStorage: BrowserLocalStorage
+    private readonly localStorage: BrowserLocalStorage
   ) {}
 
   addProductToBasket(requestObject: BasketProductRequestInterface)
@@ -28,7 +28,7 @@ export class BasketService {
       requestObject,
       {
         headers: {
-          'Authorization': `Bearer ${this.browserLocalStorage.getItem('accessToken')}`
+          'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
         }
       }
     ).pipe(
@@ -48,7 +48,7 @@ export class BasketService {
       requestObject,
       {
         headers: {
-          'Authorization': `Bearer ${this.browserLocalStorage.getItem('accessToken')}`
+          'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
         }
       }
     ).pipe(
@@ -67,7 +67,7 @@ export class BasketService {
       ].join('/'),
       {
         headers: {
-          'Authorization': `Bearer ${this.browserLocalStorage.getItem('accessToken')}`
+          'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
         }
       }
     ).pipe(
@@ -86,7 +86,7 @@ export class BasketService {
       ].join('/'),
       {
         headers: {
-          'Authorization': `Bearer ${this.browserLocalStorage.getItem('accessToken')}`
+          'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
         }
       }
     ).pipe(
@@ -106,7 +106,7 @@ export class BasketService {
       requestObject,
       {
         headers: {
-          'Authorization': `Bearer ${this.browserLocalStorage.getItem('accessToken')}`
+          'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
         }
       }
     ).pipe(
@@ -125,7 +125,7 @@ export class BasketService {
       ].join('/'),
       {
         headers: {
-          'Authorization': `Bearer ${this.browserLocalStorage.getItem('accessToken')}`
+          'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
         }
       }
     ).pipe(

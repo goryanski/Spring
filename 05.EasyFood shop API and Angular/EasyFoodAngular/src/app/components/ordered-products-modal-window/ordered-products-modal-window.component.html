@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Odrered products</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div *ngIf="!isProductsListEmpty; else noProductsMessage">
+    <div class="products" *ngIf="products.length > 0; else productsLoading">
+      <app-ordered-product *ngFor="let product of products" [product]="product"></app-ordered-product>
+    </div>
+
+    <ng-template #productsLoading>
+      <div class="spinner-border products-loader" role="status"></div>
+    </ng-template>
+  </div>
+
+  <ng-template #noProductsMessage>
+    <p class="no-products-message">There are no products yet</p>
+  </ng-template>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark cancel-btn" (click)="modal.close('Cancel click')">Cancel</button>
+</div>

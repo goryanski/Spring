@@ -1,0 +1,14 @@
+<div *ngIf="!isOrdersListEmpty; else noOrdersMessage">
+
+  <div class="orders" *ngIf="orders.length > 0; else ordersLoading">
+    <app-user-order *ngFor="let order of orders" [order]="order"></app-user-order>
+  </div>
+
+  <ng-template #ordersLoading>
+    <div class="spinner-border orders-loader" role="status"></div>
+  </ng-template>
+</div>
+
+<ng-template #noOrdersMessage>
+  <p class="no-orders-message">There are no orders</p>
+</ng-template>

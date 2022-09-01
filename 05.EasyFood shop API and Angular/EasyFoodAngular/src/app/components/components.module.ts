@@ -9,6 +9,7 @@ import { ShowProductModalWindowComponent } from './show-product-modal-window/sho
 import {ReactiveFormsModule} from "@angular/forms";
 import { ShowBasketModalWindowComponent } from './show-basket-modal-window/show-basket-modal-window.component';
 import { BasketProductComponent } from './basket-product/basket-product.component';
+import { OrderedProductComponent } from './ordered-product/ordered-product.component';
 
 // common components
 @NgModule({
@@ -18,13 +19,15 @@ import { BasketProductComponent } from './basket-product/basket-product.componen
     ProductComponent,
     ShowProductModalWindowComponent,
     ShowBasketModalWindowComponent,
-    BasketProductComponent
+    BasketProductComponent,
+    OrderedProductComponent
   ],
-    exports: [
-        HeaderComponent,
-        FooterComponent,
-        ProductComponent
-    ],
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    ProductComponent,
+    OrderedProductComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,

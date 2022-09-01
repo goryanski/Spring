@@ -6,6 +6,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 @Service
 public class MapperService {
@@ -66,5 +70,26 @@ public class MapperService {
         OrderedProduct orderedProduct = modelMapper.map(product, OrderedProduct.class);
         orderedProduct.setId(null); // we don't need to map id - orderedProduct will have his own id
         return orderedProduct;
+    }
+
+    public OrderDTO convertOrder(Order order) {
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setId(order.getId());
+        orderDTO.setPrice(order.getGeneralPrice());
+        orderDTO.setState(order.getState().getName());
+        // date
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dateStr = dateFormat.format(order.getDate());
+        orderDTO.setDate(dateStr);
+        return orderDTO;
+    }
+
+    public OrderedProductDTO convertOrderedProduct(OrderedProduct product) {
+        OrderedProductDTO productDTO = new OrderedProductDTO();
+        productDTO.setOriginalProductId(product.getProduct().getId());
+        productDTO.setName(product.getProduct().getName());
+        productDTO.setCount(product.getCount());
+        productDTO.setPrice(product.getGeneralPrice());
+        return productDTO;
     }
 }

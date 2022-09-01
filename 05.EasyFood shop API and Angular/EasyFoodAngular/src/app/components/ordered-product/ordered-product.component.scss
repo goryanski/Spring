@@ -1,0 +1,33 @@
+@import 'src/app/shared/global-variables.scss';
+
+.product {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid $warning-color;
+  box-shadow: 0 1px 10px 2px $warning-color;
+  margin: 60px 0;
+  padding: 0 20px;
+  .info {
+    color: $bootstrap-success-color;
+    font-size: 26px;
+  }
+  .product-name, .product-count, .product-price, .show-product-btn {
+    margin: 40px 20px;
+  }
+  .product-name {
+    width: 30%;
+  }
+  .show-product-btn {
+    height: 45px;
+  }
+}
+
+
+@media (max-width: 1000px) {
+    .product {
+      flex-wrap: wrap;
+      .product-name {
+        width: 100%;
+      }
+    }
+}
