@@ -28,12 +28,4 @@ public class BasketResponse {
     public void setBasketPrice(Double basketPrice) {
         this.basketPrice = basketPrice;
     }
-    //
-//    public Float getBasketPrice() {
-//        return basketPrice;
-//    }
-//
-//    public void setBasketPrice(Float basketPrice) {
-//        this.basketPrice = basketPrice;
-//    }
 }

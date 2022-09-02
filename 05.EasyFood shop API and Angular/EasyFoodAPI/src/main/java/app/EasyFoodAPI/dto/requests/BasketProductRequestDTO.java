@@ -5,13 +5,10 @@ import javax.validation.constraints.NotNull;
 public class BasketProductRequestDTO {
     @NotNull
     private Integer userId;
-
     @NotNull
     private Integer productId;
-
     @NotNull
     private Float count;
-
     @NotNull
     private Boolean weightFlexible;
 

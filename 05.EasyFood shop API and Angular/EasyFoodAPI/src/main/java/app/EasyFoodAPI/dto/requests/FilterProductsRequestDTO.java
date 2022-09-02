@@ -9,6 +9,7 @@ public class FilterProductsRequestDTO {
     private int skip;
     private int limit;
 
+
     public int getCountryId() {
         return countryId;
     }

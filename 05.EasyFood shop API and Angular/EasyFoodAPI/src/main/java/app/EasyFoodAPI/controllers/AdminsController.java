@@ -13,19 +13,29 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin()
-@RequestMapping("/api/easyFood/admin")
+@RequestMapping("/api/easyFood/admins")
 public class AdminsController {
 
-    @GetMapping("/add-product")
-    public Map<String, String> addProduct() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
 
-        Map<String, String> response = new HashMap<>();
-        response.put("username", personDetails.getUsername());
-        response.put("role", personDetails.getAccount().getRole().getName());
-        response.put("email", personDetails.getAccount().getPerson().getEmail());
 
-        return response;
-    }
+
+
+
+
+
+
+
+// test: get authenticated user (role=admin) from spring security context (to check spring security configuration for authentication and authorization)
+//    @GetMapping("/get-info")
+//    public Map<String, String> addProduct() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+//
+//        Map<String, String> response = new HashMap<>();
+//        response.put("username", personDetails.getUsername());
+//        response.put("role", personDetails.getAccount().getRole().getName());
+//        response.put("email", personDetails.getAccount().getPerson().getEmail());
+//
+//        return response;
+//    }
 }

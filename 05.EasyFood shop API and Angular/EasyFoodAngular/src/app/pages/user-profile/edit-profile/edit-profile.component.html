@@ -1,1 +1,73 @@
-<p>edit-profile works!</p>
+<form class="edit-form mt-5" [formGroup]="form">
+  <div class="text-success mb-3">* If you don't want to edit some fields - just leave them empty</div>
+  <div class="mb-3">
+    <label for="inputFullName" class="form-label">Full name</label>
+    <input type="text" class="form-control"
+           formControlName="fullName" id="inputFullName" aria-describedby="emailHelp">
+    <div *ngIf="form.controls['fullName'].errors">
+      <div *ngIf="form.controls['fullName'].errors['pattern']"
+           class="form-text text-danger">English letters only, space (2-74 symbols)
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="inputEmail" class="form-label">Email</label>
+    <input class="form-control"
+           formControlName="email" id="inputEmail">
+    <div *ngIf="form.controls['email'].errors">
+      <div *ngIf="form.controls['email'].errors['email']"
+           class="form-text text-danger">Email is incorrect
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="inputBirth" class="form-label">Date of birth (format dd/mm/yyyy)</label>
+    <input class="form-control"
+           formControlName="dateOfBirth" id="inputBirth">
+    <div *ngIf="form.controls['dateOfBirth'].errors">
+      <div *ngIf="form.controls['dateOfBirth'].errors['pattern']"
+           class="form-text text-danger">Date of birth must be in format (dd/mm/yyyy), only digits
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="inputLogin" class="form-label">Username
+      <span class="text-danger">(if you change it - you'll log out immediately)</span>
+    </label>
+    <input type="text" class="form-control"
+           formControlName="username" id="inputLogin" aria-describedby="emailHelp">
+    <div *ngIf="form.controls['username'].errors">
+      <div *ngIf="form.controls['username'].errors['pattern']"
+           class="form-text text-danger">English letters only, digits, symbols _.^! (2-36 symbols)
+      </div>
+    </div>
+  </div>
+  <div class="mb-5">
+    <label for="inputPassword" class="form-label">New password</label>
+    <input type="password" class="form-control"
+           formControlName="password" id="inputPassword">
+    <div *ngIf="form.controls['password'].errors">
+      <div *ngIf="form.controls['password'].errors['pattern']"
+           class="form-text text-danger">English letters only, digits, symbols _#@.^! (4-36 symbols)
+      </div>
+    </div>
+  </div>
+
+
+  <div class="error-block mb-4" *ngIf="isError">
+    {{errorMessage}}
+  </div>
+
+
+
+
+  <div class="mt-5">
+    <button [disabled]="!form.valid"
+            (click)="onEditClick()"
+            class="btn btn-warning">Edit
+    </button>
+    <button (click)="onBackClick()"
+            class="btn btn-warning btn-back">Back
+    </button>
+  </div>
+</form>

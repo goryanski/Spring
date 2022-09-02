@@ -30,18 +30,16 @@ public class AuthController {
     private final AuthService authService;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
-    private final AccountsService accountsService;
 
     @Autowired
     public AuthController(PersonValidator personValidator,
                           AuthService authService,
                           AuthenticationManager authenticationManager,
-                          JwtTokenProvider jwtTokenProvider, AccountsService accountsService) {
+                          JwtTokenProvider jwtTokenProvider) {
         this.personValidator = personValidator;
         this.authService = authService;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.accountsService = accountsService;
     }
 
     @PostMapping("/login")

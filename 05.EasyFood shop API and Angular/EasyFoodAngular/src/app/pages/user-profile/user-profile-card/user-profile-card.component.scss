@@ -1,0 +1,35 @@
+@import 'src/app/shared/global-variables.scss';
+
+.card {
+  text-align: center;
+  border: 1px solid $warning-color;
+  box-shadow: 0 1px 10px 2px $warning-color;
+  margin: 50px 10%;
+  padding: 5%;
+  background-color: #ffeeba;
+  div {
+    margin-bottom: 30px;
+    .data {
+      color: $bootstrap-success-color;
+      font-size: 26px;
+    }
+  }
+  div:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+.loader {
+  text-align: center;
+  margin: 50px;
+}
+
+
+@media (max-width: 600px) {
+  .card {
+    .email .data {
+      font-size: 20px;
+    }
+  }
+}

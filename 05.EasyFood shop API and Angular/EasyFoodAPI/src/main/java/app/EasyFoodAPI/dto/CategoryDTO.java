@@ -3,8 +3,6 @@ import javax.validation.constraints.Size;
 
 public class CategoryDTO {
     private Integer id;
-
-    @Size(min = 3, max = 30, message = "Category name must be between 3 and 30 characters")
     private String name;
 
     public Integer getId() {

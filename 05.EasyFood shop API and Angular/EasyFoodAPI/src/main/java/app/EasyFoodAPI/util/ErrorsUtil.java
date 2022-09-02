@@ -2,6 +2,7 @@ package app.EasyFoodAPI.util;
 import app.EasyFoodAPI.util.exceptions.AddProductToBasketException;
 import app.EasyFoodAPI.util.exceptions.AuthException;
 import app.EasyFoodAPI.util.exceptions.MakeOrderException;
+import app.EasyFoodAPI.util.exceptions.UpdatePersonException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import java.util.List;
@@ -23,6 +24,12 @@ public class ErrorsUtil {
         StringBuilder errorMessage = getErrorMessage(bindingResult);
         throw new MakeOrderException(errorMessage.toString());
     }
+
+    public static void returnUpdatePersonErrorsToClient(BindingResult bindingResult) {
+        StringBuilder errorMessage = getErrorMessage(bindingResult);
+        throw new UpdatePersonException(errorMessage.toString());
+    }
+
 
 
     private static StringBuilder getErrorMessage(BindingResult bindingResult) {

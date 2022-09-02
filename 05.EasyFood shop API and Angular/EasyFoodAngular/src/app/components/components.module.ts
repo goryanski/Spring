@@ -11,6 +11,7 @@ import { ShowBasketModalWindowComponent } from './show-basket-modal-window/show-
 import { BasketProductComponent } from './basket-product/basket-product.component';
 import { OrderedProductComponent } from './ordered-product/ordered-product.component';
 
+
 // common components
 @NgModule({
   declarations: [

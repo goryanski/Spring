@@ -1,1 +1,16 @@
-<p>user-profile-card works!</p>
+<div *ngIf="isUserCardReady; else loading">
+  <div class="card">
+    <div class="full-name">Full name: <span class="data">{{user.fullName}}</span></div>
+    <div class="username">Username: <span class="data">{{user.username}}</span></div>
+    <div class="email">Email: <span class="data">{{user.email}}</span></div>
+    <div class="date-of-birth">Date of birth: <span class="data">{{user.dateOfBirth}}</span></div>
+    <div class="orders-count">Orders count: <span class="data">{{user.ordersCount}}</span></div>
+  </div>
+</div>
+
+
+<ng-template #loading >
+  <div class="loader">
+    <div class="spinner-border" role="status"></div>
+  </div>
+</ng-template>

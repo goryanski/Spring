@@ -1,31 +1,17 @@
 package app.EasyFoodAPI.dto;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
 public class BasketProductDTO {
     // instead of id we'll use productId and userId - as one composite id key (because we already have methods, which add, update and delete products in basket by productId and userId together)
-    @NotNull
     private Integer productId;
-    @NotNull
     private Integer userId;
-    @NotNull
     private String name;
-    @NotNull
     private String photoPath;
-    @NotNull
     private Float weight;
-    @NotNull
     private String weightMeasurement;
-    @NotNull
     private Boolean isWeightFlexible;
-    @NotNull
     private Float pricePerOneItem;
-    @NotNull
     private Float generalCount;
-    @NotNull
     private Float generalPrice;
-    @NotNull
     private Integer countInStorage;
 
 

@@ -3,16 +3,9 @@ package app.EasyFoodAPI.dto;
 import javax.validation.constraints.NotNull;
 
 public class OrderedProductDTO {
-    @NotNull
     private Integer originalProductId;
-
-    @NotNull
     private String name;
-
-    @NotNull
     private Float count;
-
-    @NotNull
     private Float price;
 
 

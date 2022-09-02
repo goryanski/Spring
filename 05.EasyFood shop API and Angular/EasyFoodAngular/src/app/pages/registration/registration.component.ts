@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../api/services/auth.service";
-import {RegisterPersonRequestInterface} from "../../api/interfaces/requests/register-person-request.interface";
 import {take, tap} from "rxjs";
 import {Location} from '@angular/common';
+import {RegisterPersonRequestInterface} from "../../api/interfaces/requests/register-person-request.interface";
 
 @Component({
   selector: 'app-registration',
@@ -74,7 +74,6 @@ export class RegistrationComponent implements OnInit {
   onRegisterClick() {
     if (this.form.valid) {
       let person: RegisterPersonRequestInterface = this.form.value;
-      //console.log(person);
       this.authService.registerPerson(person)
         .pipe(
           tap(

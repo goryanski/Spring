@@ -3,10 +3,7 @@ package app.EasyFoodAPI.dto.requests;
 import javax.validation.constraints.NotNull;
 
 public class RemoveBasketProductRequestDTO {
-    @NotNull
     private Integer userId;
-
-    @NotNull
     private Integer productId;
 
     public Integer getUserId() {

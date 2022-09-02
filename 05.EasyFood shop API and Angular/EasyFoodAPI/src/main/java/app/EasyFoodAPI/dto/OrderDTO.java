@@ -3,13 +3,9 @@ package app.EasyFoodAPI.dto;
 import javax.validation.constraints.NotNull;
 
 public class OrderDTO {
-    @NotNull
     private Integer id;
-    @NotNull
     private String date;
-    @NotNull
     private Float price;
-    @NotNull
     private String state;
 
 

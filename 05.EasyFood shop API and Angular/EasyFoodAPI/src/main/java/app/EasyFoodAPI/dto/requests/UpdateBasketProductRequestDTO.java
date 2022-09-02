@@ -3,17 +3,11 @@ package app.EasyFoodAPI.dto.requests;
 import javax.validation.constraints.NotNull;
 
 public class UpdateBasketProductRequestDTO {
-    @NotNull
     private Integer userId;
-
-    @NotNull
     private Integer productId;
-
-    @NotNull
     private Float generalCount;
-
-    @NotNull
     private Float generalPrice;
+
 
     public Integer getUserId() {
         return userId;

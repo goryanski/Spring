@@ -92,4 +92,15 @@ public class MapperService {
         productDTO.setPrice(product.getGeneralPrice());
         return productDTO;
     }
+
+    public PersonDTO convertPerson(Person person) {
+        PersonDTO personDTO =  modelMapper.map(person, PersonDTO.class);
+        // change fields which need to map manually
+        personDTO.setUsername(person.getAccount().getUsername());
+        personDTO.setOrdersCount(person.getOrders().size());
+        // DateOfBirth
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        personDTO.setDateOfBirth(dateFormat.format(person.getDateOfBirth()));
+        return personDTO;
+    }
 }
