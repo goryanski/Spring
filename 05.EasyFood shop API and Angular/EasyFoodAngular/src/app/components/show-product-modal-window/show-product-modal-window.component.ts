@@ -34,6 +34,9 @@ export class ShowProductModalWindowComponent implements OnInit {
   products$?: Observable<ShortProductInfoInterface[]>;
 
   isProductFavorite: boolean = false;
+  isUserAuthenticated: boolean = false;
+  isUserAdmin: boolean = false;
+
 
 
   constructor(
@@ -44,20 +47,32 @@ export class ShowProductModalWindowComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isUserAuthenticated = this.localStorage.isUserAuthenticated();
     this.productsService.getFullInfoProductById(this.productId)
       .pipe(take(1))
       .subscribe(res => {
         this.product = res;
 
-        // check if product is in favorites and set the appropriate label
-        let requestObject: FavoriteProductRequestInterface = this.getFavoriteProductRequestObject();
-        this.favoritesProductsService.isProductFavorite(requestObject)
-          .pipe(take(1))
-          .subscribe(response => {
-            this.isProductFavorite = response;
-            // getSimilarProducts
-            this.products$ = this.productsService.getSimilarProducts(this.product.categoryId, this.similarProductsCount);
-          });
+        if(this.isUserAuthenticated) {
+          // check if product is in favorites and set the appropriate label
+          let requestObject: FavoriteProductRequestInterface = this.getFavoriteProductRequestObject();
+          this.favoritesProductsService.isProductFavorite(requestObject)
+            .pipe(take(1))
+            .subscribe(response => {
+              this.isProductFavorite = response;
+              // getSimilarProducts (it's necessary do after setting this.isProductFavorite variable)
+              this.products$ = this.productsService.getSimilarProducts(this.product.categoryId, this.similarProductsCount);
+            });
+        } else {
+          // getSimilarProducts (we don't care about this.isProductFavorite variable if user is not authenticated)
+          this.products$ = this.productsService.getSimilarProducts(this.product.categoryId, this.similarProductsCount);
+        }
+
+
+        // show button "Edit product" for admin
+        if(this.isUserAuthenticated) {
+          this.isUserAdmin = this.localStorage.getUserRole() === 'ROLE_ADMIN';
+        }
       });
   }
 
@@ -90,4 +105,9 @@ export class ShowProductModalWindowComponent implements OnInit {
       productId: this.product.id
     }
   }
+
+  onBtnEditProductClick() {
+    this.modal.close()
+  }
+
 }

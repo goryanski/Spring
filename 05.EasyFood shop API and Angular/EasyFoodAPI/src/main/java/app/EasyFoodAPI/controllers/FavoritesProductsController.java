@@ -23,6 +23,7 @@ public class FavoritesProductsController {
         this.favoritesProductsService = favoritesProductsService;
     }
 
+
     @PostMapping("/check")
     public boolean isProductFavorite (@RequestBody FavoriteProductRequestDTO params) {
         return favoritesProductsService.isProductFavorite(params);

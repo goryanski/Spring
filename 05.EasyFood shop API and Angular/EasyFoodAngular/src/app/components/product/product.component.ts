@@ -29,7 +29,7 @@ export class ProductComponent implements OnInit {
     photoPath: '',
     weightFlexible: false
   };
-  isUserAuthenticated: boolean;
+  isUserAuthenticated: boolean = false;
   isProductOrdered: boolean = false;
 
   isInvalidCountMessage: boolean = false;
@@ -50,12 +50,15 @@ export class ProductComponent implements OnInit {
     private readonly authHelper: AuthHelper,
     private readonly favoritesProductsService: FavoritesProductsService
   ) {
-    this.isUserAuthenticated = localStorage.isUserAuthenticated();
+
   }
 
   ngOnInit(): void {
-    // check if product is in favorites and set the appropriate label
-    this.checkAndSetFavoriteProductLabel();
+    this.isUserAuthenticated = this.localStorage.isUserAuthenticated();
+    if(this.isUserAuthenticated) {
+      // check if product is in favorites and set the appropriate label
+      this.checkAndSetFavoriteProductLabel();
+    }
   }
 
   onShowProductFullInfoClick() {
@@ -65,17 +68,19 @@ export class ProductComponent implements OnInit {
     ref.componentInstance.productId = this.product.id;
 
 
-    // after window was closed - check if user changed product (do it favorite or remove from favorites)
-    // we have params data and error we can use if we want to return some value from window,
-    // but now we need check label in any case
-    ref.result.then((data) => {
-        this.checkAndSetFavoriteProductLabel();
-        //console.log('on close: '+data); // find out what comes
-      },
-      (error) => {
-        this.checkAndSetFavoriteProductLabel();
-        //console.log('on error: '+error);
-      });
+    if(this.isUserAuthenticated) {
+      // after window was closed - check if user changed product (do it favorite or remove from favorites)
+      // we have params data and error we can use if we want to return some value from window,
+      // but now we need check label in any case
+      ref.result.then((data) => {
+          this.checkAndSetFavoriteProductLabel();
+          //console.log('on close: '+data); // find out what comes
+        },
+        (error) => {
+          this.checkAndSetFavoriteProductLabel();
+          //console.log('on error: '+error);
+        });
+    }
   }
 
   OnBuyProductClock() {

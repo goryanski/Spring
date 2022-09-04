@@ -37,6 +37,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin-profile/admin-profile.module').then(m => m.AdminProfileModule)
   },
   {
+    path: 'edit-product/:productId',
+    loadChildren: () => import('./pages/edit-product/edit-product.module').then(m => m.EditProductModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule)
   }

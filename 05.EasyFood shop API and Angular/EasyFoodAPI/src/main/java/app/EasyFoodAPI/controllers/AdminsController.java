@@ -1,23 +1,26 @@
 package app.EasyFoodAPI.controllers;
+import app.EasyFoodAPI.dto.EditProductDTO;
+import app.EasyFoodAPI.services.AdminsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import app.EasyFoodAPI.security.PersonDetails;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @CrossOrigin()
 @RequestMapping("/api/easyFood/admins")
 public class AdminsController {
+    private final AdminsService adminsService;
+
+    @Autowired
+    public AdminsController(AdminsService adminsService) {
+        this.adminsService = adminsService;
+    }
 
 
-
+    @GetMapping("/edit/{productId}")
+    public EditProductDTO getProductToEdit(@PathVariable("productId") int id) {
+        return adminsService.getProductToEdit(id);
+    }
 
 
 
