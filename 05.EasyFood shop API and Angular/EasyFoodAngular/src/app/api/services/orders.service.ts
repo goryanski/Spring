@@ -7,6 +7,7 @@ import {BrowserLocalStorage} from "../../shared/storage/local-storage";
 import {MakeOrderRequestInterface} from "../interfaces/requests/make-order-request.interface";
 import {OrderInterface} from "../interfaces/order.interface";
 import {OrderedProductInterface} from "../interfaces/ordered-product.interface";
+import {OrdersRequestInterface} from "../interfaces/requests/orders-request.interface";
 
 @Injectable()
 export class OrdersService {
@@ -36,14 +37,14 @@ export class OrdersService {
     );
   }
 
-  getUserOrders(userId: number) : Observable<OrderInterface[]> {
-    return this.httpClient.get<OrderInterface[]>(
+  getUserOrders(requestObject: OrdersRequestInterface) : Observable<OrderInterface[]> {
+    return this.httpClient.post<OrderInterface[]>(
       [
         this.appEnv.apiEasyFoodURL,
         'orders',
-        'userOrders',
-        `${userId}`
+        'userOrders'
       ].join('/'),
+      requestObject,
       {
         headers: {
           'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`

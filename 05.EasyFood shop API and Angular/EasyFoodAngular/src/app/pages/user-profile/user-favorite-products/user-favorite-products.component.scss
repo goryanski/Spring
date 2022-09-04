@@ -1,0 +1,65 @@
+@import 'src/app/shared/global-variables.scss';
+
+
+/*#region categories styles*/
+.content {
+  display: flex;
+  .no-data-message {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    margin-top: 40px;
+    font-size: 26px;
+    font-weight: bold;
+  }
+  .categories {
+    margin: 20px 20px 100px 20px;
+    .category {
+      font-size: 24px;
+      padding: 20px 40px;
+      border-color: $opacity-primary-color;
+      color: $main-primary-color;
+    }
+  }
+}
+
+
+.selected {
+  background-color: $main-primary-color;
+  color: white !important;
+}
+
+.categories-loader {
+  margin: 20px;
+}
+
+/*#endregion categories styles*/
+
+
+
+
+/*#region products styles*/
+.products {
+  margin: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination-block {
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.no-products-message {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.products-loader {
+  margin: 50px 50%;
+}
+/*#endregion products styles*/

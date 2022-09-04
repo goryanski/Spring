@@ -13,7 +13,6 @@ public class Category {
     private Integer id;
 
     @Column(name = "name")
-    @Size(min = 3, max = 30, message = "Category name must be between 3 and 30 characters")
     private String name;
 
     @OneToMany(mappedBy = "category")

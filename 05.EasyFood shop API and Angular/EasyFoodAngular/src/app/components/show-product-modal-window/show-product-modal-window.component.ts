@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FullProductInfoInterface} from "../../api/interfaces/full-product-info.interface";
 import {Observable, take} from "rxjs";
 import {ShortProductInfoInterface} from "../../api/interfaces/short-product-info.interface";
 import {ShowProductWindowService} from "../../api/services/show-product-window.service";
+import {FavoriteProductRequestInterface} from "../../api/interfaces/requests/favorite-product-request.interface";
+import {FavoritesProductsService} from "../../api/services/favorites-products.service";
+import {BrowserLocalStorage} from "../../shared/storage/local-storage";
 
 @Component({
   selector: 'app-show-product-modal-window',
@@ -30,9 +33,14 @@ export class ShowProductModalWindowComponent implements OnInit {
   readonly similarProductsCount: number = 4;
   products$?: Observable<ShortProductInfoInterface[]>;
 
+  isProductFavorite: boolean = false;
+
+
   constructor(
     public modal: NgbActiveModal,
-    private readonly productsService: ShowProductWindowService
+    private readonly productsService: ShowProductWindowService,
+    private readonly localStorage: BrowserLocalStorage,
+    private readonly favoritesProductsService: FavoritesProductsService
   ) { }
 
   ngOnInit(): void {
@@ -40,8 +48,46 @@ export class ShowProductModalWindowComponent implements OnInit {
       .pipe(take(1))
       .subscribe(res => {
         this.product = res;
-        this.products$ = this.productsService.getSimilarProducts(this.product.categoryId, this.similarProductsCount);
+
+        // check if product is in favorites and set the appropriate label
+        let requestObject: FavoriteProductRequestInterface = this.getFavoriteProductRequestObject();
+        this.favoritesProductsService.isProductFavorite(requestObject)
+          .pipe(take(1))
+          .subscribe(response => {
+            this.isProductFavorite = response;
+            // getSimilarProducts
+            this.products$ = this.productsService.getSimilarProducts(this.product.categoryId, this.similarProductsCount);
+          });
       });
   }
 
+  onFavoriteLabelClick() {
+    let requestObject: FavoriteProductRequestInterface = this.getFavoriteProductRequestObject();
+    if(!this.isProductFavorite) {
+      this.favoritesProductsService.addProductToFavorites(requestObject)
+        .pipe(take(1))
+        .subscribe(response => {
+          if(response.message === "OK") {
+            this.isProductFavorite = true;
+            this.product.likesCount++;
+          }
+        });
+    } else {
+      this.favoritesProductsService.deleteProductFromFavorites(requestObject)
+        .pipe(take(1))
+        .subscribe(response => {
+          if(response.message === "OK") {
+            this.isProductFavorite = false;
+            this.product.likesCount--;
+          }
+        });
+    }
+  }
+
+  private getFavoriteProductRequestObject(): FavoriteProductRequestInterface {
+    return {
+      userId: this.localStorage.getCurrentUserId(),
+      productId: this.product.id
+    }
+  }
 }

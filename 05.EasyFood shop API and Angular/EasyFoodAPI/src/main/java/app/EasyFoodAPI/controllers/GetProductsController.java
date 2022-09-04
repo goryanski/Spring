@@ -46,4 +46,6 @@ public class GetProductsController {
         Map<String, Object> response = productsService.getProductsBySubstringOfName(params);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
 }

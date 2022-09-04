@@ -77,6 +77,20 @@ public class GetProductsService {
         return getPaginatedResponse(pageTuts);
     }
 
+    private Map<String, Object> getPaginatedResponse(Page<Product> pageTuts) {
+        List<ShortProductInfoDTO> products = pageTuts.getContent()
+                .stream()
+                .map(mapper::convertProduct)
+                .collect(Collectors.toList());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("products", products);
+        response.put("currentPage", pageTuts.getNumber());
+        response.put("totalItems", pageTuts.getTotalElements());
+        response.put("totalPages", pageTuts.getTotalPages());
+        return response;
+    }
+
 
     public Map<String, Object> getFilteredProducts(FilterProductsRequestDTO params) {
         List<Product> filteredProducts;
@@ -167,21 +181,6 @@ public class GetProductsService {
         response.put("currentPage", 0);
         response.put("totalPages", 0);
 
-        return response;
-    }
-
-
-    private Map<String, Object> getPaginatedResponse(Page<Product> pageTuts) {
-        List<ShortProductInfoDTO> products = pageTuts.getContent()
-                .stream()
-                .map(mapper::convertProduct)
-                .collect(Collectors.toList());
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("products", products);
-        response.put("currentPage", pageTuts.getNumber());
-        response.put("totalItems", pageTuts.getTotalElements());
-        response.put("totalPages", pageTuts.getTotalPages());
         return response;
     }
 }

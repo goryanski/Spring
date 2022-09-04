@@ -77,6 +77,18 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<BasketProduct> basketProducts;
 
+    @OneToMany(mappedBy = "product")
+    private List<FavoriteProduct> favoriteProducts;
+
+
+    public List<FavoriteProduct> getFavoriteProducts() {
+        return favoriteProducts;
+    }
+
+    public void setFavoriteProducts(List<FavoriteProduct> favoriteProducts) {
+        this.favoriteProducts = favoriteProducts;
+    }
+
     public boolean isWeightFlexible() {
         return isWeightFlexible;
     }

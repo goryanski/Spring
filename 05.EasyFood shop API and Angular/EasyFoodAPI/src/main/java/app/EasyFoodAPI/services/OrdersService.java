@@ -3,11 +3,16 @@ package app.EasyFoodAPI.services;
 import app.EasyFoodAPI.dto.OrderDTO;
 import app.EasyFoodAPI.dto.OrderedProductDTO;
 import app.EasyFoodAPI.dto.requests.MakeOrderRequestDTO;
+import app.EasyFoodAPI.dto.requests.OrdersRequestDTO;
 import app.EasyFoodAPI.models.BasketProduct;
 import app.EasyFoodAPI.models.Order;
 import app.EasyFoodAPI.models.OrderedProduct;
+import app.EasyFoodAPI.models.Product;
 import app.EasyFoodAPI.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,12 +78,16 @@ public class OrdersService {
     }
 
 
-    public List<OrderDTO> getUserOrders(int userId) {
-        return ordersRepository.findByPersonId(userId)
+    public List<OrderDTO> getUserOrders(OrdersRequestDTO params) {
+        // with pagination and sorting by date
+        Pageable paging = PageRequest.of(params.getCurrentPage(), params.getPageSize());
+        Page<Order> pageTuts = ordersRepository.findByPersonIdOrderByDateDesc(params.getUserId(), paging);
+        return pageTuts.getContent()
                 .stream()
                 .map(mapper::convertOrder)
                 .collect(Collectors.toList());
     }
+
 
 
     public List<OrderedProductDTO> getOrderProducts(int orderId) {
@@ -87,4 +96,5 @@ public class OrdersService {
                 .map(mapper::convertOrderedProduct)
                 .collect(Collectors.toList());
     }
+
 }

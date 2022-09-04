@@ -1,15 +1,17 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ShortProductInfoInterface} from "../../api/interfaces/short-product-info.interface";
 import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ShowProductModalWindowComponent} from "../show-product-modal-window/show-product-modal-window.component";
 import {AuthHelper} from "../../shared/helpers/auth-helper";
 import {BrowserLocalStorage} from "../../shared/storage/local-storage";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BasketProductRequestInterface} from "../../api/interfaces/requests/basket-product-request.interface";
 import {take} from "rxjs";
 import {BasketService} from "../../api/services/basket.service";
 import {RemoveBasketProductRequestInterface} from "../../api/interfaces/requests/remove-basket-product-request.interface";
+import {FavoritesProductsService} from "../../api/services/favorites-products.service";
+import {FavoriteProductRequestInterface} from "../../api/interfaces/requests/favorite-product-request.interface";
+
 
 @Component({
   selector: 'app-product',
@@ -35,23 +37,45 @@ export class ProductComponent implements OnInit {
   invalidCountMessageText: string = '';
   successCountMessageText: string = '';
 
+  isProductFavorite: boolean = false;
+
+  @Input() isProductSimilar: boolean = false;
+  @Output() productRemovingFromFavoritesEvent = new EventEmitter<number>();
+
   constructor(
     private readonly router: Router,
     private modalWindowService: NgbModal,
     private readonly localStorage: BrowserLocalStorage,
     private readonly basketService: BasketService,
-    private readonly authHelper: AuthHelper
+    private readonly authHelper: AuthHelper,
+    private readonly favoritesProductsService: FavoritesProductsService
   ) {
     this.isUserAuthenticated = localStorage.isUserAuthenticated();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // check if product is in favorites and set the appropriate label
+    this.checkAndSetFavoriteProductLabel();
+  }
 
   onShowProductFullInfoClick() {
     // link to modal window
     const ref = this.modalWindowService.open(ShowProductModalWindowComponent, { size: 'xl' });
     // pass to selected modal window id of product (we can also pass the object)
     ref.componentInstance.productId = this.product.id;
+
+
+    // after window was closed - check if user changed product (do it favorite or remove from favorites)
+    // we have params data and error we can use if we want to return some value from window,
+    // but now we need check label in any case
+    ref.result.then((data) => {
+        this.checkAndSetFavoriteProductLabel();
+        //console.log('on close: '+data); // find out what comes
+      },
+      (error) => {
+        this.checkAndSetFavoriteProductLabel();
+        //console.log('on error: '+error);
+      });
   }
 
   OnBuyProductClock() {
@@ -170,6 +194,50 @@ export class ProductComponent implements OnInit {
       this.successCountMessageText = successMessageText;
       this.isInvalidCountMessage = false;
     }
+  }
+
+  onFavoriteLabelClick() {
+    let requestObject: FavoriteProductRequestInterface = this.getFavoriteProductRequestObject();
+    if(this.isProductFavorite) {
+      this.favoritesProductsService.deleteProductFromFavorites(requestObject)
+        .pipe(take(1))
+        .subscribe(response => {
+          if(response.message === "OK") {
+            this.isProductFavorite = false;
+
+            // When favorite products display in th user-profile/my-favorites-products
+            // (user-favorite-products.component)
+            // and user clicks on favorite label (unlike this product) - we need to remove
+            // this product from my-favorites-products array (on client side)
+            this.productRemovingFromFavoritesEvent.emit(this.product.id);
+          }
+        });
+    } else {
+      this.favoritesProductsService.addProductToFavorites(requestObject)
+        .pipe(take(1))
+        .subscribe(response => {
+          if(response.message === "OK") {
+            this.isProductFavorite = true;
+          }
+        });
+    }
+  }
+
+  private getFavoriteProductRequestObject(): FavoriteProductRequestInterface {
+    return {
+      userId: this.localStorage.getCurrentUserId(),
+      productId: this.product.id
+    }
+  }
+
+  private checkAndSetFavoriteProductLabel() {
+    // (is there a row in table where userId == params.userId && productId == params.productId ?)
+    let requestObject: FavoriteProductRequestInterface = this.getFavoriteProductRequestObject();
+    this.favoritesProductsService.isProductFavorite(requestObject)
+      .pipe(take(1))
+      .subscribe(response => {
+        this.isProductFavorite = response;
+      });
   }
 }
 

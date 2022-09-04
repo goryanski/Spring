@@ -11,11 +11,9 @@ public class Account {
     private int id;
 
     @Column(name = "username")
-    @Size(min = 2, max = 36, message = "Username must be between 2 and 36 symbols")
     private String username;
 
     @Column(name = "password")
-    @Size(min = 4, message = "Password must be at least 4 symbols")
     private String password;
 
     @ManyToOne

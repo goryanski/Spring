@@ -11,6 +11,7 @@ import {OrderedProductsModalWindowComponent} from "../../components/ordered-prod
 import {ComponentsModule} from "../../components/components.module";
 import { UserProfileCardComponent } from './user-profile-card/user-profile-card.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     CommonModule,
     UserProfileRoutingModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbPaginationModule
   ],
   exports: [
     UserOrderComponent,

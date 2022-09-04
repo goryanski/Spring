@@ -2,6 +2,7 @@ package app.EasyFoodAPI.controllers;
 import app.EasyFoodAPI.dto.OrderDTO;
 import app.EasyFoodAPI.dto.OrderedProductDTO;
 import app.EasyFoodAPI.dto.requests.MakeOrderRequestDTO;
+import app.EasyFoodAPI.dto.requests.OrdersRequestDTO;
 import app.EasyFoodAPI.services.OrdersService;
 import app.EasyFoodAPI.util.MessageResponse;
 import app.EasyFoodAPI.util.exceptions.AddProductToBasketException;
@@ -45,10 +46,12 @@ public class OrdersController {
         );
     }
 
-    @GetMapping("/userOrders/{userId}")
-    public List<OrderDTO> getUserOrders(@PathVariable("userId") int id) {
-        return ordersService.getUserOrders(id);
+
+    @PostMapping("/userOrders")
+    public List<OrderDTO> getUserOrders(@RequestBody OrdersRequestDTO params) {
+        return ordersService.getUserOrders(params);
     }
+
 
     @GetMapping("/orderedProducts/{orderId}")
     public List<OrderedProductDTO> getOrderProducts(@PathVariable("orderId") int id) {

@@ -19,11 +19,9 @@ public class Person {
     private int id;
 
     @Column(name = "full_name")
-    @Size(min = 2, max = 74, message = "FullName must be between 2 and 74 symbols")
     private String fullName;
 
     @Column(name = "email")
-    @Email(message = "Email must be valid")
     private String email;
 
     @Column(name = "date_of_birth")
@@ -32,11 +30,9 @@ public class Person {
     private Date dateOfBirth;
 
     @Column(name = "is_blocked")
-    @NotNull
     private Boolean isBlocked;
 
     @Column(name = "registered_at")
-    @NotNull
     private LocalDateTime registeredAt;
 
     @OneToOne(mappedBy = "person")
@@ -47,6 +43,18 @@ public class Person {
 
     @OneToMany(mappedBy = "person")
     private List<BasketProduct> basketProducts;
+
+    @OneToMany(mappedBy = "person")
+    private List<FavoriteProduct> favoriteProducts;
+
+
+    public List<FavoriteProduct> getFavoriteProducts() {
+        return favoriteProducts;
+    }
+
+    public void setFavoriteProducts(List<FavoriteProduct> favoriteProducts) {
+        this.favoriteProducts = favoriteProducts;
+    }
 
     public int getId() {
         return id;

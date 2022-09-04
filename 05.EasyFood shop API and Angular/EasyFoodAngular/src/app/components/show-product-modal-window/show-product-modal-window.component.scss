@@ -38,6 +38,14 @@
         font-weight: bold;
         color: $main-primary-color;
       }
+      .favorite-label {
+        margin-top: 40px;
+        color: $bootstrap-danger-color;
+        margin-right: 10px;
+      }
+      .favorite-label:hover {
+        cursor: pointer;
+      }
       .product-price {
         margin-top: 40px;
         font-size: 24px;
@@ -102,8 +110,15 @@
       .short-info {
         margin: 0 20px 40px 40px;
         text-align: center;
-        .product-name {
-          margin: 0 auto 10px;
+        .first-line {
+          justify-content: center;
+          .product-name {
+            margin-top: 0;
+            margin-bottom: 10px;
+          }
+          .favorite-label {
+            margin-top: 0;
+          }
         }
       }
     }
@@ -124,9 +139,6 @@
       .short-info {
         margin: 0 20px 40px 40px;
         text-align: center;
-        .product-name {
-          margin: 0 auto 10px;
-        }
       }
     }
   }

@@ -4,12 +4,44 @@
   margin: 20px;
   border: 1px solid $opacity-primary-color;
   box-shadow: 0 1px 10px 2px $shadow-primary-color;
-  .discount-label {
-    position: absolute;
+  .labels {
     margin-top: 20px;
+    margin-bottom: -30px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .discount-label {
+      padding: 10px 15px 10px 15px;
+      font-size: 18px;
+      background-color: $bootstrap-danger-color;
+      color: white;
+      border-top-right-radius: 50%;
+      border-bottom-right-radius: 50%;
+      font-weight: bold;
+    }
+    .discount-label-fake {
+      padding: 10px 15px 10px 15px;
+      font-size: 18px;
+      background-color: white;
+      color: white;
+      border-top-right-radius: 50%;
+      border-bottom-right-radius: 50%;
+      font-weight: bold;
+    }
+    .favorite-label {
+      margin-right: 20px;
+      color: $bootstrap-danger-color;
+    }
+    .favorite-label:hover {
+      cursor: pointer;
+    }
+  }
+  .discount-label-similar {
+    margin-top: 20px;
+    position: absolute;
     padding: 10px 15px 10px 15px;
     font-size: 18px;
-    background-color: red;
+    background-color: $bootstrap-danger-color;
     color: white;
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
@@ -28,7 +60,7 @@
     font-weight: bold;
   }
   .discount-price {
-    color: red;
+    color: $bootstrap-danger-color;
   }
   .order-btn {
     margin-right: 20px;

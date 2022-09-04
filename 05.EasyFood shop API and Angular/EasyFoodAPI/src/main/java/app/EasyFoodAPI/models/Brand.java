@@ -13,7 +13,6 @@ public class Brand {
     private Integer id;
 
     @Column(name = "name")
-    @Size(min = 3, max = 30, message = "Brand name must be between 3 and 30 characters")
     private String name;
 
     @OneToMany(mappedBy = "brand")

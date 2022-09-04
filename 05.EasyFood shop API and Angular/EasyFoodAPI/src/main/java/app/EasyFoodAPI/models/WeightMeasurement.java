@@ -13,7 +13,6 @@ public class WeightMeasurement {
     private Integer id;
 
     @Column(name = "name")
-    @Size(min = 1, max = 4, message = "Measurement name must be between 1 and 4 characters")
     private String name;
 
     @OneToMany(mappedBy = "measurement")

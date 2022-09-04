@@ -1,1 +1,50 @@
-<p>user-favorite-products works!</p>
+<div class="content">
+  <div class="no-data-message" *ngIf="isCategoriesListEmpty">There are no products</div>
+
+  <!-- categories list -->
+  <div class="categories list-group flex-grow-5" *ngIf="!isCategoriesListEmpty">
+    <p class="text-success">* All your favorite products are categorized:</p>
+    <div *ngIf="categoriesList.length > 0; else categoriesLoading">
+      <button type="button" class="category list-group-item list-group-item-action"
+              *ngFor="let category of categoriesList"
+              (click)="onCategoryClick(category.id)"
+              [class.selected]="category.id === selectedCategoryId">
+        {{category.name}}
+      </button>
+    </div>
+  </div>
+
+  <ng-template #categoriesLoading>
+    <div class="spinner-border categories-loader" role="status"></div>
+  </ng-template>
+
+
+
+
+    <!-- products list by selected category -->
+    <div *ngIf="selectedCategoryId != 0" class="products">
+      <div *ngIf="!isProductsListEmpty; else noProductsMessage">
+        <div class="products"
+             *ngIf="products.length > 0; else productsLoading">
+          <app-product *ngFor="let product of products" [product]="product"
+                       (productRemovingFromFavoritesEvent)="onProductRemovingFromFavoritesEvent($event)">
+          </app-product>
+        </div>
+
+        <ngb-pagination [collectionSize]="allProductsCount" [(page)]="currentPage" [pageSize]="pageSize"
+                        size="lg" aria-label="Products pagination"
+                        class="pagination-block"
+                        (pageChange)="getNextProducts()">
+        </ngb-pagination>
+
+        <ng-template #productsLoading>
+          <div class="spinner-border products-loader" role="status"></div>
+        </ng-template>
+      </div>
+
+
+      <ng-template #noProductsMessage>
+        <p class="no-products-message">There are no products</p>
+      </ng-template>
+    </div>
+</div>

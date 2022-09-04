@@ -39,8 +39,7 @@ public class ProductsFilterController {
 
     @PostMapping("/filtered-products")
     public ResponseEntity<Map<String, Object>> getFilteredProducts(
-            @RequestBody FilterProductsRequestDTO params
-    ) {
+            @RequestBody FilterProductsRequestDTO params) {
         Map<String, Object> response = productsService.getFilteredProducts(params);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
