@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { EditProductRoutingModule } from './edit-product-routing.module';
 import { EditProductComponent } from './edit-product.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { EditProductComponent } from './edit-product.component';
   ],
   imports: [
     CommonModule,
-    EditProductRoutingModule
+    EditProductRoutingModule,
+    ReactiveFormsModule,
+    NgbDropdownModule
   ]
 })
 export class EditProductModule { }

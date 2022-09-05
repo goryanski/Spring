@@ -5,13 +5,12 @@ export interface EditProductInterface {
   price: number,
   weight: number,
   discount: number,
-  isAvailable: boolean,
+  available: boolean,
   photoPath: string,
-  amountInStorage: number;
-  likesCount: number,
-  isWeightFlexible: boolean,
+  amountInStorage: number,
+  weightFlexible: boolean,
   categoryName: string,
   brandName: string,
   countryName: string,
-  weightMeasurement: string
+  measurementName: string
 }

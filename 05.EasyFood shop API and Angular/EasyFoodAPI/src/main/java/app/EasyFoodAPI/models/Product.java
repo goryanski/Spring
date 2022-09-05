@@ -45,11 +45,11 @@ public class Product {
 
     @Column(name = "amount_in_storage")
     @NotNull(message = "Amount of products cannot be empty")
-    @Min(value = 1, message = "Amount of products in storage cannot be less than 1")
-    @Max(value = 1000_000, message = "Amount of products in storage cannot be more than a million")
+    @Min(value = 0, message = "Amount of products in storage cannot be less than 0")
     private Integer amountInStorage;
 
     @Column(name = "likes_count")
+    @Min(value = 0, message = "Likes count of products in storage cannot be less than 0")
     private Integer likesCount;
 
     @Column(name = "is_weight_flexible")

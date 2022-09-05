@@ -33,14 +33,14 @@ export class LoginComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       'username': this.fb.control(
-        'igoryan',
+        'barbara', // igoryan
         [
           Validators.required,
           Validators.pattern(this.pattern.username)
         ]
       ),
       'password': this.fb.control(
-        '123456Homo01odWq12444',
+        '2222',// 123456Homo01odWq12444
         [
           Validators.required,
           Validators.pattern(this.pattern.password)

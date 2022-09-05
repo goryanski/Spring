@@ -10,12 +10,13 @@ public class EditProductDTO {
     private Boolean isAvailable;
     private String photoPath;
     private Integer amountInStorage;
-    private Integer likesCount;
     private Boolean isWeightFlexible;
+
+    // if you need to convert Product to EditProductDTO with ModelMapper, and there are some fields with data from other tables, you have to name there fields (in EditProductDTO) like this (bellow). Example: in Product entity field "Category category" (class Category has fields "int id" and "String name"); If you name field "someCategory" in class EditProductDTO and you want to map in this field category.name from  Product,  instead of mapping manually (editProductDTO.setSomeCategory(product.getCategory().getName())),  ModelMapper can do it automatically if you name field like "categoryName" in EditProductDTO. The same you can do with id - just name field as "categoryId"
     private String categoryName;
     private String brandName;
     private String countryName;
-    private String weightMeasurement;
+    private String measurementName;
 
 
     public Integer getId() {
@@ -90,14 +91,6 @@ public class EditProductDTO {
         this.amountInStorage = amountInStorage;
     }
 
-    public Integer getLikesCount() {
-        return likesCount;
-    }
-
-    public void setLikesCount(Integer likesCount) {
-        this.likesCount = likesCount;
-    }
-
     public Boolean getWeightFlexible() {
         return isWeightFlexible;
     }
@@ -130,11 +123,11 @@ public class EditProductDTO {
         this.countryName = countryName;
     }
 
-    public String getWeightMeasurement() {
-        return weightMeasurement;
+    public String getMeasurementName() {
+        return measurementName;
     }
 
-    public void setWeightMeasurement(String weightMeasurement) {
-        this.weightMeasurement = weightMeasurement;
+    public void setMeasurementName(String measurementName) {
+        this.measurementName = measurementName;
     }
 }

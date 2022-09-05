@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class MapperService {
@@ -94,7 +95,7 @@ public class MapperService {
     }
 
     public PersonDTO convertPerson(Person person) {
-        PersonDTO personDTO =  modelMapper.map(person, PersonDTO.class);
+        PersonDTO personDTO = modelMapper.map(person, PersonDTO.class);
         // change fields which need to map manually
         personDTO.setUsername(person.getAccount().getUsername());
         personDTO.setOrdersCount(person.getOrders().size());
@@ -102,5 +103,10 @@ public class MapperService {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         personDTO.setDateOfBirth(dateFormat.format(person.getDateOfBirth()));
         return personDTO;
+    }
+
+    public EditProductDTO convertProductToEdit(Product product) {
+        // how all fields were converted automatically - watch explanation in EditProductDTO
+        return modelMapper.map(product, EditProductDTO.class);
     }
 }

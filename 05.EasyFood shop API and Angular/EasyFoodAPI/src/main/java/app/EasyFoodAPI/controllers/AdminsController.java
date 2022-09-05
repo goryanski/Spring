@@ -1,5 +1,6 @@
 package app.EasyFoodAPI.controllers;
 import app.EasyFoodAPI.dto.EditProductDTO;
+import app.EasyFoodAPI.dto.responses.ProductLinkedDataResponseDTO;
 import app.EasyFoodAPI.services.AdminsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,10 @@ public class AdminsController {
         return adminsService.getProductToEdit(id);
     }
 
-
+    @GetMapping("/productLinkedData")
+    public ProductLinkedDataResponseDTO getProductLinkedData() {
+        return adminsService.getProductLinkedData();
+    }
 
 
 
