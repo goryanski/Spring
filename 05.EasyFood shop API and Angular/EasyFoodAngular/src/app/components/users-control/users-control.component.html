@@ -1,0 +1,21 @@
+<div class="container">
+  <form class="d-flex">
+    <input class="form-control" #searchUserField type="search"
+           placeholder="Search by username" aria-label="SearchUser">
+    <div class="btn-group" role="group" aria-label="outlined">
+      <button (click)="btnSearchUserClick(searchUserField.value)"
+              type="button" class="btn btn-warning">Search
+      </button>
+    </div>
+  </form>
+  <div class="user-info-container" *ngIf="isUserIdReceived">
+    <app-user-card [userId]="userId"></app-user-card>
+  </div>
+  <div class="user-not-found-message" *ngIf="userNotFound">
+    <div>User not found</div>
+  </div>
+  <div class="admin-control-buttons" *ngIf="isUserIdReceived">
+    <button class="btn btn-primary" [disabled]="isThisCurrentUser" (click)="onBlockUserClick()">Block user</button>
+    <button class="btn btn-primary" [disabled]="isThisCurrentUser" (click)="onSetAdminClick()">Set as admin</button>
+  </div>
+</div>

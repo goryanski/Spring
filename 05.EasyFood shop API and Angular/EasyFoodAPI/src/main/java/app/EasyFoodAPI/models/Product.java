@@ -13,43 +13,30 @@ public class Product {
     private Integer id;
 
     @Column(name = "name")
-    @Size(min = 3, max = 100, message = "Product name must be between 3 and 100 characters")
     private String name;
 
     @Column(name = "description")
-    @Size(min = 3, max = 500, message = "Description must be between 3 and 500 characters")
     private String description;
 
     @Column(name = "price")
-    @NotNull(message = "Price cannot be empty")
-    @Digits(integer=9, fraction=2, message = "Max number of allowed digits in the integral part - 9 and fraction part - 2 (example: 123.00)")
-    private Float price; // if we want to use @NotNull annotation, we can't set the primitive types to fields
+    private Float price;
 
     @Column(name = "weight")
-    @NotNull(message = "Weight cannot be empty")
-    @Digits(integer=7, fraction=2, message = "Max number of allowed digits in the integral part - 7 and fraction part - 2 (example: 123.00)")
     private Float weight;
 
     @Column(name = "discount")
-    @NotNull(message = "Discount cannot be empty. If there is no discount - set 0")
-    @Min(value = 0, message = "Discount cannot be less than 0%")
-    @Max(value = 99, message = "Discount cannot be more than 99%")
     private Integer discount;
 
     @Column(name = "is_available")
     private Boolean isAvailable;
 
     @Column(name = "photo_path")
-    @NotEmpty(message = "Photo path cannot be empty")
     private String photoPath;
 
     @Column(name = "amount_in_storage")
-    @NotNull(message = "Amount of products cannot be empty")
-    @Min(value = 0, message = "Amount of products in storage cannot be less than 0")
     private Integer amountInStorage;
 
     @Column(name = "likes_count")
-    @Min(value = 0, message = "Likes count of products in storage cannot be less than 0")
     private Integer likesCount;
 
     @Column(name = "is_weight_flexible")

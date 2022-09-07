@@ -9,7 +9,6 @@ import { UserOrdersComponent } from './user-orders/user-orders.component';
 import {UserOrderComponent} from "../../components/user-order/user-order.component";
 import {OrderedProductsModalWindowComponent} from "../../components/ordered-products-modal-window/ordered-products-modal-window.component";
 import {ComponentsModule} from "../../components/components.module";
-import { UserProfileCardComponent } from './user-profile-card/user-profile-card.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 
@@ -22,7 +21,6 @@ import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
     UserOrdersComponent,
     UserOrderComponent,
     OrderedProductsModalWindowComponent,
-    UserProfileCardComponent
   ],
   imports: [
     CommonModule,
@@ -33,8 +31,7 @@ import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
   ],
   exports: [
     UserOrderComponent,
-    OrderedProductsModalWindowComponent,
-    UserProfileCardComponent
+    OrderedProductsModalWindowComponent
   ]
 })
 export class UserProfileModule { }

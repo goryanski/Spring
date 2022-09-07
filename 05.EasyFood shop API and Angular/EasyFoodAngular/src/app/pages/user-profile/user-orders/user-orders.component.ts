@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import {BrowserLocalStorage} from "../../../shared/storage/local-storage";
 import {OrdersService} from "../../../api/services/orders.service";
 import {OrderInterface} from "../../../api/interfaces/order.interface";
@@ -10,13 +10,14 @@ import {OrdersRequestInterface} from "../../../api/interfaces/requests/orders-re
   templateUrl: './user-orders.component.html',
   styleUrls: ['./user-orders.component.scss']
 })
-export class UserOrdersComponent implements OnInit {
+export class UserOrdersComponent implements OnInit, OnChanges {
   orders: OrderInterface[] = [];
   isOrdersListEmpty: boolean = false;
 
   currentPage: number = 1;
   pageSize: number = 3;
   currentPosition =  window.pageYOffset;
+  @Input() changedNumber: number = 0;
 
   constructor(
     private readonly localStorage: BrowserLocalStorage,
@@ -56,6 +57,16 @@ export class UserOrdersComponent implements OnInit {
       userId: this.localStorage.getCurrentUserId(),
       currentPage: this.currentPage - 1,
       pageSize: this.pageSize
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['changedNumber'] != undefined) {
+      // load data again
+      this.currentPage = 1;
+      // remove all in this array
+      this.orders.splice(0, this.orders.length);
+      this.showNextOrders();
     }
   }
 }

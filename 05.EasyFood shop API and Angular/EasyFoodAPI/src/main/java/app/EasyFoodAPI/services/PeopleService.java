@@ -90,4 +90,9 @@ public class PeopleService {
             }
         }
     }
+
+    public int getUserIdByUsername(String username) {
+        Optional<Account> account = accountsRepository.findByUsername(username);
+        return account.map(value -> value.getPerson().getId()).orElse(0);
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CategoryInterface} from "../../../api/interfaces/category.interface";
 import {ShortProductInfoInterface} from "../../../api/interfaces/short-product-info.interface";
 import {ViewportScroller} from "@angular/common";
@@ -13,7 +13,7 @@ import {FavoriteProductsByCategoryIdRequestInterface} from "../../../api/interfa
   templateUrl: './user-favorite-products.component.html',
   styleUrls: ['./user-favorite-products.component.scss']
 })
-export class UserFavoriteProductsComponent implements OnInit {
+export class UserFavoriteProductsComponent implements OnInit, OnChanges {
   categoriesList: CategoryInterface[] = [];
   selectedCategoryId: number = 0;
   isCategoriesListEmpty: boolean = false;
@@ -24,17 +24,14 @@ export class UserFavoriteProductsComponent implements OnInit {
   allProductsCount: number = 0;
   isProductsListEmpty: boolean = false;
 
+  @Input() changedNumber: number = 0;
+
   constructor(
     private readonly scroll: ViewportScroller,
     private readonly favoritesProductsService: FavoritesProductsService,
     private readonly localStorage: BrowserLocalStorage
   ) {
-    favoritesProductsService.getFavoritesProductsCategories(this.localStorage.getCurrentUserId())
-      .pipe(take(1))
-      .subscribe(categories => {
-        this.categoriesList.push(...categories);
-        this.isCategoriesListEmpty = this.categoriesList.length == 0;
-      });
+    this.getProductsCategories();
   }
 
   ngOnInit(): void {}
@@ -99,5 +96,25 @@ export class UserFavoriteProductsComponent implements OnInit {
         this.getNextProducts();
       }
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['changedNumber'] != undefined) {
+      // load data again
+      this.selectedCategoryId = 0;
+      // remove all in arrays
+      this.categoriesList.splice(0, this.categoriesList.length);
+      this.products.splice(0, this.products.length);
+      this.getProductsCategories();
+    }
+  }
+
+  private getProductsCategories() {
+    this.favoritesProductsService.getFavoritesProductsCategories(this.localStorage.getCurrentUserId())
+      .pipe(take(1))
+      .subscribe(categories => {
+        this.categoriesList.push(...categories);
+        this.isCategoriesListEmpty = this.categoriesList.length == 0;
+      });
   }
 }

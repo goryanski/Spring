@@ -1,0 +1,30 @@
+@import 'src/app/shared/global-variables.scss';
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  border-bottom: 1px solid $warning-color;
+  .menu-content-position {
+    margin: 0 auto;
+  }
+  .tabs-item {
+    :hover {
+      border-radius: 10px 10px 0 0;
+    }
+  }
+  .tabs-btn {
+    color: black;
+  }
+  .active {
+    background-color: $warning-color;
+    color: rgba(0, 0, 0, 0.5);
+    border: 1px solid $warning-color;
+    border-radius: 10px 10px 0 0;
+    border-bottom: none;
+  }
+}
+
+.tab-content {
+  margin-bottom: 125px;
+}

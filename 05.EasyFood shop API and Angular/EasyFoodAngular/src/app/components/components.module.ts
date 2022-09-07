@@ -4,12 +4,15 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {RouterModule} from "@angular/router";
 import { ProductComponent } from './product/product.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbDropdownModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ShowProductModalWindowComponent } from './show-product-modal-window/show-product-modal-window.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { ShowBasketModalWindowComponent } from './show-basket-modal-window/show-basket-modal-window.component';
 import { BasketProductComponent } from './basket-product/basket-product.component';
 import { OrderedProductComponent } from './ordered-product/ordered-product.component';
+import { UsersControlComponent } from './users-control/users-control.component';
+import { EditProductsComponent } from './edit-products/edit-products.component';
+import { UserCardComponent } from './user-card/user-card.component';
 
 
 // common components
@@ -21,20 +24,27 @@ import { OrderedProductComponent } from './ordered-product/ordered-product.compo
     ShowProductModalWindowComponent,
     ShowBasketModalWindowComponent,
     BasketProductComponent,
-    OrderedProductComponent
+    OrderedProductComponent,
+    UsersControlComponent,
+    EditProductsComponent,
+    UserCardComponent
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     ProductComponent,
-    OrderedProductComponent
+    OrderedProductComponent,
+    UsersControlComponent,
+    EditProductsComponent,
+    UserCardComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    NgbModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        NgbModule,
+        ReactiveFormsModule,
+        NgbDropdownModule
+    ]
 })
 
 export class ComponentsModule { }

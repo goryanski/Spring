@@ -46,6 +46,11 @@ public class UsersController {
         );
     }
 
+    @GetMapping("getId/{username}")
+    public int getUserIdByUsername(@PathVariable("username") String username) {
+        return peopleService.getUserIdByUsername(username);
+    }
+
 
     @ExceptionHandler
     private MessageResponse handleException(UpdatePersonException e) {

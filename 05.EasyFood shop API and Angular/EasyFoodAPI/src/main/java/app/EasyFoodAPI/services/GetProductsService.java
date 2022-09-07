@@ -54,7 +54,10 @@ public class GetProductsService {
         // get first the most unpopular or new products by required categoryId
         // (only unpopular or new products have the least likesCount value)
         // for getting the first products we'll use pagination (explanation in the repository)
-        return productsRepository.findByCategoryIdOrderByLikesCount(categoryId,
+        return productsRepository
+                .findByCategoryIdAndIsAvailableAndAmountInStorageGreaterThanOrderByLikesCount(categoryId,
+                        true,
+                        0,
                         PageRequest.of(0, productsCount))
                 .getContent()
                 .stream()

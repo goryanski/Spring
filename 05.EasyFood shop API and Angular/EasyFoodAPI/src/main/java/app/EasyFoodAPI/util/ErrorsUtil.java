@@ -1,8 +1,5 @@
 package app.EasyFoodAPI.util;
-import app.EasyFoodAPI.util.exceptions.AddProductToBasketException;
-import app.EasyFoodAPI.util.exceptions.AuthException;
-import app.EasyFoodAPI.util.exceptions.MakeOrderException;
-import app.EasyFoodAPI.util.exceptions.UpdatePersonException;
+import app.EasyFoodAPI.util.exceptions.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import java.util.List;
@@ -28,6 +25,11 @@ public class ErrorsUtil {
     public static void returnUpdatePersonErrorsToClient(BindingResult bindingResult) {
         StringBuilder errorMessage = getErrorMessage(bindingResult);
         throw new UpdatePersonException(errorMessage.toString());
+    }
+
+    public static void returnProductValidationErrorsToClient(BindingResult bindingResult) {
+        StringBuilder errorMessage = getErrorMessage(bindingResult);
+        throw new ProductValidationException(errorMessage.toString());
     }
 
 

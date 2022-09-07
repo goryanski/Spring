@@ -16,7 +16,11 @@ public interface ProductsRepository extends JpaRepository<Product, Integer> {
             Pageable pageable);
 
     // we use pagination to get only a few first products (in our case - 4 first products)
-    Page<Product> findByCategoryIdOrderByLikesCount(int categoryId, Pageable pageable); // or we could use another way:
+    Page<Product> findByCategoryIdAndIsAvailableAndAmountInStorageGreaterThanOrderByLikesCount(
+            int categoryId,
+            boolean isAvailable,
+            int amount,
+            Pageable pageable); // or we could use another way:
     //List<Product> findTop4ByCategoryIdOrderByLikesCount(int categoryId); - find top 4 from result, but in this case
     // we cannot change how many products we can take (we want to decide it on the client side)
 

@@ -8,7 +8,7 @@ import {ProductLinkedDataResponseInterface} from "../interfaces/responses/produc
 import {MessageResponseInterface} from "../interfaces/responses/message-response.interface";
 
 @Injectable()
-export class AdministrateProductsService {
+export class AdministrateUsersService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly appEnv: AppEnvironment,
@@ -16,13 +16,13 @@ export class AdministrateProductsService {
   ) {
   }
 
-  getProductToEdit(productId: number): Observable<EditProductInterface> {
-    return this.httpClient.get<EditProductInterface>(
+  getUserIdByUsername(username: string): Observable<number> {
+    return this.httpClient.get<number>(
       [
         this.appEnv.apiEasyFoodURL,
-        'admins',
-        'edit',
-        `${productId}`
+        'users',
+        'getId',
+        `${username}`
       ].join('/'),
       {
         headers: {
@@ -35,33 +35,15 @@ export class AdministrateProductsService {
     );
   }
 
-  getProductLinkedData(): Observable<ProductLinkedDataResponseInterface> {
-    return this.httpClient.get<ProductLinkedDataResponseInterface>(
-      [
-        this.appEnv.apiEasyFoodURL,
-        'admins',
-        'productLinkedData',
-      ].join('/'),
-      {
-        headers: {
-          'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
-        }
-      }
-    ).pipe(
-      publishReplay(1),
-      refCount()
-    );
-  }
-
-  editProduct(product: EditProductInterface)
+  blockUser(userId: number)
     : Observable<MessageResponseInterface> {
     return this.httpClient.put<MessageResponseInterface>(
       [
         this.appEnv.apiEasyFoodURL,
         'admins',
-        'editProduct',
+        'blockUser',
       ].join('/'),
-      product,
+      userId,
       {
         headers: {
           'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
@@ -73,15 +55,15 @@ export class AdministrateProductsService {
     );
   }
 
-  addProduct(product: EditProductInterface)
+  setUserAsAdmin(userId: number)
     : Observable<MessageResponseInterface> {
-    return this.httpClient.post<MessageResponseInterface>(
+    return this.httpClient.put<MessageResponseInterface>(
       [
         this.appEnv.apiEasyFoodURL,
         'admins',
-        'addProduct',
+        'setUserAsAdmin',
       ].join('/'),
-      product,
+      userId,
       {
         headers: {
           'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`

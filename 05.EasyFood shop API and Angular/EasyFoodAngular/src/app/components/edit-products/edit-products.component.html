@@ -1,0 +1,223 @@
+<form class="edit-form mt-5" [formGroup]="form">
+  <div class="mb-5">
+    <label for="inputName" class="form-label">Product name</label>
+    <input type="text" class="form-control"
+           formControlName="name" id="inputName">
+    <div *ngIf="form.controls['name'].errors">
+      <div *ngIf="form.controls['name'].errors['minlength']"
+           class="form-text text-danger">Length must be at least 3 characters
+      </div>
+      <div *ngIf="form.controls['name'].errors['maxlength']"
+           class="form-text text-danger">Length must not be more than 100 characters
+      </div>
+      <div *ngIf="form.controls['name'].errors['required']"
+           class="form-text text-danger">Field is required
+      </div>
+    </div>
+  </div>
+  <div class="mb-5">
+    <label for="inputDescription" class="form-label">Description</label>
+    <input type="text" class="form-control"
+           formControlName="description" id="inputDescription">
+    <div *ngIf="form.controls['description'].errors">
+      <div *ngIf="form.controls['description'].errors['minlength']"
+           class="form-text text-danger">Length must be at least 3 characters
+      </div>
+      <div *ngIf="form.controls['description'].errors['maxlength']"
+           class="form-text text-danger">Length must not be more than 500 characters
+      </div>
+      <div *ngIf="form.controls['description'].errors['required']"
+           class="form-text text-danger">Field is required
+      </div>
+    </div>
+  </div>
+  <div class="mb-5">
+    <label for="inputPhotoPath" class="form-label">Photo path</label>
+    <input type="text" class="form-control"
+           formControlName="photoPath" id="inputPhotoPath">
+    <div *ngIf="form.controls['photoPath'].errors">
+      <div *ngIf="form.controls['photoPath'].errors['minlength']"
+           class="form-text text-danger">Length must be at least 4 characters
+      </div>
+      <div *ngIf="form.controls['photoPath'].errors['maxlength']"
+           class="form-text text-danger">Length must not be more than 600 characters
+      </div>
+      <div *ngIf="form.controls['photoPath'].errors['required']"
+           class="form-text text-danger">Field is required
+      </div>
+    </div>
+  </div>
+  <div class="mb-5">
+    <label for="inputPrice" class="form-label">Price (more than 0)</label>
+    <input type="number" class="form-control input-number" min="0"
+           formControlName="price" id="inputPrice">
+    <div *ngIf="priceInputError"
+         class="form-text text-danger">Incorrect price value (example: 48 or 36.50)
+    </div>
+  </div>
+  <div class="mb-5 weight-block">
+    <div class="weight">
+      <label for="inputWeight" class="form-label">Weight (positive number)</label>
+      <input type="number" class="form-control input-number" min="0"
+             formControlName="weight" id="inputWeight">
+      <div *ngIf="weightInputError"
+           class="form-text text-danger">Incorrect weight value (example: 1 or 1.5)
+      </div>
+    </div>
+    <div class="weight-flexible-chb">
+      <input type="checkbox" class="input-weight-flexible-chb"
+             formControlName="weightFlexible" id="inputWeightFlexible">
+      <label for="inputWeightFlexible" class="form-label label-weight-flexible">Is weight flexible?</label>
+    </div>
+  </div>
+
+
+  <!-- measurements dropdown -->
+  <div class="measurement-container mb-5">
+    <div *ngIf="productLinkedData">
+      <div ngbDropdown class="d-inline-block" *ngIf="productLinkedData.weightMeasurements as measurements">
+        <div class="mb-2 form-label">Select the measurement</div>
+        <button type="button" class="btn btn-outline-primary measurements-dropdown" id="dropdownMeasurements"
+                ngbDropdownToggle>{{selectedMeasurementName}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownMeasurements">
+          <button ngbDropdownItem *ngFor="let measurement of measurements"
+                  (click)="onDropdownMeasurementsClick(measurement)">{{measurement}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="new-measurement-field">
+      <label for="inputNewMeasurement" class="form-label">Or add new measurement</label>
+      <input type="text" class="form-control"
+             formControlName="measurementName" id="inputNewMeasurement">
+      <div *ngIf="form.controls['measurementName'].errors">
+        <div *ngIf="form.controls['measurementName'].errors['pattern']"
+             class="form-text text-danger">English letters only, (1-4 characters)
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="mb-5">
+    <label for="inputDiscount" class="form-label">Discount (range 0-99)</label>
+    <input type="number" class="form-control input-number" min="0" max="99"
+           formControlName="discount" id="inputDiscount">
+    <div *ngIf="discountInputError"
+         class="form-text text-danger">Incorrect discount value (example: 0 or 15; between 0 and 99; whole number)
+    </div>
+  </div>
+  <div class="mb-5">
+    <label for="inputAmountInStorage" class="form-label">Amount in storage (positive number)</label>
+    <input type="number" class="form-control input-number" min="0"
+           formControlName="amountInStorage" id="inputAmountInStorage">
+    <div *ngIf="amountInStorageInputError"
+         class="form-text text-danger">Incorrect amount value (example: 0 or 467)
+    </div>
+  </div>
+  <div class="available-chb mb-5">
+    <input type="checkbox" class="input-available-chb"
+           formControlName="available" id="inputAvailable">
+    <label for="inputAvailable" class="form-label label-available">Is product available? (if false - you won't see this product in the app (only in DB))</label>
+  </div>
+
+
+  <!-- countries dropdown -->
+  <div class="countries-container mb-5">
+    <div *ngIf="productLinkedData">
+      <div ngbDropdown class="d-inline-block" *ngIf="productLinkedData.countries as counties">
+        <div class="mb-2 form-label">Select the country</div>
+        <button type="button" class="btn btn-outline-primary countries-dropdown" id="dropdownLinkedCountries"
+                ngbDropdownToggle>{{selectedCountryName}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownLinkedCountries">
+          <button ngbDropdownItem *ngFor="let country of counties"
+                  (click)="onDropdownCountryClick(country)">{{country}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="new-country-field">
+      <label for="inputNewCountry" class="form-label">Or add new country</label>
+      <input type="text" class="form-control"
+             formControlName="countryName" id="inputNewCountry">
+      <div *ngIf="form.controls['countryName'].errors">
+        <div *ngIf="form.controls['countryName'].errors['pattern']"
+             class="form-text text-danger">English letters only, first letter is capitalized, other - lowercase (4-30 symbols)
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- categories dropdown -->
+  <div class="categories-container mb-5">
+    <div *ngIf="productLinkedData">
+      <div ngbDropdown class="d-inline-block" *ngIf="productLinkedData.categories as categories">
+        <div class="mb-2 form-label">Select the category</div>
+        <button type="button" class="btn btn-outline-primary categories-dropdown" id="dropdownLinkedCategories"
+                ngbDropdownToggle>{{selectedCategoryName}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownLinkedCategories">
+          <button ngbDropdownItem *ngFor="let category of categories"
+                  (click)="onDropdownCategoryClick(category)">{{category}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="new-category-field">
+      <label for="inputNewCategory" class="form-label">Or add new category</label>
+      <input type="text" class="form-control"
+             formControlName="categoryName" id="inputNewCategory">
+      <div *ngIf="form.controls['categoryName'].errors">
+        <div *ngIf="form.controls['categoryName'].errors['pattern']"
+             class="form-text text-danger">English letters only, space, first letter is capitalized, other - lowercase (3-40 characters)
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- brands dropdown -->
+  <div class="brands-container mb-5">
+    <div *ngIf="productLinkedData">
+      <div ngbDropdown class="d-inline-block" *ngIf="productLinkedData.brands as brands">
+        <div class="mb-2 form-label">Select the brand</div>
+        <button type="button" class="btn btn-outline-primary brands-dropdown" id="dropdownLinkedBrands"
+                ngbDropdownToggle>{{selectedBrandName}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownLinkedBrands" style="padding-bottom: 100px">
+          <button ngbDropdownItem *ngFor="let brand of brands"
+                  (click)="onDropdownBrandsClick(brand)">{{brand}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="new-brand-field">
+      <label for="inputNewBrand" class="form-label">Or add new brand</label>
+      <input type="text" class="form-control"
+             formControlName="brandName" id="inputNewBrand">
+      <div *ngIf="form.controls['brandName'].errors">
+        <div *ngIf="form.controls['brandName'].errors['pattern']"
+             class="form-text text-danger">English letters only, digits, space, symbols .%#@&$ (3-30 characters)
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="error-block mb-4" *ngIf="isEditError">
+    {{apiResponseErrorMessage}}
+  </div>
+
+
+  <div class="mt-5">
+    <button [disabled]="!form.valid"
+            (click)="onEditClick()"
+            class="btn btn-warning">{{buttonLabel}}
+    </button>
+    <button (click)="onBackClick()"
+            class="btn btn-warning btn-back">Back
+    </button>
+  </div>
+</form>
+

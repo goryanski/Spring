@@ -10,6 +10,7 @@ import {OrdersService} from "./services/orders.service";
 import {UsersService} from "./services/users.service";
 import {FavoritesProductsService} from "./services/favorites-products.service";
 import {AdministrateProductsService} from "./services/administrate-products.service";
+import {AdministrateUsersService} from "./services/administrate-users.service";
 
 @NgModule({
   declarations: [],
@@ -26,7 +27,8 @@ import {AdministrateProductsService} from "./services/administrate-products.serv
     OrdersService,
     UsersService,
     FavoritesProductsService,
-    AdministrateProductsService
+    AdministrateProductsService,
+    AdministrateUsersService
   ]
 })
 export class ApiServicesModule { }
