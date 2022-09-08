@@ -30,6 +30,11 @@ public interface ProductsRepository extends JpaRepository<Product, Integer> {
             int amount,
             Pageable pageable);
 
+    Page<Product> findByAmountInStorageLessThanAndIsAvailable(
+            int leftInStockLimit,
+            boolean isAvailable,
+            Pageable pageable);
+
     // filter
     List<Product> findByBrandIdAndIsAvailableAndAmountInStorageGreaterThan(
             int brandId,

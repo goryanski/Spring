@@ -13,6 +13,7 @@ import { OrderedProductComponent } from './ordered-product/ordered-product.compo
 import { UsersControlComponent } from './users-control/users-control.component';
 import { EditProductsComponent } from './edit-products/edit-products.component';
 import { UserCardComponent } from './user-card/user-card.component';
+import { RunOutProductsComponent } from './run-out-products/run-out-products.component';
 
 
 // common components
@@ -27,17 +28,19 @@ import { UserCardComponent } from './user-card/user-card.component';
     OrderedProductComponent,
     UsersControlComponent,
     EditProductsComponent,
-    UserCardComponent
+    UserCardComponent,
+    RunOutProductsComponent
   ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    ProductComponent,
-    OrderedProductComponent,
-    UsersControlComponent,
-    EditProductsComponent,
-    UserCardComponent
-  ],
+    exports: [
+        HeaderComponent,
+        FooterComponent,
+        ProductComponent,
+        OrderedProductComponent,
+        UsersControlComponent,
+        EditProductsComponent,
+        UserCardComponent,
+        RunOutProductsComponent
+    ],
     imports: [
         CommonModule,
         RouterModule,

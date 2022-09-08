@@ -1,10 +1,13 @@
 <!--menu-->
 <ul class="nav nav-tabs tabs" id="myTab" role="tablist">
   <li class="nav-item tabs-item" role="presentation">
-    <button class="nav-link tabs-btn active" id="add-product-tab" data-bs-toggle="tab" data-bs-target="#addProduct" type="button" role="tab" aria-controls="addProduct" aria-selected="true">Add new product</button>
+    <button class="nav-link tabs-btn active" id="add-product-tab" data-bs-toggle="tab" data-bs-target="#addProduct" type="button" role="tab" aria-controls="addProduct" aria-selected="true">Add product</button>
   </li>
   <li class="nav-item tabs-item" role="presentation">
     <button class="nav-link tabs-btn" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="false">Users</button>
+  </li>
+  <li class="nav-item tabs-item" role="presentation">
+    <button class="nav-link tabs-btn" id="order-tab" data-bs-toggle="tab" data-bs-target="#order" type="button" role="tab" aria-controls="order" aria-selected="false">Run out soon</button>
   </li>
 </ul>
 
@@ -16,5 +19,8 @@
   </div>
   <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
     <app-users-control></app-users-control>
+  </div>
+  <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-tab">
+    <app-run-out-products></app-run-out-products>
   </div>
 </div>

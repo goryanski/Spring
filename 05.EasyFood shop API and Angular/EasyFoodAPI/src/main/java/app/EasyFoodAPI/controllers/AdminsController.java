@@ -1,15 +1,20 @@
 package app.EasyFoodAPI.controllers;
 import app.EasyFoodAPI.dto.EditProductDTO;
+import app.EasyFoodAPI.dto.requests.RunOutProductsRequestDTO;
 import app.EasyFoodAPI.dto.responses.ProductLinkedDataResponseDTO;
 import app.EasyFoodAPI.services.AdminsService;
+import app.EasyFoodAPI.services.GetProductsService;
 import app.EasyFoodAPI.util.MessageResponse;
-import app.EasyFoodAPI.util.exceptions.MakeOrderException;
 import app.EasyFoodAPI.util.exceptions.ProductValidationException;
 import app.EasyFoodAPI.util.validators.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.Map;
+
 import static app.EasyFoodAPI.util.ErrorsUtil.returnProductValidationErrorsToClient;
 
 
@@ -19,11 +24,13 @@ import static app.EasyFoodAPI.util.ErrorsUtil.returnProductValidationErrorsToCli
 public class AdminsController {
     private final AdminsService adminsService;
     private final ProductValidator productValidator;
+    private final GetProductsService productsService;
 
     @Autowired
-    public AdminsController(AdminsService adminsService, ProductValidator productValidator) {
+    public AdminsController(AdminsService adminsService, ProductValidator productValidator, GetProductsService productsService) {
         this.adminsService = adminsService;
         this.productValidator = productValidator;
+        this.productsService = productsService;
     }
 
 
@@ -91,6 +98,14 @@ public class AdminsController {
                 System.currentTimeMillis()
         );
     }
+
+
+    @PostMapping("/runOutProducts")
+    public ResponseEntity<Map<String, Object>> getRunOutProducts(@RequestBody RunOutProductsRequestDTO params) {
+        Map<String, Object> response = productsService.getRunOutProducts(params);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
 
 // test: get authenticated user (role=admin) from spring security context (to check spring security configuration for authentication and authorization)

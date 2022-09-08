@@ -4,6 +4,7 @@ import app.EasyFoodAPI.dto.ShortProductInfoDTO;
 import app.EasyFoodAPI.dto.requests.FilterProductsRequestDTO;
 import app.EasyFoodAPI.dto.requests.ProductsByCategoryRequestDTO;
 import app.EasyFoodAPI.dto.requests.ProductsByNameRequestDTO;
+import app.EasyFoodAPI.dto.requests.RunOutProductsRequestDTO;
 import app.EasyFoodAPI.models.Product;
 import app.EasyFoodAPI.repositories.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +30,15 @@ public class GetProductsService {
     }
 
     public Map<String, Object> getProductsByCategoryId(ProductsByCategoryRequestDTO params) {
-        Pageable paging = PageRequest.of(params.getCurrentPage(), params.getPageSize());
-        Page<Product> pageTuts = productsRepository
-                // products must also be available and in stock
-                .findByCategoryIdAndIsAvailableAndAmountInStorageGreaterThan(
-                        params.getCategoryId(),
-                        true,
-                        0,
-                        paging);
-        return getPaginatedResponse(pageTuts);
+                Pageable paging = PageRequest.of(params.getCurrentPage(), params.getPageSize());
+                Page<Product> pageTuts = productsRepository
+                        // products must also be available and in stock
+                        .findByCategoryIdAndIsAvailableAndAmountInStorageGreaterThan(
+                                params.getCategoryId(),
+                                true,
+                                0,
+                                paging);
+                return getPaginatedResponse(pageTuts);
     }
 
     public FullProductInfoDTO getFullProductById(int id) {
@@ -185,5 +186,16 @@ public class GetProductsService {
         response.put("totalPages", 0);
 
         return response;
+    }
+
+    public Map<String, Object> getRunOutProducts(RunOutProductsRequestDTO params) {
+        Pageable paging = PageRequest.of(params.getCurrentPage(), params.getPageSize());
+        Page<Product> pageTuts = productsRepository
+                // products must also be available
+                .findByAmountInStorageLessThanAndIsAvailable(
+                        params.getLeftInStockLimit(),
+                        true,
+                        paging);
+        return getPaginatedResponse(pageTuts);
     }
 }

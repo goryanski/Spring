@@ -6,6 +6,8 @@ import {EditProductInterface} from "../interfaces/edit-product.interface";
 import {BrowserLocalStorage} from "../../shared/storage/local-storage";
 import {ProductLinkedDataResponseInterface} from "../interfaces/responses/product-linked-data-response.interface";
 import {MessageResponseInterface} from "../interfaces/responses/message-response.interface";
+import {RunOutProductsRequestInterface} from "../interfaces/requests/run-out-products-request.interface";
+import {PaginatedProductsResponseInterface} from "../interfaces/responses/paginated-products-response.interface";
 
 @Injectable()
 export class AdministrateProductsService {
@@ -82,6 +84,26 @@ export class AdministrateProductsService {
         'addProduct',
       ].join('/'),
       product,
+      {
+        headers: {
+          'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
+        }
+      }
+    ).pipe(
+      publishReplay(1),
+      refCount()
+    );
+  }
+
+  getRunOutProducts(requestObj: RunOutProductsRequestInterface)
+    : Observable<PaginatedProductsResponseInterface> {
+    return this.httpClient.post<PaginatedProductsResponseInterface>(
+      [
+        this.appEnv.apiEasyFoodURL,
+        'admins',
+        'runOutProducts',
+      ].join('/'),
+      requestObj,
       {
         headers: {
           'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
