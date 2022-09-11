@@ -207,3 +207,9 @@ CREATE TABLE ordered_products (
     general_price NUMERIC(9,2) NOT NULL
 );
 
+
+CREATE TABLE favorites_products (
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    person_id INT REFERENCES people(id) ON DELETE SET NULL,
+    product_id INT REFERENCES products(id) ON DELETE SET NULL
+);
