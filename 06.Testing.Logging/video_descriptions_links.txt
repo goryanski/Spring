@@ -1,0 +1,3 @@
+01.ServiceLayerTests - https://www.youtube.com/watch?v=mOL8EjbHz4Y
+02.EntitiesTests - https://www.youtube.com/watch?v=E3s_PjDFCe8
+03.IntegrationTesting.Logging - https://youtu.be/TzL_1WVxT8c

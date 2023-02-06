@@ -1,0 +1,50 @@
+DROP TABLE tasks;
+DROP TABLE todo_collaborator;
+DROP TABLE todos;
+DROP TABLE users;
+DROP TABLE roles;
+DROP TABLE states;
+
+CREATE TABLE users (
+    id BIGINT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    first_name VARCHAR(255) NOT NULL,
+    last_name  VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role_id BIGINT NOT NULL
+);
+
+CREATE TABLE roles
+(
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE todos
+(
+    id BIGINT PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL,
+    title  VARCHAR(255) NOT NULL,
+    owner_id BIGINT NOT NULL
+);
+
+CREATE TABLE todo_collaborator
+(
+    collaborator_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
+    todo_id BIGINT REFERENCES todos(id) ON DELETE SET NULL
+);
+
+CREATE TABLE tasks
+(
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    priority VARCHAR(255) NOT NULL,
+    state_id BIGINT NOT NULL,
+    todo_id BIGINT NOT NULL
+);
+
+CREATE TABLE states
+(
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
