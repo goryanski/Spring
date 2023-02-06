@@ -1,0 +1,24 @@
+server.port=
+
+# after first run switch this to never
+#spring.sql.init.mode=always
+spring.sql.init.mode=never
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.datasource.url=jdbc:h2:file:./todo.db;DB_CLOSE_DELAY=-1
+spring.datasource.username=
+spring.datasource.password=
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2
+
+# in order to generate schema you may uncomment these lines
+# and copy content of ../create.sql into ../resources/schema.sql
+#spring.jpa.properties.javax.persistence.schema-generation.scripts.action=create
+#spring.jpa.properties.javax.persistence.schema-generation.scripts.create-target=create.sql
+#spring.jpa.properties.javax.persistence.schema-generation.scripts.create-source=metadata
+
+
+
+jwtSecret=
+jwtExpirationMs=

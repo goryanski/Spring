@@ -1,0 +1,14 @@
+server.port=
+
+spring.datasource.platform=postgres
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+spring.jpa.database=POSTGRESQL
+spring.jpa.show-sql=true
+spring.jpa.generate-ddl=true
+#TODO - remove property ddl-auto
+spring.jpa.hibernate.ddl-auto=create
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+spring.datasource.initialization-mode=always
