@@ -1,6 +1,6 @@
 # Spring
 
-If you want to launch project:
+If you want to launch a project:
 1. in a file "src/main/resources/database.properties.origin" write your database data. then change name 
 	of this file to database.properties (remove .origin from name)
 2. download all dependencies in pom.xml
